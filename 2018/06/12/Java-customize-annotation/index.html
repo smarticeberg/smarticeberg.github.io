@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Annotation," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="背景写这篇文章的背景是项目中需要一个测试方法执行时间的功能。主要有两种实现方式:  在每个方法执行前后写入代码，这样冗余代码比较多，发布项目的话，还要去修改逻辑代码，不便于操作。 在第一种方案不可行的情况下，就思考到了结合AOP，来实现我们自定义的注解。  知识准备@interface在编写自定义的注解类之前，我们先要了解@interface，这是标识了一个注解类的主要元素，这里不再赘述。然后我们">
+<meta name="keywords" content="Java,Annotation">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java自定义注解">
+<meta property="og:url" content="http://smarticeberg.github.io/2018/06/12/Java-customize-annotation/index.html">
+<meta property="og:site_name" content="Jarvis的技术小黑屋">
+<meta property="og:description" content="背景写这篇文章的背景是项目中需要一个测试方法执行时间的功能。主要有两种实现方式:  在每个方法执行前后写入代码，这样冗余代码比较多，发布项目的话，还要去修改逻辑代码，不便于操作。 在第一种方案不可行的情况下，就思考到了结合AOP，来实现我们自定义的注解。  知识准备@interface在编写自定义的注解类之前，我们先要了解@interface，这是标识了一个注解类的主要元素，这里不再赘述。然后我们">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180612/1.png">
+<meta property="og:updated_time" content="2018-09-03T06:02:30.894Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java自定义注解">
+<meta name="twitter:description" content="背景写这篇文章的背景是项目中需要一个测试方法执行时间的功能。主要有两种实现方式:  在每个方法执行前后写入代码，这样冗余代码比较多，发布项目的话，还要去修改逻辑代码，不便于操作。 在第一种方案不可行的情况下，就思考到了结合AOP，来实现我们自定义的注解。  知识准备@interface在编写自定义的注解类之前，我们先要了解@interface，这是标识了一个注解类的主要元素，这里不再赘述。然后我们">
+<meta name="twitter:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180612/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://smarticeberg.github.io/2018/06/12/Java-customize-annotation/"/>
+
+
+
+
+
+  <title>Java自定义注解 | Jarvis的技术小黑屋</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/smarticeberg"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jarvis的技术小黑屋</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天学一点东西</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/06/12/Java-customize-annotation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java自定义注解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-12T16:43:02+08:00">
+                2018-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>写这篇文章的背景是项目中需要一个测试方法执行时间的功能。主要有两种实现方式:</p>
+<ul>
+<li>在每个方法执行前后写入代码，这样冗余代码比较多，发布项目的话，还要去修改逻辑代码，不便于操作。</li>
+<li>在第一种方案不可行的情况下，就思考到了结合AOP，来实现我们自定义的注解。</li>
+</ul>
+<h1 id="知识准备"><a href="#知识准备" class="headerlink" title="知识准备"></a>知识准备</h1><h2 id="interface"><a href="#interface" class="headerlink" title="@interface"></a>@interface</h2><p>在编写自定义的注解类之前，我们先要了解@interface，这是标识了一个注解类的主要元素，这里不再赘述。然后我们需要看看注解类上面的元注解</p>
+<h2 id="Target"><a href="#Target" class="headerlink" title="@Target"></a>@Target</h2><p>该注解表明注解类能够作用的范围，也就是作用在哪个上面:类，方法，参数等等。</p>
+<table>
+<thead>
+<tr>
+<th>注解类型</th>
+<th>作用范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@Target(ElementType.TYPE)</td>
+<td>接口、类、枚举、注解</td>
+</tr>
+<tr>
+<td>@Target(ElementType.FIELD)</td>
+<td>字段、枚举的常量</td>
+</tr>
+<tr>
+<td>@Target(ElementType.METHOD)</td>
+<td>方法</td>
+</tr>
+<tr>
+<td>@Target(ElementType.PARAMETER)</td>
+<td>方法参数</td>
+</tr>
+<tr>
+<td>@Target(ElementType.CONSTRUCTOR)</td>
+<td>构造函数</td>
+</tr>
+<tr>
+<td>@Target(ElementType.LOCAL_VARIABLE)</td>
+<td>局部变量</td>
+</tr>
+<tr>
+<td>@Target(ElementType.LOCAL_VARIABLE)</td>
+<td>局部变量</td>
+</tr>
+<tr>
+<td>@Target(ElementType.ANNOTATION_TYPE)</td>
+<td>注解</td>
+</tr>
+<tr>
+<td>@Target(ElementType.PACKAGE)</td>
+<td>包</td>
+</tr>
+</tbody>
+</table>
+<p>里面的参数都是可以多选的，使用:@Target({ElementType.METHOD,ElementType.FIELD})。</p>
+<h2 id="Retention"><a href="#Retention" class="headerlink" title="@Retention"></a>@Retention</h2><p>@Retention可以设置注解的级别，分为三种，都有其特定的功能。</p>
+<table>
+<thead>
+<tr>
+<th>注解级别</th>
+<th>存在范围</th>
+<th>主要用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SOURCE源码级别</td>
+<td>注解只存在源码中</td>
+<td>功能是与编译器交互，用于代码检测。如@Override,@SuppressWarings。额外效率损耗发生在编译时</td>
+</tr>
+<tr>
+<td>CLASS 字节码级别</td>
+<td>注解存在源码与字节码文件中</td>
+<td>主要用于编译时生成额外的文件，如XML，Java文件等，但运行时无法获得。这个级别需要添加JVM加载时候的代理（javaagent），使用代理来动态修改字节码文件</td>
+</tr>
+<tr>
+<td>RUNTIME 运行时级别</td>
+<td>注解存在源码，字节码与Java虚拟机中</td>
+<td>主要用于运行时反射获取相关信息</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Documented"><a href="#Documented" class="headerlink" title="@Documented"></a>@Documented</h2><p>@Documented 注解表明这个注解应该被Javadoc工具记录，默认情况下，Javadoc是不包括注解的，但是如果声明注解时指定了@Documented，则它会被Javadoc之类的工具处理，所以注解类型信息也会被包括在生成的文档中。</p>
+<h2 id="Order"><a href="#Order" class="headerlink" title="@Order"></a>@Order</h2><p>@Order注解定义了组件的加载顺序，这个注解包含一个value属性。属性接受整型值。值越小拥有越高的优先级。Ordered.HIGHEST_PRECEDENCE这个属性值是最高优先级的属性，它的值是-2147483648，对应的最低属性值是Ordered.LOWEST_PRECEDENCE，它的值是2147483647。</p>
+<h1 id="开始撸代码"><a href="#开始撸代码" class="headerlink" title="开始撸代码"></a>开始撸代码</h1><h2 id="编写注解类"><a href="#编写注解类" class="headerlink" title="编写注解类"></a>编写注解类</h2><p><code>AnalysisTime.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.cruiser.support.annotation;</span><br><span class="line"></span><br><span class="line">import java.lang.annotation.ElementType;</span><br><span class="line">import java.lang.annotation.Retention;</span><br><span class="line">import java.lang.annotation.RetentionPolicy;</span><br><span class="line">import java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line">@Target(ElementType.METHOD)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">public @interface AnalysisTime &#123;</span><br><span class="line"></span><br><span class="line">    int type() default 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="使用AOP进行切面编程"><a href="#使用AOP进行切面编程" class="headerlink" title="使用AOP进行切面编程"></a>使用AOP进行切面编程</h2><p>因为我是要将自定义Annotation集成在Springboot项目中，需要以下几个步骤。</p>
+<h3 id="引入Maven"><a href="#引入Maven" class="headerlink" title="引入Maven"></a>引入Maven</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- AOP依赖模块 --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="编写切面方法"><a href="#编写切面方法" class="headerlink" title="编写切面方法"></a>编写切面方法</h3><p><code>AnalysisTimeAspect.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.cruiser.support.annotation.aspect;</span><br><span class="line"></span><br><span class="line">import org.aspectj.lang.JoinPoint;</span><br><span class="line">import org.aspectj.lang.annotation.After;</span><br><span class="line">import org.aspectj.lang.annotation.Aspect;</span><br><span class="line">import org.aspectj.lang.annotation.Before;</span><br><span class="line">import org.aspectj.lang.annotation.Pointcut;</span><br><span class="line">import org.slf4j.Logger;</span><br><span class="line">import org.slf4j.LoggerFactory;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">import com.jarvis.cruiser.support.annotation.AnalysisTime;</span><br><span class="line"></span><br><span class="line">@Aspect</span><br><span class="line">@Component</span><br><span class="line">public class AnalysisTimeAspect &#123;</span><br><span class="line"></span><br><span class="line">	final static Logger logger = LoggerFactory.getLogger(AnalysisTimeAspect.class);</span><br><span class="line">	ThreadLocal&lt;Long&gt; beginTime = new ThreadLocal&lt;Long&gt;();</span><br><span class="line">	ThreadLocal&lt;Integer&gt; type = new ThreadLocal&lt;Integer&gt;();</span><br><span class="line">	ThreadLocal&lt;String&gt; methodName = new ThreadLocal&lt;String&gt;();</span><br><span class="line"></span><br><span class="line">	@Pointcut(&quot;@annotation(analysisTime)&quot;)</span><br><span class="line">	public void timeStatistics(AnalysisTime analysisTime) &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Before(&quot;timeStatistics(analysisTime)&quot;)</span><br><span class="line">	public void doBefore(JoinPoint joinPoint, AnalysisTime analysisTime) &#123;</span><br><span class="line">		type.set(analysisTime.type());</span><br><span class="line">		methodName.set(joinPoint.getSignature().getDeclaringTypeName() + &quot; &quot; + joinPoint.getSignature().getName());</span><br><span class="line">		switch (type.get()) &#123;</span><br><span class="line">		case 0:</span><br><span class="line">			beginTime.set(System.currentTimeMillis());</span><br><span class="line">			break;</span><br><span class="line"></span><br><span class="line">		case 1:</span><br><span class="line">			beginTime.set(System.nanoTime());</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@After(&quot;timeStatistics(analysisTime)&quot;)</span><br><span class="line">	public void doAfter(AnalysisTime analysisTime) &#123;</span><br><span class="line">		long duration = 0L;</span><br><span class="line">		String unit = &quot;ms&quot;;</span><br><span class="line">		switch (type.get()) &#123;</span><br><span class="line">		case 0:</span><br><span class="line">			duration = System.currentTimeMillis() - beginTime.get();</span><br><span class="line">			break;</span><br><span class="line"></span><br><span class="line">		case 1:</span><br><span class="line">			duration = System.nanoTime() - beginTime.get();</span><br><span class="line">			unit = &quot;ns&quot;;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		logger.info(&quot;[AnalysisTime]excute [&#123;&#125;] method ,duration is:&#123;&#125;&quot; + unit, methodName.get(), duration);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用自定义Annotation"><a href="#使用自定义Annotation" class="headerlink" title="使用自定义Annotation"></a>使用自定义Annotation</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(&quot;/manage/ticket/list.dhtml&quot;)</span><br><span class="line">@AnalysisTime(type = 0)</span><br><span class="line">public String query(ModelMap model, HttpServletRequest request, Integer pageNo, ) &#123;</span><br><span class="line">    // 逻辑代码省略</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h2><p><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180612/1.png" alt="Alt text"></p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>使用注解能够在某些特定场景下方便编程的开发，后续会加入一些高级的注解使用场景。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2018/06/12/Java-customize-annotation/">Java自定义注解</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
+  <p><span>发布时间:</span>2018年06月12日 - 16:06</p>
+  <p><span>最后更新:</span>2018年09月03日 - 14:09</p>
+  <p><span>原始链接:</span><a href="/2018/06/12/Java-customize-annotation/" title="Java自定义注解">http://smarticeberg.github.io/2018/06/12/Java-customize-annotation/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2018/06/12/Java-customize-annotation/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+	});
+    });  
+</script>
+
+      
+    </div>
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/qrcode.jpg" alt="Iceberg wechat" style="width: 200px; max-width: 100%;"/>
+    <div>这是我的公众号，欢迎关注。</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/Annotation/" rel="tag"><i class="fa fa-tag"></i> Annotation</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/05/SpringBoot-SpringSecurity/" rel="next" title="SpringBoot集成SpringSecurity">
+                <i class="fa fa-chevron-left"></i> SpringBoot集成SpringSecurity
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/20/Java-proxy/" rel="prev" title="Java代理机制">
+                Java代理机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Iceberg</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/smarticeberg" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:icebergsmart@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.baidu.com" title="百度" target="_blank">百度</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#知识准备"><span class="nav-number">2.</span> <span class="nav-text">知识准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#interface"><span class="nav-number">2.1.</span> <span class="nav-text">@interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Target"><span class="nav-number">2.2.</span> <span class="nav-text">@Target</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Retention"><span class="nav-number">2.3.</span> <span class="nav-text">@Retention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Documented"><span class="nav-number">2.4.</span> <span class="nav-text">@Documented</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Order"><span class="nav-number">2.5.</span> <span class="nav-text">@Order</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始撸代码"><span class="nav-number">3.</span> <span class="nav-text">开始撸代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#编写注解类"><span class="nav-number">3.1.</span> <span class="nav-text">编写注解类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用AOP进行切面编程"><span class="nav-number">3.2.</span> <span class="nav-text">使用AOP进行切面编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入Maven"><span class="nav-number">3.2.1.</span> <span class="nav-text">引入Maven</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写切面方法"><span class="nav-number">3.2.2.</span> <span class="nav-text">编写切面方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用自定义Annotation"><span class="nav-number">3.2.3.</span> <span class="nav-text">使用自定义Annotation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#效果"><span class="nav-number">3.3.</span> <span class="nav-text">效果</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结束语"><span class="nav-number">4.</span> <span class="nav-text">结束语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Iceberg</span>
+
+  
+</div>
+
+
+ <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

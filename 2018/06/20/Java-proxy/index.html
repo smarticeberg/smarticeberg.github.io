@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Proxy," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="引言动态代理在Java中有着广泛的应用，鼎鼎大名的Spring框架的AOP实现就是基于此项技术。Java的代理分为静态代理和动态代理，区别在于，静态代理的代理关系在编译时就确定，而动态代理的代理关系是在编译期才确定。 分类 JDK代理 JDK静态代理 JDK动态代理   CGLIB动态代理  实现JDK 静态代理业务接口: UserService.java123456789101112packag">
+<meta name="keywords" content="Java,Proxy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java代理机制">
+<meta property="og:url" content="http://smarticeberg.github.io/2018/06/20/Java-proxy/index.html">
+<meta property="og:site_name" content="Jarvis的技术小黑屋">
+<meta property="og:description" content="引言动态代理在Java中有着广泛的应用，鼎鼎大名的Spring框架的AOP实现就是基于此项技术。Java的代理分为静态代理和动态代理，区别在于，静态代理的代理关系在编译时就确定，而动态代理的代理关系是在编译期才确定。 分类 JDK代理 JDK静态代理 JDK动态代理   CGLIB动态代理  实现JDK 静态代理业务接口: UserService.java123456789101112packag">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-09-03T06:02:30.894Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java代理机制">
+<meta name="twitter:description" content="引言动态代理在Java中有着广泛的应用，鼎鼎大名的Spring框架的AOP实现就是基于此项技术。Java的代理分为静态代理和动态代理，区别在于，静态代理的代理关系在编译时就确定，而动态代理的代理关系是在编译期才确定。 分类 JDK代理 JDK静态代理 JDK动态代理   CGLIB动态代理  实现JDK 静态代理业务接口: UserService.java123456789101112packag">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://smarticeberg.github.io/2018/06/20/Java-proxy/"/>
+
+
+
+
+
+  <title>Java代理机制 | Jarvis的技术小黑屋</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/smarticeberg"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jarvis的技术小黑屋</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天学一点东西</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/06/20/Java-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java代理机制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-20T15:25:50+08:00">
+                2018-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>动态代理在Java中有着广泛的应用，鼎鼎大名的Spring框架的AOP实现就是基于此项技术。Java的代理分为静态代理和动态代理，区别在于，静态代理的代理关系在编译时就确定，而动态代理的代理关系是在编译期才确定。</p>
+<h1 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h1><ul>
+<li>JDK代理<ul>
+<li>JDK静态代理</li>
+<li>JDK动态代理</li>
+</ul>
+</li>
+<li>CGLIB动态代理</li>
+</ul>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="JDK-静态代理"><a href="#JDK-静态代理" class="headerlink" title="JDK 静态代理"></a>JDK 静态代理</h2><p>业务接口: <code>UserService.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.service;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author Iceberg</span><br><span class="line"> * @description 业务接口</span><br><span class="line"> */</span><br><span class="line">public interface UserService &#123;</span><br><span class="line"></span><br><span class="line">	public void addUser();</span><br><span class="line"></span><br><span class="line">	public void editUser();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>业务实现类: <code>UserServiceImpl.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.service.impl;</span><br><span class="line"></span><br><span class="line">import com.jarvis.service.UserService;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author Administrator</span><br><span class="line"> * @description 业务实现类</span><br><span class="line"> */</span><br><span class="line">public class UserServiceImpl implements UserService &#123;</span><br><span class="line"></span><br><span class="line">	public void addUser() &#123;</span><br><span class="line">		System.out.println(&quot;增加一个用户&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void editUser() &#123;</span><br><span class="line">		System.out.println(&quot;编辑一个用户&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>业务代理类: <code>UserServiceProxy.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.service.proxy;</span><br><span class="line"></span><br><span class="line">import com.jarvis.service.UserService;</span><br><span class="line">import com.jarvis.service.impl.UserServiceImpl;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author Iceberg</span><br><span class="line"> * @description 代理类</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class UserServiceProxy implements UserService &#123;</span><br><span class="line"></span><br><span class="line">	private UserServiceImpl userServiceImpl;</span><br><span class="line"></span><br><span class="line">	public UserServiceProxy(UserServiceImpl userServiceImpl) &#123;</span><br><span class="line">		this.userServiceImpl = userServiceImpl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void addUser() &#123;</span><br><span class="line">		System.out.println(&quot;代理方法,在添加用户之前做一些动作。&quot;);</span><br><span class="line">		System.out.println(&quot;事务开启&quot;);</span><br><span class="line">		userServiceImpl.addUser();</span><br><span class="line">		System.out.println(&quot;事务结束&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void editUser() &#123;</span><br><span class="line">		System.out.println(&quot;代理方法,在编辑用户之前做一些动作。&quot;);</span><br><span class="line">		System.out.println(&quot;事务开启&quot;);</span><br><span class="line">		userServiceImpl.editUser();</span><br><span class="line">		System.out.println(&quot;事务结束&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试类: <code>JdkStaticProxyTest.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.service;</span><br><span class="line"></span><br><span class="line">import org.junit.Test;</span><br><span class="line"></span><br><span class="line">import com.jarvis.service.impl.UserServiceImpl;</span><br><span class="line">import com.jarvis.service.proxy.UserServiceProxy;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author Iceberg</span><br><span class="line"> * @description JDK静态代理测试类</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class JdkStaticProxyTest &#123;</span><br><span class="line"></span><br><span class="line">	@Test</span><br><span class="line">	public void testJdkStaticProxy() &#123;</span><br><span class="line">		UserServiceImpl serviceImpl = new UserServiceImpl();</span><br><span class="line">		UserServiceProxy proxy = new UserServiceProxy(serviceImpl);</span><br><span class="line">		proxy.addUser();</span><br><span class="line">		System.out.println(&quot;-------------------------------------&quot;);</span><br><span class="line">		proxy.editUser();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">代理方法,在添加用户之前做一些动作。</span><br><span class="line">事务开启</span><br><span class="line">增加一个用户</span><br><span class="line">事务结束</span><br><span class="line">-------------------------------------</span><br><span class="line">代理方法,在添加用户之前做一些动作。</span><br><span class="line">事务开启</span><br><span class="line">编辑一个用户</span><br><span class="line">事务结束</span><br></pre></td></tr></table></figure></p>
+<h2 id="JDK-动态代理"><a href="#JDK-动态代理" class="headerlink" title="JDK 动态代理"></a>JDK 动态代理</h2><p>在写代码之前，我们先来了解一些重要关键点。JDK动态代理机制中，有两个重要的类或接口，<code>InvocationHandler(Interface)</code>、<code>Proxy(Class)</code>。这两个是我们事先动态代理所必须用到的。</p>
+<ul>
+<li>InvocationHandler<blockquote>
+<p>InvocationHandler is the interface implemented by the invocation handler of a proxy instance. Each proxy instance has an associated invocation handler. When a method is invoked on a proxy instance, the method invocation is encoded and dispatched to the invoke method of its invocation handler.</p>
+</blockquote>
+</li>
+</ul>
+<p>这是Java API文档中对于InvocationHandler接口的描述。大意为：每一个动态代理类都必须实现InvocationHandler这个接口，并且每个代理类的实例都关联到了一个handler，当我们通过代理对象调用一个方法的时候，这个方法的调用就会被转发为由InvocationHandler这个接口invoke方法来进行调用。</p>
+<ul>
+<li><p>invoke方法</p>
+<blockquote>
+<p>Object invoke(Object proxy, Method method, Object[] args) throws Throwable</p>
+</blockquote>
+<ul>
+<li>proxy:指代我们所代理的那个真实对象</li>
+<li>method:指代的是我们所要调用真实对象的某个方法的Method对象</li>
+<li>args:指代的是调用真实对象某个方法时接受的参数</li>
+</ul>
+</li>
+<li><p>Proxy</p>
+<blockquote>
+<p>Proxy provides static methods for creating dynamic proxy classes and instances, and it is also the superclass of all dynamic proxy classes created by those methods. </p>
+</blockquote>
+<p>  Proxy这个类的作用就是用来动态创建一个代理对象的类，其newProxyInstance方法最为常用。</p>
+<blockquote>
+<p>public static Object newProxyInstance(ClassLoader loader, Class&lt;?&gt;[] interfaces,  InvocationHandler h)  throws IllegalArgumentException</p>
+</blockquote>
+<ul>
+<li>loader:一个ClassLoader对象，定义了由哪个ClassLoader对象来对生成的代理对象进行加载</li>
+<li>interfaces:一个Interface对象的数组，表示的是我将要给我需要代理的对象提供一组什么接口，如果我提供了一组接口给它，那么这个代理对象就宣称实现了该接口(多态)，这样我就能调用这组接口中的方法了</li>
+<li>h:一个InvocationHandler对象，表示的是当我这个动态代理对象在调用方法的时候，会关联到哪一个InvocationHandler对象上</li>
+</ul>
+</li>
+</ul>
+<h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><p>业务接口: <code>UserService.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.service;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author Iceberg</span><br><span class="line"> * @description 业务接口</span><br><span class="line"> */</span><br><span class="line">public interface UserService &#123;</span><br><span class="line"></span><br><span class="line">	public void addUser();</span><br><span class="line"></span><br><span class="line">	public void editUser();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>业务实现类: <code>UserServiceImpl.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.service.impl;</span><br><span class="line"></span><br><span class="line">import com.jarvis.service.UserService;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author Administrator</span><br><span class="line"> * @description 业务实现类</span><br><span class="line"> */</span><br><span class="line">public class UserServiceImpl implements UserService &#123;</span><br><span class="line"></span><br><span class="line">	public void addUser() &#123;</span><br><span class="line">		System.out.println(&quot;增加一个用户&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void editUser() &#123;</span><br><span class="line">		System.out.println(&quot;编辑一个用户&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>JDK动态代理类: <code>UserServiceInvocationHandler.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.service.proxy;</span><br><span class="line"></span><br><span class="line">import java.lang.reflect.InvocationHandler;</span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line">import java.lang.reflect.Proxy;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author Iceberg</span><br><span class="line"> * @description JDK动态代理类</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class UserServiceInvocationHandler implements InvocationHandler &#123;</span><br><span class="line"></span><br><span class="line">	// 目标对象</span><br><span class="line">	private Object target;</span><br><span class="line"></span><br><span class="line">	public UserServiceInvocationHandler(Object target) &#123;</span><br><span class="line">		this.target = target;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * 创建代理实例</span><br><span class="line">	 * </span><br><span class="line">	 * @return</span><br><span class="line">	 */</span><br><span class="line">	public Object getProxy() &#123;</span><br><span class="line">		return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), this.target.getClass().getInterfaces(), this);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;</span><br><span class="line">		Object result = null;</span><br><span class="line">		System.out.println(&quot;代理方法，增强功能。&quot;);</span><br><span class="line">		System.out.println(&quot;事务开始&quot;);</span><br><span class="line">		// 执行目标对象方法</span><br><span class="line">		result = method.invoke(target, args);</span><br><span class="line">		System.out.println(&quot;事务结束&quot;);</span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试类: <code>JdkProxyTest.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.service;</span><br><span class="line"></span><br><span class="line">import org.junit.Test;</span><br><span class="line"></span><br><span class="line">import com.jarvis.service.impl.UserServiceImpl;</span><br><span class="line">import com.jarvis.service.proxy.UserServiceInvocationHandler;</span><br><span class="line"></span><br><span class="line">public class JdkProxyTest &#123;</span><br><span class="line"></span><br><span class="line">	@Test</span><br><span class="line">	public void jdkProxyTest() &#123;</span><br><span class="line">		UserService service = new UserServiceImpl();</span><br><span class="line">		UserServiceInvocationHandler handler = new UserServiceInvocationHandler(service);</span><br><span class="line">		// 根据目标对象生成代理对象</span><br><span class="line">		UserService proxy = (UserService) handler.getProxy();</span><br><span class="line">		proxy.addUser();</span><br><span class="line">		System.out.println(&quot;--------------------&quot;);</span><br><span class="line">		proxy.editUser();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">代理方法，增强功能。</span><br><span class="line">事务开始</span><br><span class="line">增加一个用户</span><br><span class="line">事务结束</span><br><span class="line">--------------------</span><br><span class="line">代理方法，增强功能。</span><br><span class="line">事务开始</span><br><span class="line">编辑一个用户</span><br><span class="line">事务结束</span><br></pre></td></tr></table></figure></p>
+<p>这边我们打印一下代理对象，<code>System.out.println(proxy.getClass().getName());</code>，打印结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.sun.proxy.$Proxy2</span><br></pre></td></tr></table></figure></p>
+<p>可能会理所当然的认为这边的对象应该是<code>UserService</code>类型的对象， 或者是<code>InvocationHandler</code>对象，但结果差强人意。整个原因在于newProxyInstance这个方法的第二个参数上，这是我们给代理对象提供一组的接口，代理对象会实现这组接口，所以我们这边可以使用<code>UserService proxy = (UserService) handler.getProxy();</code>来强制类型转化为这组接口的任意一个。<br>同时需要记住一点是<strong>Proxy.newProxyInstance创建的代理对象是在JVM运行时动态生成的一个对象，它并不是InvocationHandler类型，也不是定义的接口类型，命名方式都是以$Proxy+N的形式，最后一个数字N表示对象的符号</strong></p>
+<h2 id="CGLIB-动态代理"><a href="#CGLIB-动态代理" class="headerlink" title="CGLIB 动态代理"></a>CGLIB 动态代理</h2><ol>
+<li>首先得实现<code>MethodInterceptor</code>，方法调用会被转发到该类的intercept()方法。</li>
+<li>使用时通过CGLIB动态获取代理对象</li>
+</ol>
+<h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h3><p>业务类: <code>MemberService.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.service.impl;</span><br><span class="line"></span><br><span class="line">public class MemberService &#123;</span><br><span class="line"></span><br><span class="line">	public void addMember() &#123;</span><br><span class="line">		System.out.println(&quot;增加会员&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void removeMember() &#123;</span><br><span class="line">		System.out.println(&quot;删除会员&quot;);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>代理类: <code>MemberServiceCglib.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.service.proxy;</span><br><span class="line"></span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line">import net.sf.cglib.proxy.Enhancer;</span><br><span class="line">import net.sf.cglib.proxy.MethodInterceptor;</span><br><span class="line">import net.sf.cglib.proxy.MethodProxy;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author Iceberg</span><br><span class="line"> * @description CGLIB代理类</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class MemberServiceCglib implements MethodInterceptor &#123;</span><br><span class="line"></span><br><span class="line">	private Object target;</span><br><span class="line"></span><br><span class="line">	public Object getInstance(Object target) &#123;</span><br><span class="line">		this.target = target;</span><br><span class="line">		Enhancer enhancer = new Enhancer();</span><br><span class="line">		enhancer.setSuperclass(this.target.getClass());</span><br><span class="line">		// 设置回调方法</span><br><span class="line">		enhancer.setCallback(this);</span><br><span class="line">		// 创建代理对象</span><br><span class="line">		return enhancer.create();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable &#123;</span><br><span class="line">		System.out.println(&quot;代理方法，增强功能。&quot;);</span><br><span class="line">		System.out.println(&quot;事务开始&quot;);</span><br><span class="line">		Object result = proxy.invokeSuper(obj, args);</span><br><span class="line">		System.out.println(&quot;事务结束&quot;);</span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试类: <code>CglibProxyTest.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.service;</span><br><span class="line"></span><br><span class="line">import org.junit.Test;</span><br><span class="line"></span><br><span class="line">import com.jarvis.service.impl.MemberService;</span><br><span class="line">import com.jarvis.service.proxy.MemberServiceCglib;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author Iceberg</span><br><span class="line"> * @description CGLIB代理测试类</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class CglibProxyTest &#123;</span><br><span class="line"></span><br><span class="line">	@Test</span><br><span class="line">	public void cglibProxyTest() &#123;</span><br><span class="line">		MemberServiceCglib cglib = new MemberServiceCglib();</span><br><span class="line">		MemberService memberService = (MemberService) cglib.getInstance(new MemberService());</span><br><span class="line">		memberService.addMember();</span><br><span class="line">		System.out.println(&quot;----------------&quot;);</span><br><span class="line">		memberService.removeMember();</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试结果:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">代理方法，增强功能。</span><br><span class="line">事务开始</span><br><span class="line">增加会员</span><br><span class="line">事务结束</span><br><span class="line">----------------</span><br><span class="line">代理方法，增强功能。</span><br><span class="line">事务开始</span><br><span class="line">删除会员</span><br><span class="line">事务结束</span><br></pre></td></tr></table></figure></p>
+<p>如果业务类被定义成final类型的， 则会报如下错误:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">java.lang.IllegalArgumentException: Cannot subclass final class class com.jarvis.service.impl.MemberService</span><br><span class="line">	at net.sf.cglib.proxy.Enhancer.generateClass(Enhancer.java:446)</span><br><span class="line">	at net.sf.cglib.core.DefaultGeneratorStrategy.generate(DefaultGeneratorStrategy.java:25)</span><br><span class="line">	at net.sf.cglib.core.AbstractClassGenerator.create(AbstractClassGenerator.java:216)</span><br><span class="line">	at net.sf.cglib.proxy.Enhancer.createHelper(Enhancer.java:377)</span><br><span class="line">	at net.sf.cglib.proxy.Enhancer.create(Enhancer.java:285)</span><br><span class="line">	at com.jarvis.service.proxy.MemberServiceCglib.getInstance(MemberServiceCglib.java:25)</span><br><span class="line">	at com.jarvis.service.CglibProxyTest.cglibProxyTest(CglibProxyTest.java:18)</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)</span><br><span class="line">	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)</span><br><span class="line">	at java.lang.reflect.Method.invoke(Method.java:498)</span><br><span class="line">	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)</span><br><span class="line">	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)</span><br><span class="line">	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)</span><br><span class="line">	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)</span><br><span class="line">	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)</span><br><span class="line">	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)</span><br><span class="line">	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)</span><br><span class="line">	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)</span><br><span class="line">	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)</span><br><span class="line">	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)</span><br><span class="line">	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)</span><br><span class="line">	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)</span><br><span class="line">	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)</span><br><span class="line">	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)</span><br><span class="line">	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)</span><br><span class="line">	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)</span><br><span class="line">	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:678)</span><br><span class="line">	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)</span><br><span class="line">	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)</span><br></pre></td></tr></table></figure></p>
+<h1 id="常见动态代理场景"><a href="#常见动态代理场景" class="headerlink" title="常见动态代理场景"></a>常见动态代理场景</h1><ul>
+<li>Spring AOP</li>
+<li>Hibernate懒加载查询</li>
+<li>Dubbo消费者初始化</li>
+</ul>
+<h1 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h1><ul>
+<li>JDK静态代理<br>这个比较简单，直接代理对象包装了被代理对象</li>
+<li>JDK动态代理<br>JDK动态代理是<strong>接口代理</strong>，被代理的类需要实现业务接口，代理类需要实现InvocationHandler接口。同时，JDK动态代理会根据被代理对象生成一个继承Proxy的代理类，并实现了业务接口。该类的字节码会被ClassLoader加载，创建代理对象的实例。JDK代理对象实例在创建时，业务代理对象实例会被赋值给Proxy类，JDK代理对象实例也就有了业务代理对象的实例，同时JDK代理对象实例通过反射根据被代理类的业务方法创建了相应的Method对象m（可能有多个）。当JDK代理对象实例调用业务方法，如proxy.addUser();这个会先把对应的m对象作为参数传给invoke()方法（就是invoke方法的第二个参数），调用了JDK代理对象实例的invoke()回调方法，在invoke方法里面再通过反射来调用被代理对象的因为方法，即result = method.invoke(target, args);。</li>
+<li>CGLIB动态代理是<strong>继承代理</strong>，通过ASM来修改字节码生成新的子类，重写并增强方法。</li>
+</ul>
+<h1 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h1><ul>
+<li>JDK静态代理只能服务于一个被代理类，如果需要代理的类比较多的情况下，就会产生很多的代理类。JDK静态代理的好处在于在编译时就产生了类的字节码文件，可直接使用，效率上来讲还是很好的。</li>
+<li>JDK动态代理必须实现<strong>接口</strong>，通过反射来动态代理方法，比较消耗系统性能。好处在于不用生成过多的代理类，避免编写大量的重复代码，比较灵活可用。</li>
+<li>CGLIB动态代理<strong>无需实现接口</strong>，基于ASM的字节码生成库生成字节码来实现，比反射快一点，没有性能问题。缺点是犹豫CGLIB会继承被代理类，需要重写被代理的方法，所以被代理的类不能是final，被代理的方法也不能是final。</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://www.cnblogs.com/fillPv/p/5939277.html" target="_blank" rel="noopener">https://www.cnblogs.com/fillPv/p/5939277.html</a></li>
+<li><a href="http://www.cnblogs.com/xiaoluo501395377/p/3383130.html" target="_blank" rel="noopener">http://www.cnblogs.com/xiaoluo501395377/p/3383130.html</a></li>
+<li><a href="http://www.baeldung.com/java-asm" target="_blank" rel="noopener">http://www.baeldung.com/java-asm</a></li>
+<li><a href="http://www.importnew.com/27772.html" target="_blank" rel="noopener">http://www.importnew.com/27772.html</a></li>
+<li><a href="http://cxis.me/2017/04/12/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E6%9C%BA%E5%88%B6%E8%A7%A3%E6%9E%90/" target="_blank" rel="noopener">http://cxis.me/2017/04/12/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E6%9C%BA%E5%88%B6%E8%A7%A3%E6%9E%90/</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-proxy1/index.html" target="_blank" rel="noopener">https://www.ibm.com/developerworks/cn/java/j-lo-proxy1/index.html</a></li>
+<li><a href="https://www.zhihu.com/question/20794107" target="_blank" rel="noopener">https://www.zhihu.com/question/20794107</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2018/06/20/Java-proxy/">Java代理机制</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
+  <p><span>发布时间:</span>2018年06月20日 - 15:06</p>
+  <p><span>最后更新:</span>2018年09月03日 - 14:09</p>
+  <p><span>原始链接:</span><a href="/2018/06/20/Java-proxy/" title="Java代理机制">http://smarticeberg.github.io/2018/06/20/Java-proxy/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2018/06/20/Java-proxy/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+	});
+    });  
+</script>
+
+      
+    </div>
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/qrcode.jpg" alt="Iceberg wechat" style="width: 200px; max-width: 100%;"/>
+    <div>这是我的公众号，欢迎关注。</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/Proxy/" rel="tag"><i class="fa fa-tag"></i> Proxy</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/12/Java-customize-annotation/" rel="next" title="Java自定义注解">
+                <i class="fa fa-chevron-left"></i> Java自定义注解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/09/Leetcode-23-Merge-k-Sorted-Lists/" rel="prev" title="Leetcode#23 Merge k Sorted Lists">
+                Leetcode#23 Merge k Sorted Lists <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Iceberg</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/smarticeberg" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:icebergsmart@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.baidu.com" title="百度" target="_blank">百度</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分类"><span class="nav-number">2.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK-静态代理"><span class="nav-number">3.1.</span> <span class="nav-text">JDK 静态代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK-动态代理"><span class="nav-number">3.2.</span> <span class="nav-text">JDK 动态代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CGLIB-动态代理"><span class="nav-number">3.3.</span> <span class="nav-text">CGLIB 动态代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-2"><span class="nav-number">3.3.1.</span> <span class="nav-text">实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见动态代理场景"><span class="nav-number">4.</span> <span class="nav-text">常见动态代理场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#原理"><span class="nav-number">5.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#优缺点"><span class="nav-number">6.</span> <span class="nav-text">优缺点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Iceberg</span>
+
+  
+</div>
+
+
+ <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

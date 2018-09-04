@@ -1,0 +1,2290 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Jarvis的技术小黑屋">
+<meta property="og:url" content="http://smarticeberg.github.io/index.html">
+<meta property="og:site_name" content="Jarvis的技术小黑屋">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jarvis的技术小黑屋">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://smarticeberg.github.io/"/>
+
+
+
+
+
+  <title>Jarvis的技术小黑屋</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+  page-home">
+    <div class="headband"></div>
+<a href="https://github.com/smarticeberg"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jarvis的技术小黑屋</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天学一点东西</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/08/13/WeakReference-And-WeakHashMap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/13/WeakReference-And-WeakHashMap/" itemprop="url">强引用、弱引用、虚引用、软引用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-13T10:33:29+08:00">
+                2018-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h1 id="Java-GC"><a href="#Java-GC" class="headerlink" title="Java GC"></a>Java GC</h1><p>Java对象被回收，必须满足两个条件:</p>
+<ul>
+<li>没有任何（有效）引用指向它</li>
+<li>GC被运行<br>通常，我们通过手动置空的方式来满足对象下次GC运行的时候被回收，如下这种方式比较常见:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Object obj = new Object();</span><br><span class="line">obj = null;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这种方式较为繁琐，且违背JAVA GC自动回收的本质。另，缓存对象一般常为程序需要，随着缓存中的引用逐渐增加，GC无法回收的对象增多，导致无法自动回收，也是一个比较常见的问题。</p>
+<h2 id="弱引用-WeakReference"><a href="#弱引用-WeakReference" class="headerlink" title="弱引用(WeakReference)"></a>弱引用(WeakReference)</h2><h3 id="WeakReference-And-WeakHashMap"><a href="#WeakReference-And-WeakHashMap" class="headerlink" title="WeakReference And WeakHashMap"></a>WeakReference And WeakHashMap</h3><h4 id="WeakReference"><a href="#WeakReference" class="headerlink" title="WeakReference"></a>WeakReference</h4><p>当一个对象仅仅被WeakReference指向时，而没有其他强引用指向的时候,GC运行，这个对象将会被回收。</p>
+<h4 id="WeakHashMap"><a href="#WeakHashMap" class="headerlink" title="WeakHashMap"></a>WeakHashMap</h4><ul>
+<li>WeakHashMap 是存储键值对(key-value)的非同步且无序的散列表，键和值都允许为null，基本跟 HashMap一致。</li>
+<li>特殊之处在于 WeakHashMap 里的entry可能会被GC自动删除，即使没有主动调用 remove() 或者 clear() 方法。</li>
+<li>其键为弱键，除了自身有对key的引用外，此key没有其他引用那么此map会自动丢弃此值。</li>
+<li>消除陈旧对象时，使用WeakHashMap,用于短时间内就过期的缓存。</li>
+</ul>
+<p>通俗来讲，当使用WeakHashMap时，及时没有显示的进行添加和删除操作，也会发生如下情形</p>
+<ul>
+<li>调用两次size()方法返回不同的值。</li>
+<li>两次调用isEmpty()方法，第一次返回false，第二次返回true。</li>
+<li>两次调用containsKey()方法，第一次返回true，第二次返回false，尽管两次使用的是同一个key。</li>
+<li>两次调用get()方法，第一次返回一个value，第二次返回null，尽管两次使用的是同一个对象。</li>
+</ul>
+<p>那么出现这种情形的原理是啥？这里简述一下过程:WeakHashMap的键为弱键。在WeakHashMap中，当某个键不再正常使用时，会被从WeakHashMap中自动移除。换句话说，对于一个给定的键，其映射的存在并不阻止垃圾回收器对该键的丢弃。WeakHashMap中的弱键是通过WeakReference和ReferenceQueue实现的。ReferenceQueue是一个队列，保存被GC回收的弱键，主要用作同步。具体实现步骤为:</p>
+<ul>
+<li>新建WeakHashMap，将键值对添加到WeakHashMap中。实际上,WeakHashMap是通过table来保存Entry，每一个Entry实际上是一个单向链表。</li>
+<li>当某个弱键不再被其他对象引用，并被GC回收时，在GC回收该弱键的时候，这个弱键同时会被添加到ReferenceQueue队列中。</li>
+<li>当下一个操作WeakHashMap时，会先同步table和queue。table中保存了全部的键值对，而queue中保存被GC回收的键值对，同步其实就是<strong>删除table中被GC回收的键值对</strong>。</li>
+</ul>
+<h4 id="过程分析"><a href="#过程分析" class="headerlink" title="过程分析"></a>过程分析</h4><p>我们来看下面的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">private static String test()&#123;</span><br><span class="line">    String a = new String(&quot;a&quot;);</span><br><span class="line">    //System.out.println(a);</span><br><span class="line">    WeakReference&lt;String&gt; b = new WeakReference&lt;String&gt;(a);</span><br><span class="line">    //System.out.println(b.get());</span><br><span class="line">    WeakHashMap&lt;String, Integer&gt; weakMap = new WeakHashMap&lt;String, Integer&gt;();</span><br><span class="line">    weakMap.put(b.get(), 1);</span><br><span class="line">    a = null;</span><br><span class="line">    System.out.println(&quot;GC前b.get()：&quot;+b.get());</span><br><span class="line">    System.out.println(&quot;GC前weakMap：&quot;+weakMap);</span><br><span class="line">    System.gc();</span><br><span class="line">    System.out.println(&quot;GC后&quot;+b.get());</span><br><span class="line">    System.out.println(&quot;GC后&quot;+weakMap);</span><br><span class="line">    String c = &quot;&quot;;</span><br><span class="line">    try&#123;</span><br><span class="line">        c = b.get().replace(&quot;a&quot;, &quot;b&quot;);</span><br><span class="line">        System.out.println(&quot;C:&quot;+c);</span><br><span class="line">        return c;</span><br><span class="line">    &#125;catch(Exception e)&#123;</span><br><span class="line">        c = &quot;c&quot;;</span><br><span class="line">        System.out.println(&quot;Exception&quot;);</span><br><span class="line">        return c;</span><br><span class="line">    &#125;finally&#123;</span><br><span class="line">        c += &quot;d&quot;;</span><br><span class="line">        return c + &quot;e&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GC前b.get()：a</span><br><span class="line">GC前weakMap：&#123;a=1&#125;</span><br><span class="line">GC后null</span><br><span class="line">GC后&#123;&#125;</span><br><span class="line">Exception</span><br><span class="line">cde</span><br></pre></td></tr></table></figure>
+<p>这道题目能够完美地使其理解好WeakReference和WeakHashMap。a=null,system.gc()后，a已经被系统回收，b没有强引用指向，所以b.get()则返回null，进行b.get().replace(“a”, “b”)时则抛出异常，故运行结果为“cde”。</p>
+<h2 id="软引用-SoftReference"><a href="#软引用-SoftReference" class="headerlink" title="软引用(SoftReference)"></a>软引用(SoftReference)</h2><p>软引用和弱引用的区别在于，如果一个对象是弱引用可达，无论当前内训是否充足，它都会被回收，而软引用可达的对象在内存不足时，才会被回收，因此软引用要比弱引用强一点。</p>
+<h2 id="虚引用-Phantom-Reference"><a href="#虚引用-Phantom-Reference" class="headerlink" title="虚引用(Phantom Reference)"></a>虚引用(Phantom Reference)</h2><p>虚引用是Java中最弱的引用，以至于我们通过虚引用无法获取到被引用的对象，虚引用存在的唯一作用就是当它指向的对象被回收后，虚引用本身就会被加入到引用队列中，用作记录它指向的对象已被回收。它的get()方法总是返回null。在finalize()方法中，通过一个强引用指向它，都无法复活PhantomReference指向的对象。虚引用适合用来查看对象什么时候被回收,优化内存的时候使用。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.cnblogs.com/romanjoy/p/8178071.html" target="_blank" rel="noopener">https://www.cnblogs.com/romanjoy/p/8178071.html</a><br><a href="http://www.importnew.com/23182.html" target="_blank" rel="noopener">http://www.importnew.com/23182.html</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/08/03/Java-GC-Analysis-And-Optimize/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/03/Java-GC-Analysis-And-Optimize/" itemprop="url">Java GC 分析及优化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-03T10:19:23+08:00">
+                2018-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Java-GC常用工具"><a href="#Java-GC常用工具" class="headerlink" title="Java GC常用工具"></a>Java GC常用工具</h1><h2 id="JVM监控工具"><a href="#JVM监控工具" class="headerlink" title="JVM监控工具"></a>JVM监控工具</h2><table>
+<thead>
+<tr>
+<th>工具名称</th>
+<th>作用</th>
+<th>补充</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jps</td>
+<td>显示指定系统内所有的虚拟机系统</td>
+<td>jps -v:显示启动时JVM参数</td>
+</tr>
+<tr>
+<td>jstat</td>
+<td>用于收集虚拟机各方面的运行数据</td>
+<td>jstat -gc:监视Java堆状况，容量情况<br>jstat -gcutil:监视Java堆各个区使用百分比</td>
+</tr>
+<tr>
+<td>jinfo</td>
+<td>查看和调整虚拟机参数</td>
+<td>jinfo -flag:调整JVM参数值<br>jinfo pid:查看配置信息</td>
+</tr>
+<tr>
+<td>jmap</td>
+<td>生成虚拟机的堆转储快照</td>
+<td>jmap -heap:显示Java堆详细信息<br>jmap -dump:生成堆内存快照信息</td>
+</tr>
+<tr>
+<td>jstack</td>
+<td>Java堆栈分析工具</td>
+<td>jstack -pid:打印堆栈</td>
+</tr>
+<tr>
+<td>jhat</td>
+<td>堆转储快照分析工具</td>
+<td>暂无</td>
+</tr>
+</tbody>
+</table>
+<h2 id="可视化分析工具"><a href="#可视化分析工具" class="headerlink" title="可视化分析工具"></a>可视化分析工具</h2><table>
+<thead>
+<tr>
+<th>工具名称</th>
+<th>作用</th>
+<th>补充</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VisualVM</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>MAT</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>JProfile</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>HPjmeter</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Java-GC-日志"><a href="#Java-GC-日志" class="headerlink" title="Java GC 日志"></a>Java GC 日志</h2><p>Java GC日志可以通过 +PrintGCDetails开启。对于Java GC日志的解析，可以以ParallelGC为例。<br>YoungGC:<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180806/younggc.jpeg" alt="Alt Text"><br>FullGC:<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180806/fullgc.jpeg" alt="Alt Text"></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/07/24/Eclipse-Relevant-Questions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/24/Eclipse-Relevant-Questions/" itemprop="url">Eclipse相关问题整理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-24T15:42:03+08:00">
+                2018-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Eclipse相关问题整理"><a href="#Eclipse相关问题整理" class="headerlink" title="Eclipse相关问题整理"></a>Eclipse相关问题整理</h1><h2 id="修改Eclipse-Git插件中默认的作者和提交者"><a href="#修改Eclipse-Git插件中默认的作者和提交者" class="headerlink" title="修改Eclipse Git插件中默认的作者和提交者"></a>修改Eclipse Git插件中默认的作者和提交者</h2><ul>
+<li>打开 Windows -&gt; Preferences -&gt; Team -&gt; Git -&gt; Configuration</li>
+<li>修改User Settings，点击Add Entry</li>
+<li>添加两个键值对分别为:<ul>
+<li>user.name   xxxx</li>
+<li>user.email  xxxxx@xxx.com</li>
+</ul>
+</li>
+<li>这时在Git Staging中的Commit message栏位中出现的Author和Committer就是你想要的提交者了。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/07/11/Leetcode-29-Divide-Two-Integers/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/11/Leetcode-29-Divide-Two-Integers/" itemprop="url">Leetcode#29 Divide Two Integers</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-11T16:53:25+08:00">
+                2018-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Divide-Two-Integers"><a href="#Divide-Two-Integers" class="headerlink" title="Divide Two Integers"></a>Divide Two Integers</h1><blockquote>
+<p>Given two integers dividend and divisor, divide two integers without using multiplication, division and mod operator.Return the quotient after dividing dividend by divisor.The integer division should truncate toward zero.</p>
+</blockquote>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: dividend = 10, divisor = 3</span><br><span class="line">Output: 3</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: dividend = 7, divisor = -3</span><br><span class="line">Output: -2</span><br></pre></td></tr></table></figure>
+<p><strong>Note:</strong></p>
+<ul>
+<li>Both dividend and divisor will be 32-bit signed integers.</li>
+<li>The divisor will never be 0.</li>
+<li>Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−2^31,  2^31 − 1]. For the purpose of this problem, assume that your function returns 2^31 − 1 when the division result overflows.</li>
+</ul>
+<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
+<p>两个数的除法，但是部允许用乘、除、取余符号。</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一-位运算"><a href="#思路一-位运算" class="headerlink" title="思路一 位运算"></a>思路一 位运算</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n^2)，空间复杂度:O(1)。</p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>解决这个问题需要注意几个点:</p>
+<ul>
+<li>Integer.MIN_VALUE取绝对值溢出问题</li>
+<li>使用位运算来进行计算</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	public int divide(int dividend, int divisor) &#123;</span><br><span class="line">		// 除数为0，根据被除数的符号取Integer最大最小值</span><br><span class="line">		if (divisor == 0) return dividend &gt;= 0 ? Integer.MAX_VALUE : Integer.MIN_VALUE;</span><br><span class="line">		// 被除数为0的情况，直接输出0。</span><br><span class="line">		if (dividend == 0) return 0;</span><br><span class="line">		// 被除数为Integer最小值且除数为-1时，结果会溢出，故取Integer最大值。</span><br><span class="line">		if (dividend == Integer.MIN_VALUE &amp;&amp; divisor == -1) return Integer.MAX_VALUE;</span><br><span class="line">		// 判断输出结果的符号</span><br><span class="line">		boolean isNegative = (dividend &lt; 0 &amp;&amp; divisor &gt; 0) || (dividend &gt; 0 &amp;&amp; divisor &lt; 0);</span><br><span class="line"></span><br><span class="line">		// 解决Integer.MIN_VALUE取绝对值溢出问题。</span><br><span class="line">		long ldividend = Math.abs((long) dividend);</span><br><span class="line">		long ldivisor = Math.abs((long) divisor);</span><br><span class="line"></span><br><span class="line">		int result = 0;</span><br><span class="line">		while (ldividend &gt;= ldivisor) &#123;</span><br><span class="line">			int shift = 0;</span><br><span class="line">			while (ldividend &gt;= (ldivisor &lt;&lt; shift)) &#123;</span><br><span class="line">				shift++;</span><br><span class="line">			&#125;</span><br><span class="line">			ldividend -= ldivisor &lt;&lt; (shift - 1);</span><br><span class="line">			result += 1 &lt;&lt; (shift - 1);</span><br><span class="line">		&#125;</span><br><span class="line">		return isNegative ? -result : result;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="思路二-位运算改进版"><a href="#思路二-位运算改进版" class="headerlink" title="思路二 位运算改进版"></a>思路二 位运算改进版</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n)，空间复杂度:O(1)。</p>
+<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>在上述方法中的while循环中，提取出最大的移动位数操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	public int divide(int dividend, int divisor) &#123;</span><br><span class="line">		// 除数为0，根据被除数的符号取Integer最大最小值</span><br><span class="line">		if (divisor == 0) return dividend &gt;= 0 ? Integer.MAX_VALUE : Integer.MIN_VALUE;</span><br><span class="line">		// 被除数为0的情况，直接输出0。</span><br><span class="line">		if (dividend == 0) return 0;</span><br><span class="line">		// 被除数为Integer最小值且除数为-1时，结果会溢出，故取Integer最大值。</span><br><span class="line">		if (dividend == Integer.MIN_VALUE &amp;&amp; divisor == -1) return Integer.MAX_VALUE;</span><br><span class="line">		// 判断输出结果的符号</span><br><span class="line">		boolean isNegative = (dividend &lt; 0 &amp;&amp; divisor &gt; 0) || (dividend &gt; 0 &amp;&amp; divisor &lt; 0);</span><br><span class="line"></span><br><span class="line">		// 解决Integer.MIN_VALUE取绝对值溢出问题。</span><br><span class="line">		long ldividend = Math.abs((long) dividend);</span><br><span class="line">		long ldivisor = Math.abs((long) divisor);</span><br><span class="line"></span><br><span class="line">		int result = 0;</span><br><span class="line">		int multiple = 1;</span><br><span class="line"></span><br><span class="line">		while ((ldivisor &lt;&lt; 1) &lt;= ldividend) &#123;</span><br><span class="line">			multiple &lt;&lt;= 1;</span><br><span class="line">			ldivisor &lt;&lt;= 1;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		while (multiple &gt; 0) &#123;</span><br><span class="line">			if (ldividend &gt;= ldivisor) &#123;</span><br><span class="line">				ldividend -= ldivisor;</span><br><span class="line">				result += multiple;</span><br><span class="line">			&#125;</span><br><span class="line">			multiple &gt;&gt;= 1;</span><br><span class="line">			ldivisor &gt;&gt;= 1;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return isNegative ? -result : result;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/07/11/Leetcode-28-Implement-strStr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/11/Leetcode-28-Implement-strStr/" itemprop="url">Leetcode#28 Implement strStr()</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-11T16:52:41+08:00">
+                2018-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Implement-strStr"><a href="#Implement-strStr" class="headerlink" title="Implement strStr()"></a>Implement strStr()</h1><blockquote>
+<p>Implement strStr().Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.</p>
+</blockquote>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: haystack = &quot;hello&quot;, needle = &quot;ll&quot;</span><br><span class="line">Output: 2</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: haystack = &quot;aaaaa&quot;, needle = &quot;bba&quot;</span><br><span class="line">Output: -1</span><br></pre></td></tr></table></figure>
+<p><strong>Clarification:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">What should we return when needle is an empty string? This is a great question to ask during an interview.</span><br><span class="line"></span><br><span class="line">For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C&apos;s strstr() and Java&apos;s indexOf().</span><br></pre></td></tr></table></figure>
+<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
+<p>判断needle是否是haystack的字串，类似indexOf方法。</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一-Brute-Force"><a href="#思路一-Brute-Force" class="headerlink" title="思路一  Brute Force"></a>思路一  Brute Force</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(N^2)，空间复杂度：O(1)。</p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>考虑边界条件，用暴力法进行求解。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	public int strStr(String haystack, String needle) &#123;</span><br><span class="line"></span><br><span class="line">		int start = 0;</span><br><span class="line">		// 如果剩下的字母不够needle的长度就停止遍历</span><br><span class="line">		while (start &lt;= haystack.length() - needle.length()) &#123;</span><br><span class="line">			int i1 = start, i2 = 0;</span><br><span class="line">			while (i2 &lt; needle.length() &amp;&amp; haystack.charAt(i1) == needle.charAt(i2)) &#123;</span><br><span class="line">				i1++;</span><br><span class="line">				i2++;</span><br><span class="line">			&#125;</span><br><span class="line">			if (i2 == needle.length()) return start;</span><br><span class="line">			start++;</span><br><span class="line">		&#125;</span><br><span class="line">		return -1;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="思路二-KMP算法"><a href="#思路二-KMP算法" class="headerlink" title="思路二  KMP算法"></a>思路二  KMP算法</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(N+M)，空间复杂度：O(M)。</p>
+<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>KMP算法是较为高级的算法。它使用一个next数组，这个数组记录了模式串needle自身的前缀和后缀的重复情况。同样是双指针进行匹配，当失配时可以根据这个数组找到应该将模式串向后位移多少位，避免一些重复的比较。<a href="https://blog.csdn.net/v_july_v/article/details/7041827" target="_blank" rel="noopener">KMP算法</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">public class Solution2 &#123;</span><br><span class="line"></span><br><span class="line">	public int strStr(String haystack, String needle) &#123;</span><br><span class="line">		if (needle.length() == 0) return 0;</span><br><span class="line"></span><br><span class="line">		int[] next = new int[needle.length()];</span><br><span class="line">		// 得到next数组</span><br><span class="line">		getNextArr(next, needle);</span><br><span class="line">		// i是匹配串haystack的指针，j是模式串needle的指针</span><br><span class="line">		int i = 0, j = 0;</span><br><span class="line">		// 双指针开始匹配</span><br><span class="line">		while (i &lt; haystack.length() &amp;&amp; j &lt; needle.length()) &#123;</span><br><span class="line">			// 如果j=-1意味着刚刚失配过，下标+1后，下一轮就可以开始匹配各自的第一个了</span><br><span class="line">			// 如果指向的字母相同，则下一轮匹配各自的下一个</span><br><span class="line">			if (j == -1 || haystack.charAt(i) == needle.charAt(j)) &#123;</span><br><span class="line">				i++;</span><br><span class="line">				j++;</span><br><span class="line">				// 如果失配，则将更新j为next[j]</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				j = next[j];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return j == needle.length() ? i - j : -1;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private void getNextArr(int[] next, String needle) &#123;</span><br><span class="line">		// k是前缀中相同部分的末尾，同时也是相同部分的长度，因为长度等于k-0。</span><br><span class="line">		// j是后缀的末尾，即后缀相同部分的末尾</span><br><span class="line">		int k = -1, j = 0;</span><br><span class="line">		next[0] = -1;</span><br><span class="line">		while (j &lt; needle.length() - 1) &#123;</span><br><span class="line">			// 如果k=-1，说明刚刚失配了，则重新开始计算前缀和后缀相同的长度</span><br><span class="line">			// 如果两个字符相等，则在上次前缀和后缀相同的长度加1就行了</span><br><span class="line">			if (k == -1 || needle.charAt(j) == needle.charAt(k)) &#123;</span><br><span class="line">				k++;</span><br><span class="line">				j++;</span><br><span class="line">				next[j] = k;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				// 否则，前缀长度缩短为next[k]</span><br><span class="line">				k = next[k];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/07/10/Leetcode-27-Remove-Element/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/10/Leetcode-27-Remove-Element/" itemprop="url">Leetcode#27 Remove Element</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-10T15:02:46+08:00">
+                2018-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Remove-Element"><a href="#Remove-Element" class="headerlink" title="Remove Element"></a>Remove Element</h1><blockquote>
+<p>Given an array nums and a value val, remove all instances of that value in-place and return the new length.Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.The order of elements can be changed. It doesn’t matter what you leave beyond the new length.</p>
+</blockquote>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Given nums = [3,2,2,3], val = 3,</span><br><span class="line"></span><br><span class="line">Your function should return length = 2, with the first two elements of nums being 2.</span><br><span class="line"></span><br><span class="line">It doesn&apos;t matter what you leave beyond the returned length.</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Given nums = [0,1,2,2,3,0,4,2], val = 2,</span><br><span class="line"></span><br><span class="line">Your function should return length = 5, with the first five elements of nums containing 0, 1, 3, 0, and 4.</span><br><span class="line"></span><br><span class="line">Note that the order of those five elements can be arbitrary.</span><br><span class="line"></span><br><span class="line">It doesn&apos;t matter what values are set beyond the returned length.</span><br></pre></td></tr></table></figure>
+<p><strong>Clarification:</strong></p>
+<blockquote>
+<p>Confused why the returned value is an integer but your answer is an array?Note that the input array is passed in by reference, which means modification to the input array will be known to the caller as well.Internally you can think of this:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// nums is passed in by reference. (i.e., without making a copy)</span><br><span class="line">int len = removeElement(nums, val);</span><br><span class="line"></span><br><span class="line">// any modification to nums in your function would be known by the caller.</span><br><span class="line">// using the length returned by your function, it prints the first len elements.</span><br><span class="line">for (int i = 0; i &lt; len; i++) &#123;</span><br><span class="line">    print(nums[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
+<p>删除数组中给定的值，并返回修改后的长度。</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n)，空间复杂度:O(1)。</p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>与#26 Remove Duplicates from Sorted Array.方法相似。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">	public int removeElement(int[] nums, int val) &#123;</span><br><span class="line">		int i = 0;</span><br><span class="line">		for (int j = 0; j &lt; nums.length; j++) &#123;</span><br><span class="line">			if (nums[j] != val) &#123;</span><br><span class="line">				nums[i] = nums[j];</span><br><span class="line">				i++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/07/10/Leetcode-26-Remove-Duplicates-from-Sorted-Array/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/10/Leetcode-26-Remove-Duplicates-from-Sorted-Array/" itemprop="url">Leetcode#26 Remove Duplicates from Sorted Array</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-10T14:47:48+08:00">
+                2018-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Remove-Duplicates-from-Sorted-Array"><a href="#Remove-Duplicates-from-Sorted-Array" class="headerlink" title="Remove Duplicates from Sorted Array"></a>Remove Duplicates from Sorted Array</h1><blockquote>
+<p>Given a sorted array nums, remove the duplicates in-place such that each element appear only once and return the new length.Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.</p>
+</blockquote>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Given nums = [1,1,2],</span><br><span class="line"></span><br><span class="line">Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively.</span><br><span class="line"></span><br><span class="line">It doesn&apos;t matter what you leave beyond the returned length.</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Given nums = [0,0,1,1,1,2,2,3,3,4],</span><br><span class="line"></span><br><span class="line">Your function should return length = 5, with the first five elements of nums being modified to 0, 1, 2, 3, and 4 respectively.</span><br><span class="line"></span><br><span class="line">It doesn&apos;t matter what values are set beyond the returned length.</span><br></pre></td></tr></table></figure>
+<p><strong>Clarification:</strong></p>
+<blockquote>
+<p>Confused why the returned value is an integer but your answer is an array?<br>Note that the input array is passed in by reference, which means modification to the input array will be known to the caller as well.<br>Internally you can think of this:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// nums is passed in by reference. (i.e., without making a copy)</span><br><span class="line">int len = removeDuplicates(nums);</span><br><span class="line"></span><br><span class="line">// any modification to nums in your function would be known by the caller.</span><br><span class="line">// using the length returned by your function, it prints the first len elements.</span><br><span class="line">for (int i = 0; i &lt; len; i++) &#123;</span><br><span class="line">    print(nums[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n)，空间复杂度:O(1)</p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>如题，数组是排好序的，我们可以使用两个指针i和j，i较之于j移动缓慢。当nums[i]=nums[j]，通过移动j来跳过重复的值。当遇到nums[i]!=nums[j],我们将nums[j]的值赋值给nums[i+1],重复这个操作一直到j遍历到数组的结束。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	public int removeDuplicates(int[] nums) &#123;</span><br><span class="line">		if (nums.length == 0) return 0;</span><br><span class="line"></span><br><span class="line">		int i = 0;</span><br><span class="line">		for (int j = 1; j &lt; nums.length; j++) &#123;</span><br><span class="line">			if (nums[j] != nums[i]) &#123;</span><br><span class="line">				i++;</span><br><span class="line">				nums[i] = nums[j];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return i + 1;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/07/10/Leetcode-25-Reverse-Nodes-in-k-Group/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/10/Leetcode-25-Reverse-Nodes-in-k-Group/" itemprop="url">Leetcode#25 Reverse Nodes in k-Group</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-10T14:26:24+08:00">
+                2018-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Reverse-Nodes-in-k-Group"><a href="#Reverse-Nodes-in-k-Group" class="headerlink" title="Reverse Nodes in k-Group"></a>Reverse Nodes in k-Group</h1><blockquote>
+<p>Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.<br>k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.</p>
+</blockquote>
+<p><strong>Example</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Given this linked list: 1-&gt;2-&gt;3-&gt;4-&gt;5</span><br><span class="line">For k = 2, you should return: 2-&gt;1-&gt;4-&gt;3-&gt;5</span><br><span class="line">For k = 3, you should return: 3-&gt;2-&gt;1-&gt;4-&gt;5</span><br></pre></td></tr></table></figure>
+<p><strong>Note</strong>:</p>
+<ul>
+<li>Only constant extra memory is allowed.</li>
+<li>You may not alter the values in the list’s nodes, only nodes itself may be changed.</li>
+</ul>
+<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
+<p>对于一个给定的链表，将其按照K个为一组进行翻转操作，不足K个的保持不变。这道题目其实是Swap Nodes int Pairs的基本情形。</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一-递归法"><a href="#思路一-递归法" class="headerlink" title="思路一 递归法"></a>思路一 递归法</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n)，空间复杂度:O(1)。</p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">	public class ListNode &#123;</span><br><span class="line">		int val;</span><br><span class="line">		ListNode next;</span><br><span class="line"></span><br><span class="line">		ListNode(int x) &#123;</span><br><span class="line">			val = x;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ListNode reverseKGroup(ListNode head, int k) &#123;</span><br><span class="line"></span><br><span class="line">		if (head == null || head.next == null || k &lt; 2) return head;</span><br><span class="line"></span><br><span class="line">		ListNode next_group = head;</span><br><span class="line">		for (int i = 0; i &lt; k; i++) &#123;</span><br><span class="line">			if (next_group != null) &#123;</span><br><span class="line">				next_group = next_group.next;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				return head;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// next_group是下一组的head</span><br><span class="line">		// reverse_next_group是nextgroup递归后的新头部</span><br><span class="line">		ListNode reverse_next_group = reverseKGroup(next_group, k);</span><br><span class="line">		ListNode prev = null, cur = head;</span><br><span class="line">		while (cur != next_group) &#123;</span><br><span class="line">			ListNode next = cur.next;</span><br><span class="line">			cur.next = prev != null ? prev : reverse_next_group;</span><br><span class="line">			prev = cur;</span><br><span class="line">			cur = next;</span><br><span class="line">		&#125;</span><br><span class="line">		// prev为这个group的新的head</span><br><span class="line">		return prev;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="思路二-迭代法"><a href="#思路二-迭代法" class="headerlink" title="思路二 迭代法"></a>思路二 迭代法</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>空间复杂度:O(1)。</p>
+<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">public class Solution2 &#123;</span><br><span class="line">	public class ListNode &#123;</span><br><span class="line">		int val;</span><br><span class="line">		ListNode next;</span><br><span class="line"></span><br><span class="line">		ListNode(int x) &#123;</span><br><span class="line">			val = x;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ListNode reverseKGroup(ListNode head, int k) &#123;</span><br><span class="line">		if (head == null || head.next == null || k &lt; 2) return head;</span><br><span class="line"></span><br><span class="line">		ListNode fake = new ListNode(0);</span><br><span class="line">		fake.next = head;</span><br><span class="line">		ListNode pre = fake;</span><br><span class="line">		int i = 0;</span><br><span class="line"></span><br><span class="line">		ListNode p = head;</span><br><span class="line">		while (p != null) &#123;</span><br><span class="line">			i++;</span><br><span class="line">			if (i % k == 0) &#123;</span><br><span class="line">				pre = reverse(pre, p.next);</span><br><span class="line">				p = pre.next;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				p = p.next;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return fake.next;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ListNode reverse(ListNode pre, ListNode next) &#123;</span><br><span class="line">		ListNode last = pre.next;</span><br><span class="line">		ListNode curr = last.next;</span><br><span class="line"></span><br><span class="line">		while (curr != next) &#123;</span><br><span class="line">			last.next = curr.next;</span><br><span class="line">			curr.next = pre.next;</span><br><span class="line">			pre.next = curr;</span><br><span class="line">			curr = last.next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return last;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/07/09/Leetcode-24-Swap-Nodes-in-Pairs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/09/Leetcode-24-Swap-Nodes-in-Pairs/" itemprop="url">Leetcode#24 Swap Nodes in Pairs</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-09T15:42:31+08:00">
+                2018-07-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Swap-Nodes-in-Pairs"><a href="#Swap-Nodes-in-Pairs" class="headerlink" title="Swap Nodes in Pairs"></a>Swap Nodes in Pairs</h1><blockquote>
+<p>Given a linked list, swap every two adjacent nodes and return its head.</p>
+<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Given 1-&gt;2-&gt;3-&gt;4, you should return the list as 2-&gt;1-&gt;4-&gt;3.</span><br></pre></td></tr></table></figure></p>
+<p>Note:</p>
+<ul>
+<li>Your algorithm should use only constant extra space.</li>
+<li>You may not modify the values in the list’s nodes, only nodes itself may be changed.</li>
+</ul>
+</blockquote>
+<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
+<p>给定一个链表，交换相邻的两个节点，并返回其头部。注意：算法必须使用唯一不可变的空间，也不能修改列表中的值，只有节点本身是可以改变的。</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一-遍历法"><a href="#思路一-遍历法" class="headerlink" title="思路一 遍历法"></a>思路一 遍历法</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n)，空间复杂度:O(1)</p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>用辅助指针作为表头，处理head的边界情况。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public class Solution2 &#123;</span><br><span class="line">	public class ListNode &#123;</span><br><span class="line">		int val;</span><br><span class="line">		ListNode next;</span><br><span class="line"></span><br><span class="line">		ListNode(int x) &#123;</span><br><span class="line">			val = x;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ListNode swapPairs(ListNode head) &#123;</span><br><span class="line">		if (head == null || head.next == null) return head;</span><br><span class="line">		ListNode dummy = new ListNode(0);</span><br><span class="line">		dummy.next = head;</span><br><span class="line">		ListNode pre = dummy;</span><br><span class="line">		ListNode cur = head;</span><br><span class="line">		while (cur != null &amp;&amp; cur.next != null) &#123;</span><br><span class="line">			ListNode next = cur.next.next;</span><br><span class="line">			cur.next.next = cur;</span><br><span class="line">			pre.next = cur.next;</span><br><span class="line">			if (next != null &amp;&amp; next.next != null) cur.next = next.next;</span><br><span class="line">			else</span><br><span class="line">				cur.next = next;</span><br><span class="line">			pre = cur;</span><br><span class="line">			cur = next;</span><br><span class="line">		&#125;</span><br><span class="line">		return dummy.next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="思路二-递归法"><a href="#思路二-递归法" class="headerlink" title="思路二 递归法"></a>思路二 递归法</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n)，空间复杂度:O(1)</p>
+<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>采用递归遍历到链表末尾，然后交换首尾两个，依次往前交换。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">	public class ListNode &#123;</span><br><span class="line">		int val;</span><br><span class="line">		ListNode next;</span><br><span class="line"></span><br><span class="line">		ListNode(int x) &#123;</span><br><span class="line">			val = x;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ListNode swapPairs(ListNode head) &#123;</span><br><span class="line">		if (head == null || head.next == null) return head;</span><br><span class="line">		ListNode node = head.next;</span><br><span class="line">		head.next = swapPairs(head.next.next);</span><br><span class="line">		node.next = head;</span><br><span class="line">		return node;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/07/09/Leetcode-23-Merge-k-Sorted-Lists/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/09/Leetcode-23-Merge-k-Sorted-Lists/" itemprop="url">Leetcode#23 Merge k Sorted Lists</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-09T14:07:53+08:00">
+                2018-07-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Merge-k-Sorted-Lists"><a href="#Merge-k-Sorted-Lists" class="headerlink" title="Merge k Sorted Lists"></a>Merge k Sorted Lists</h1><blockquote>
+<p>Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity</p>
+<p>Example:</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input:</span><br><span class="line">[</span><br><span class="line">  1-&gt;4-&gt;5,</span><br><span class="line">  1-&gt;3-&gt;4,</span><br><span class="line">  2-&gt;6</span><br><span class="line">]</span><br><span class="line">Output: 1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4-&gt;5-&gt;6</span><br></pre></td></tr></table></figure>
+<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
+<p>合并K个有序列表</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一-分治法"><a href="#思路一-分治法" class="headerlink" title="思路一 分治法"></a>思路一 分治法</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>假设总共有k个list，每个list的最大长度是n，那么运行时间满足递推式T(k) = 2T(k/2)+O(n*k)。根据主定理，可以算出算法的总复杂度是O(nklogk)。空间复杂度的话是递归栈的大小O(logk)。</p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>先将任务分成两个子任务，然后递归求子任务，最后回溯回来。将k个list分成两半，然后继续划分，直到最后剩下的两个list就合并起来。</p>
+<p><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180709/divide_and_conquer_new.png" alt="Alt text"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">public class Solution2 &#123;</span><br><span class="line">	public class ListNode &#123;</span><br><span class="line">		int val;</span><br><span class="line">		ListNode next;</span><br><span class="line"></span><br><span class="line">		ListNode(int x) &#123;</span><br><span class="line">			val = x;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ListNode mergeKLists(ListNode[] lists) &#123;</span><br><span class="line">		if (lists == null || lists.length == 0) return null;</span><br><span class="line">		return helper(lists, 0, lists.length - 1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ListNode helper(ListNode[] lists, int l, int r) &#123;</span><br><span class="line">		if (l &lt; r) &#123;</span><br><span class="line">			int mid = l + (r - l) / 2;</span><br><span class="line">			// 将问题分解为2个更小的子问题：左边list的merge和右边list的merge，然后再把两个生成的解合并在一起。</span><br><span class="line">			return merge(helper(lists, l, mid), helper(lists, mid + 1, r));</span><br><span class="line">		&#125;</span><br><span class="line">		return lists[l];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ListNode merge(ListNode n1, ListNode n2) &#123;</span><br><span class="line">		ListNode dummy = new ListNode(-1);</span><br><span class="line">		ListNode cursor = dummy;</span><br><span class="line">		while (n1 != null &amp;&amp; n2 != null) &#123;</span><br><span class="line">			if (n1.val &lt; n2.val) &#123;</span><br><span class="line">				cursor.next = n1;</span><br><span class="line">				n1 = n1.next;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				cursor.next = n2;</span><br><span class="line">				n2 = n2.next;</span><br><span class="line">			&#125;</span><br><span class="line">			cursor = cursor.next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (n1 != null) &#123;</span><br><span class="line">			cursor.next = n1;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			cursor.next = n2;</span><br><span class="line">		&#125;</span><br><span class="line">		return dummy.next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="思路二-Priority-Queue"><a href="#思路二-Priority-Queue" class="headerlink" title="思路二 Priority Queue"></a>思路二 Priority Queue</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(nklogk)，k为链表数目。空间复杂度O(k)</p>
+<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>本方法用到堆的数据结构。维护一个大小为k的堆，每次取堆顶的最小元素放在结果中，然后读取元素的下一个元素放在堆中，重新维护。因为每个链表是有序的，每次又是取当前K个元素中最小的，所以当所有链表都读取完时结束，这个时候所有元素都从小到大放在结果链表中。因为每个元素都读取一次，所以需要K*N次，然后读取元素要把新元素插入堆中要logk的复杂度，所以总的复杂度为O(nklogk)，空间复杂度即为堆的大小，O(k)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">	public class ListNode &#123;</span><br><span class="line">		int val;</span><br><span class="line">		ListNode next;</span><br><span class="line"></span><br><span class="line">		ListNode(int x) &#123;</span><br><span class="line">			val = x;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ListNode mergeKLists(ListNode[] lists) &#123;</span><br><span class="line">		if (lists == null || lists.length == 0) return null;</span><br><span class="line"></span><br><span class="line">		PriorityQueue&lt;ListNode&gt; pq = new PriorityQueue&lt;ListNode&gt;(lists.length, new Comparator&lt;ListNode&gt;() &#123;</span><br><span class="line"></span><br><span class="line">			@Override</span><br><span class="line">			public int compare(ListNode o1, ListNode o2) &#123;</span><br><span class="line">				if (o1.val &lt; o2.val) return -1;</span><br><span class="line">				else if (o1.val == o2.val) return 0;</span><br><span class="line">				else</span><br><span class="line">					return 1;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line"></span><br><span class="line">		for (int i = 0; i &lt; lists.length; i++) &#123;</span><br><span class="line">			if (lists[i] != null) pq.add(lists[i]);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		ListNode dummy = new ListNode(-1);</span><br><span class="line">		ListNode tail = dummy;</span><br><span class="line">		while (!pq.isEmpty()) &#123;</span><br><span class="line">			tail.next = pq.poll();</span><br><span class="line">			tail = tail.next;</span><br><span class="line">			if (tail.next != null) pq.add(tail.next);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return dummy.next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Iceberg</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/smarticeberg" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:icebergsmart@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.baidu.com" title="百度" target="_blank">百度</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Iceberg</span>
+
+  
+</div>
+
+
+ <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

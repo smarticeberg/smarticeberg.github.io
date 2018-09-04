@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Springboot,SpringSecurity," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简述SpringBoot作为微服务开发框架的便捷性不言而喻。通常，对于页面的安全控制也是必不可少的主要环节。本文主要采用Springboot+jpa+SpringSecurity+thymeleaf来进行页面的安全性控制。 准备 在pom.xml中添加配置 123456&amp;lt;properties&amp;gt;	&amp;lt;!-- thymeleaf --&amp;gt;	&amp;lt;thymeleaf.version">
+<meta name="keywords" content="Java,Springboot,SpringSecurity">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot集成SpringSecurity">
+<meta property="og:url" content="http://smarticeberg.github.io/2018/06/05/SpringBoot-SpringSecurity/index.html">
+<meta property="og:site_name" content="Jarvis的技术小黑屋">
+<meta property="og:description" content="简述SpringBoot作为微服务开发框架的便捷性不言而喻。通常，对于页面的安全控制也是必不可少的主要环节。本文主要采用Springboot+jpa+SpringSecurity+thymeleaf来进行页面的安全性控制。 准备 在pom.xml中添加配置 123456&amp;lt;properties&amp;gt;	&amp;lt;!-- thymeleaf --&amp;gt;	&amp;lt;thymeleaf.version">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180605/1.png">
+<meta property="og:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180605/2.png">
+<meta property="og:updated_time" content="2018-09-03T06:02:30.904Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot集成SpringSecurity">
+<meta name="twitter:description" content="简述SpringBoot作为微服务开发框架的便捷性不言而喻。通常，对于页面的安全控制也是必不可少的主要环节。本文主要采用Springboot+jpa+SpringSecurity+thymeleaf来进行页面的安全性控制。 准备 在pom.xml中添加配置 123456&amp;lt;properties&amp;gt;	&amp;lt;!-- thymeleaf --&amp;gt;	&amp;lt;thymeleaf.version">
+<meta name="twitter:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180605/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://smarticeberg.github.io/2018/06/05/SpringBoot-SpringSecurity/"/>
+
+
+
+
+
+  <title>SpringBoot集成SpringSecurity | Jarvis的技术小黑屋</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/smarticeberg"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jarvis的技术小黑屋</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天学一点东西</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/06/05/SpringBoot-SpringSecurity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SpringBoot集成SpringSecurity</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-05T16:13:14+08:00">
+                2018-06-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p>SpringBoot作为微服务开发框架的便捷性不言而喻。通常，对于页面的安全控制也是必不可少的主要环节。本文主要采用Springboot+jpa+SpringSecurity+thymeleaf来进行页面的安全性控制。</p>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><ul>
+<li><p>在<code>pom.xml</code>中添加配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;properties&gt;</span><br><span class="line">	&lt;!-- thymeleaf --&gt;</span><br><span class="line">	&lt;thymeleaf.version&gt;3.0.8.RELEASE&lt;/thymeleaf.version&gt;</span><br><span class="line">	&lt;thymeleaf-layout-dialect.version&gt;2.2.2&lt;/thymeleaf-layout-dialect.version&gt;</span><br><span class="line">	&lt;thymeleaf-extras-springsecurity4.version&gt;3.0.2.RELEASE&lt;/thymeleaf-extras-springsecurity4.version&gt;</span><br><span class="line">&lt;/properties&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>pom.xml</code>中添加依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;!-- SpringSecurity依赖 --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.thymeleaf.extras&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;thymeleaf-extras-springsecurity4&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这边注意好版本哦，有些低版本的话，thymeleaf中<code>sec:authorize=&quot;hasRole(&#39;ROLE_ADMIN&#39;)&quot;</code>标签会失效。</p>
+<h1 id="开始"><a href="#开始" class="headerlink" title="开始"></a>开始</h1><h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1"></a>Step 1</h2><p>在用户表里增加一个字段<code>rolenames</code>，其主要作用是为了创建authorities权限列表，多个角色用分隔符<code>,</code>隔开，具体业务逻辑根据自己的需要去进行设计:<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180605/1.png" alt="Alt text"></p>
+<h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2"></a>Step 2</h2><p>用户实体类需实现<code>UserDetails</code>接口，主要的权限控制方法是实现接口中的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public Collection&lt;? extends GrantedAuthority&gt; getAuthorities() &#123;</span><br><span class="line">	return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>依照我上面的数据库设计，此处为了获取到用户的角色，具体实现为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public Collection&lt;? extends GrantedAuthority&gt; getAuthorities() &#123;</span><br><span class="line">	List&lt;GrantedAuthority&gt; authorities = Lists.newArrayList();</span><br><span class="line">       // 切分方法可自己写，不一定用guava的split方法</span><br><span class="line">	List&lt;String&gt; roles = Splitter.on(CommonConstant.COMMON_COMMA_SPLITTER).trimResults().splitToList(this.rolenames);</span><br><span class="line">	for (String roleName : roles) &#123;</span><br><span class="line">		authorities.add(new SimpleGrantedAuthority(roleName));</span><br><span class="line">	&#125;</span><br><span class="line">	return authorities;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>User</code>实体完整代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.cruiser.model.acl;</span><br><span class="line"></span><br><span class="line">import java.io.Serializable;</span><br><span class="line">import java.util.Collection;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">import javax.persistence.Entity;</span><br><span class="line">import javax.persistence.GeneratedValue;</span><br><span class="line">import javax.persistence.Id;</span><br><span class="line"></span><br><span class="line">import org.springframework.security.core.GrantedAuthority;</span><br><span class="line">import org.springframework.security.core.authority.SimpleGrantedAuthority;</span><br><span class="line">import org.springframework.security.core.userdetails.UserDetails;</span><br><span class="line"></span><br><span class="line">import com.google.common.base.Splitter;</span><br><span class="line">import com.google.common.collect.Lists;</span><br><span class="line">import com.jarvis.cruiser.constant.CommonConstant;</span><br><span class="line">import com.jarvis.cruiser.model.BaseObject;</span><br><span class="line"></span><br><span class="line">@Entity</span><br><span class="line">public class User extends BaseObject implements UserDetails &#123;</span><br><span class="line">	/**</span><br><span class="line">	 * </span><br><span class="line">	 */</span><br><span class="line">	private static final long serialVersionUID = -3757802379712748889L;</span><br><span class="line"></span><br><span class="line">	@Id</span><br><span class="line">	@GeneratedValue</span><br><span class="line">	private Long id;</span><br><span class="line">	private String username;</span><br><span class="line">	private String password;</span><br><span class="line">	private String rolenames;</span><br><span class="line"></span><br><span class="line">	public Long getId() &#123;</span><br><span class="line">		return id;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setId(Long id) &#123;</span><br><span class="line">		this.id = id;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public String getUsername() &#123;</span><br><span class="line">		return username;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setUsername(String username) &#123;</span><br><span class="line">		this.username = username;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public String getPassword() &#123;</span><br><span class="line">		return password;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setPassword(String password) &#123;</span><br><span class="line">		this.password = password;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public Serializable realId() &#123;</span><br><span class="line">		return id;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public Collection&lt;? extends GrantedAuthority&gt; getAuthorities() &#123;</span><br><span class="line">		List&lt;GrantedAuthority&gt; authorities = Lists.newArrayList();</span><br><span class="line">		List&lt;String&gt; roles = Splitter.on(CommonConstant.COMMON_COMMA_SPLITTER).trimResults().splitToList(this.rolenames);</span><br><span class="line">		for (String roleName : roles) &#123;</span><br><span class="line">			authorities.add(new SimpleGrantedAuthority(roleName));</span><br><span class="line">		&#125;</span><br><span class="line">		return authorities;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public boolean isAccountNonExpired() &#123;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public boolean isAccountNonLocked() &#123;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public boolean isCredentialsNonExpired() &#123;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public boolean isEnabled() &#123;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public String getRolenames() &#123;</span><br><span class="line">		return rolenames;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void setRolenames(String rolenames) &#123;</span><br><span class="line">		this.rolenames = rolenames;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3"></a>Step 3</h2><p>在需要的thymeleaf页面中额外添加头<code>&lt;html xmlns:sec=&quot;http://www.thymeleaf.org/extras/spring-security&quot;&gt;</code>，全部的格式为<code>&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot; xmlns:sec=&quot;http://www.thymeleaf.org/extras/spring-security&quot;&gt;</code>。<br>在需要控制的地方加上类似代码:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;li sec:authorize=&quot;hasRole(&apos;ROLE_ADMIN&apos;)&quot;&gt;&lt;a href=&quot;#&quot;&gt;&lt;i class=&quot;fa fa-table&quot;&gt;&lt;/i&gt; &lt;span class=&quot;nav-label&quot;&gt;数据管理&lt;/span&gt;&lt;span class=&quot;fa arrow&quot;&gt;&lt;/span&gt;&lt;/a&gt;</span><br><span class="line">    &lt;ul class=&quot;nav nav-second-level&quot;&gt;</span><br><span class="line">        &lt;li&gt;&lt;a class=&quot;J_menuItem&quot; th:href=&quot;@&#123;/manage/ticket/import.dhtml&#125;&quot;&gt;导入数据&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;&lt;a class=&quot;J_menuItem&quot; th:href=&quot;@&#123;/manage/ticket/list.dhtml&#125;&quot;&gt;查询数据&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">&lt;/li&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这边的<code>sec:authorize=&quot;hasRole(&#39;ROLE_ADMIN&#39;)&quot;</code>意思是，具有<code>ROLE_ADMIN</code>角色的用户才能显示此标签列表。具体更多的标签参照文档:<a href="https://github.com/thymeleaf/thymeleaf-extras-springsecurity" target="_blank" rel="noopener">thymeleaf-extras-springsecurity</a></p>
+<h2 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4"></a>Step 4</h2><p>上面只是完成简单的根据角色显示，SpringSecurity最核心的对url拦截还未进行，那我们开始吧。权限管理主要分为两个部分:</p>
+<ul>
+<li><p>登录验证 <code>AuthenticationProcessingFilter</code></p>
+<ul>
+<li>登录验证比较简单，主要会被<code>AuthenticationProcessingFilter</code>拦截，调用<code>AuthenticationManager</code>来实现，Springboot封装了一系列复杂的操作，直接实现<code>UserDetailsService</code>接口:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException &#123;</span><br><span class="line">    User user = userRepository.findByUsername(s);</span><br><span class="line">    if (user == null) throw new UsernameNotFoundException(&quot;用户名不存在&quot;);</span><br><span class="line"></span><br><span class="line">    return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthorities());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>访问资源管理 <code>AbstractSecurityInterceptor</code>，这里需要<code>AuthenticationManager</code>、<code>accessDecisionManager</code>来支撑整个验证流程。</p>
+<ul>
+<li>访问url时，会通过<code>AbstractSecurityInterceptor</code>拦截器拦截，其中会调用<code>FilterInvocationSecurityMetadataSource</code>的方法来获取被拦截url所需的全部权限，再调用授权管理器<code>AccessDecisionManager</code>，这个管理器会通过spring的全局缓存<code>SecurityContextHolder</code>获取用户的权限信息，还会获得被拦截的url和被拦截url所需的全部权限，然后根据所配的策略（有：一票决定，一票否定，少数服从多数等），如果权限足够，则返回，权限不够则报错并调用权限不足页面。</li>
+</ul>
+</li>
+</ul>
+<p><code>MyAccessDecisionManager.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.cruiser.service.acl;</span><br><span class="line"></span><br><span class="line">import java.util.Collection;</span><br><span class="line">import java.util.Iterator;</span><br><span class="line"></span><br><span class="line">import org.springframework.security.access.AccessDecisionManager;</span><br><span class="line">import org.springframework.security.access.AccessDeniedException;</span><br><span class="line">import org.springframework.security.access.ConfigAttribute;</span><br><span class="line">import org.springframework.security.authentication.InsufficientAuthenticationException;</span><br><span class="line">import org.springframework.security.core.Authentication;</span><br><span class="line">import org.springframework.security.core.GrantedAuthority;</span><br><span class="line">import org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">public class MyAccessDecisionManager implements AccessDecisionManager &#123;</span><br><span class="line"></span><br><span class="line">	// decide方法是判定是否拥有权限的决策方法</span><br><span class="line">	// authentication是UserService中循环添加到GrantedAuthority对象中的权限信息集合</span><br><span class="line">	// object 包含客户端发起的请求的request的信息，可转换为HttpServletRequest request=((FilterInvocation)object).getHttpRequest();</span><br><span class="line">	// configAttributes 为MyAccessDecisionSecurityMetadataSource的getAttributes(Object object)这个方法返回的结果，此方法是为了判定用户请求的url 是否在权限表中，如果在权限表中，则返回给 decide 方法，用来判定用户是否有此权限。如果不在权限表中则放行。</span><br><span class="line">	@Override</span><br><span class="line">	public void decide(Authentication authentication, Object object, Collection&lt;ConfigAttribute&gt; configAttributes) throws AccessDeniedException, InsufficientAuthenticationException &#123;</span><br><span class="line"></span><br><span class="line">		if (null == configAttributes || configAttributes.size() &lt;= 0) return;</span><br><span class="line">		ConfigAttribute configAttribute;</span><br><span class="line">		String needRole;</span><br><span class="line">		for (Iterator&lt;ConfigAttribute&gt; iterator = configAttributes.iterator(); iterator.hasNext();) &#123;</span><br><span class="line">			configAttribute = iterator.next();</span><br><span class="line">			needRole = configAttribute.getAttribute();</span><br><span class="line">			// authentication 为在注释1 中循环添加到 GrantedAuthority 对象中的权限信息集合</span><br><span class="line">			for (GrantedAuthority ga : authentication.getAuthorities()) &#123;</span><br><span class="line">				if (needRole.trim().equals(ga.getAuthority())) return;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		throw new AccessDeniedException(&quot;no right&quot;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public boolean supports(ConfigAttribute attribute) &#123;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public boolean supports(Class&lt;?&gt; clazz) &#123;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>MyFilterSecurityInterceptor.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.cruiser.service.acl;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line"></span><br><span class="line">import javax.servlet.Filter;</span><br><span class="line">import javax.servlet.FilterChain;</span><br><span class="line">import javax.servlet.FilterConfig;</span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line">import javax.servlet.ServletRequest;</span><br><span class="line">import javax.servlet.ServletResponse;</span><br><span class="line"></span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.security.access.SecurityMetadataSource;</span><br><span class="line">import org.springframework.security.access.intercept.AbstractSecurityInterceptor;</span><br><span class="line">import org.springframework.security.access.intercept.InterceptorStatusToken;</span><br><span class="line">import org.springframework.security.web.FilterInvocation;</span><br><span class="line">import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;</span><br><span class="line">import org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">public class MyFilterSecurityInterceptor extends AbstractSecurityInterceptor implements Filter &#123;</span><br><span class="line"></span><br><span class="line">	@Autowired</span><br><span class="line">	private FilterInvocationSecurityMetadataSource securityMetadataSource;</span><br><span class="line"></span><br><span class="line">	@Autowired</span><br><span class="line">	public void serMyAccessDecisionManager(MyAccessDecisionManager myAccessDecisionManager) &#123;</span><br><span class="line">		super.setAccessDecisionManager(myAccessDecisionManager);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void destroy() &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException &#123;</span><br><span class="line">		FilterInvocation filterInvocation = new FilterInvocation(request, response, chain);</span><br><span class="line">		invoke(filterInvocation);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void invoke(FilterInvocation filterInvocation) throws IOException, ServletException &#123;</span><br><span class="line">		// filterInvocation里面有一个被拦截的url</span><br><span class="line">		// 里面调用MyInvocationSecurityMetadataSource的getAttributes(Object object)这个方法获取filterInvocation对应的所有权限</span><br><span class="line">		// 再调用MyAccessDecisionManager的decide方法来校验用户的权限是否足够</span><br><span class="line">		InterceptorStatusToken token = super.beforeInvocation(filterInvocation);</span><br><span class="line">		try &#123;</span><br><span class="line">			// 执行下一个拦截器</span><br><span class="line">			filterInvocation.getChain().doFilter(filterInvocation.getRequest(), filterInvocation.getResponse());</span><br><span class="line">		&#125; finally &#123;</span><br><span class="line">			super.afterInvocation(token, null);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public void init(FilterConfig filterConfig) throws ServletException &#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public Class&lt;?&gt; getSecureObjectClass() &#123;</span><br><span class="line">		return FilterInvocation.class;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public SecurityMetadataSource obtainSecurityMetadataSource() &#123;</span><br><span class="line">		return this.securityMetadataSource;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>MyInvocationSecurityMetadataSourceService.java</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.cruiser.service.acl;</span><br><span class="line"></span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.Collection;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Iterator;</span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line"></span><br><span class="line">import org.apache.commons.lang.StringUtils;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.security.access.ConfigAttribute;</span><br><span class="line">import org.springframework.security.access.SecurityConfig;</span><br><span class="line">import org.springframework.security.web.FilterInvocation;</span><br><span class="line">import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;</span><br><span class="line">import org.springframework.security.web.util.matcher.AntPathRequestMatcher;</span><br><span class="line">import org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line">import com.jarvis.cruiser.dao.repository.PermissionRepository;</span><br><span class="line">import com.jarvis.cruiser.model.acl.SysPermission;</span><br><span class="line"></span><br><span class="line">@Service</span><br><span class="line">public class MyInvocationSecurityMetadataSourceService implements FilterInvocationSecurityMetadataSource &#123;</span><br><span class="line"></span><br><span class="line">	@Autowired</span><br><span class="line">	private PermissionRepository permissionRepository;</span><br><span class="line">	private HashMap&lt;String, Collection&lt;ConfigAttribute&gt;&gt; map = null;</span><br><span class="line"></span><br><span class="line">	/**</span><br><span class="line">	 * 加载权限表中所有权限</span><br><span class="line">	 */</span><br><span class="line">	public void loadResourceDefine() &#123;</span><br><span class="line">		map = new HashMap&lt;String, Collection&lt;ConfigAttribute&gt;&gt;();</span><br><span class="line">		List&lt;SysPermission&gt; permissions = permissionRepository.findAll();</span><br><span class="line">		for (SysPermission sysPermission : permissions) &#123;</span><br><span class="line">			map.put(sysPermission.getUrl(), SecurityConfig.createList(StringUtils.split(sysPermission.getName(), &quot;,&quot;)));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public Collection&lt;ConfigAttribute&gt; getAttributes(Object object) throws IllegalArgumentException &#123;</span><br><span class="line">		if (map == null) loadResourceDefine();</span><br><span class="line">		// object 中包含用户请求的request 信息</span><br><span class="line">		HttpServletRequest request = ((FilterInvocation) object).getHttpRequest();</span><br><span class="line">		AntPathRequestMatcher matcher;</span><br><span class="line">		String resUrl;</span><br><span class="line">		for (Iterator&lt;String&gt; iter = map.keySet().iterator(); iter.hasNext();) &#123;</span><br><span class="line">			resUrl = iter.next();</span><br><span class="line">			matcher = new AntPathRequestMatcher(resUrl);</span><br><span class="line">			if (matcher.matches(request)) &#123;</span><br><span class="line">				return map.get(resUrl);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return null;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public Collection&lt;ConfigAttribute&gt; getAllConfigAttributes() &#123;</span><br><span class="line">		return null;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	public boolean supports(Class&lt;?&gt; clazz) &#123;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>权限<code>permission</code>表：<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180605/2.png" alt="Alt text"></p>
+<h2 id="Step-5"><a href="#Step-5" class="headerlink" title="Step 5"></a>Step 5</h2><p>最后一步，添加Springboot配置文件:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis.cruiser.config;</span><br><span class="line"></span><br><span class="line">import org.apache.commons.codec.digest.DigestUtils;</span><br><span class="line">import org.apache.commons.lang.StringUtils;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;</span><br><span class="line">import org.springframework.security.config.annotation.web.builders.HttpSecurity;</span><br><span class="line">import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;</span><br><span class="line">import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;</span><br><span class="line">import org.springframework.security.core.userdetails.UserDetailsService;</span><br><span class="line">import org.springframework.security.web.csrf.CsrfFilter;</span><br><span class="line">import org.springframework.web.filter.CharacterEncodingFilter;</span><br><span class="line"></span><br><span class="line">import com.jarvis.cruiser.service.acl.UserService;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@EnableWebSecurity</span><br><span class="line">public class WebSecurityConfig extends WebSecurityConfigurerAdapter &#123;</span><br><span class="line"></span><br><span class="line">	@Bean</span><br><span class="line">	UserDetailsService userService() &#123;</span><br><span class="line">		return new UserService();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	protected void configure(HttpSecurity http) throws Exception &#123;</span><br><span class="line">		http.authorizeRequests().antMatchers(&quot;/css/**&quot;, &quot;/js/**&quot;, &quot;/images/**&quot;, &quot;/plugins/**&quot;, &quot;/fonts/**&quot;).permitAll().anyRequest().authenticated().and().formLogin().loginPage(&quot;/login&quot;).failureUrl(&quot;/login?error&quot;).permitAll().and().headers().frameOptions().disable().and().logout().logoutUrl(&quot;/logout&quot;)</span><br><span class="line">				.logoutSuccessUrl(&quot;/login&quot;).permitAll();</span><br><span class="line">		// 解决非thmeleaf的form表单提交被拦截问题</span><br><span class="line">		http.csrf().disable();</span><br><span class="line"></span><br><span class="line">		// 解决中文乱码问题</span><br><span class="line">		CharacterEncodingFilter filter = new CharacterEncodingFilter();</span><br><span class="line">		filter.setEncoding(&quot;UTF-8&quot;);</span><br><span class="line">		filter.setForceEncoding(true);</span><br><span class="line">		http.addFilterBefore(filter, CsrfFilter.class);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	protected void configure(AuthenticationManagerBuilder auth) throws Exception &#123;</span><br><span class="line">		auth.userDetailsService(userService()).passwordEncoder(new org.springframework.security.crypto.password.PasswordEncoder() &#123;</span><br><span class="line"></span><br><span class="line">			@Override</span><br><span class="line">			public boolean matches(CharSequence rawPassword, String encodedPassword) &#123;</span><br><span class="line">				return StringUtils.equals(DigestUtils.md5Hex((String) rawPassword), encodedPassword);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			@Override</span><br><span class="line">			public String encode(CharSequence rawPassword) &#123;</span><br><span class="line">				return DigestUtils.md5Hex((String) rawPassword);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Step-6"><a href="#Step-6" class="headerlink" title="Step 6"></a>Step 6</h2><p>运行项目，依次去验证上述添加的功能。</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>本篇没有详细的讲到SpringSecurity的内部运行机制，后续有时间的话，会从源码的角度去分析Spring Security。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2018/06/05/SpringBoot-SpringSecurity/">SpringBoot集成SpringSecurity</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
+  <p><span>发布时间:</span>2018年06月05日 - 16:06</p>
+  <p><span>最后更新:</span>2018年09月03日 - 14:09</p>
+  <p><span>原始链接:</span><a href="/2018/06/05/SpringBoot-SpringSecurity/" title="SpringBoot集成SpringSecurity">http://smarticeberg.github.io/2018/06/05/SpringBoot-SpringSecurity/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2018/06/05/SpringBoot-SpringSecurity/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+	});
+    });  
+</script>
+
+      
+    </div>
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/qrcode.jpg" alt="Iceberg wechat" style="width: 200px; max-width: 100%;"/>
+    <div>这是我的公众号，欢迎关注。</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/Springboot/" rel="tag"><i class="fa fa-tag"></i> Springboot</a>
+          
+            <a href="/tags/SpringSecurity/" rel="tag"><i class="fa fa-tag"></i> SpringSecurity</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/04/SpringBoot-dockerfile/" rel="next" title="SpringBoot-构建docker镜像">
+                <i class="fa fa-chevron-left"></i> SpringBoot-构建docker镜像
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/12/Java-customize-annotation/" rel="prev" title="Java自定义注解">
+                Java自定义注解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Iceberg</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/smarticeberg" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:icebergsmart@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.baidu.com" title="百度" target="_blank">百度</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简述"><span class="nav-number">1.</span> <span class="nav-text">简述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#准备"><span class="nav-number">2.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开始"><span class="nav-number">3.</span> <span class="nav-text">开始</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-1"><span class="nav-number">3.1.</span> <span class="nav-text">Step 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-2"><span class="nav-number">3.2.</span> <span class="nav-text">Step 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-3"><span class="nav-number">3.3.</span> <span class="nav-text">Step 3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-4"><span class="nav-number">3.4.</span> <span class="nav-text">Step 4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-5"><span class="nav-number">3.5.</span> <span class="nav-text">Step 5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Step-6"><span class="nav-number">3.6.</span> <span class="nav-text">Step 6</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结束语"><span class="nav-number">4.</span> <span class="nav-text">结束语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Iceberg</span>
+
+  
+</div>
+
+
+ <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
