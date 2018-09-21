@@ -256,6 +256,172 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/01/29/Leetcode-8-String-to-Integer-atoi/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/29/Leetcode-8-String-to-Integer-atoi/" itemprop="url">Leetcode#8 String to Integer(atoi)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-29T11:06:58+08:00">
+                2018-01-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="String-to-Integer-atoi"><a href="#String-to-Integer-atoi" class="headerlink" title="String to Integer (atoi)"></a>String to Integer (atoi)</h1><blockquote>
+<p>Implement atoi to convert a string to an integer.</p>
+<p>Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.</p>
+<p>Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.</p>
+<p>Requirements for atoi:<br>The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.</p>
+<p>The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.</p>
+<p>If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.</p>
+<p>If no valid conversion could be performed, a zero value is returned. If the correct value is out of the range of representable values, INT_MAX (2147483647) or INT_MIN (-2147483648) is returned.</p>
+</blockquote>
+<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><p>题目要求将字符串转换成整型数。类似于C++的atoi，不符合要求的返回-1,符合要求的返回0。</p>
+<blockquote>
+<p>1.首先需要丢弃字符串前面的空格。</p>
+<p>2.可能有正负号（注意只取一个，如果有多个正负号，那么说这个字符串是无法转换的，返回0。）</p>
+<p>3.字符串可以包含0~9以外的字符，如果遇到非数字字符，那么只取该字符之前的部分，如“-00123a66”返回“-123”。</p>
+<p>4.如果超出int的范围，返回边界值(2147483647或-2147483648)</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h4><p>见题目翻译。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">public int myAtoi(String str) &#123;</span><br><span class="line"></span><br><span class="line">	// 1.空字符串</span><br><span class="line">	if (str == null || str.length() == 0)</span><br><span class="line">		return 0;</span><br><span class="line"></span><br><span class="line">	// 2.去除空格</span><br><span class="line">	str.trim();</span><br><span class="line"></span><br><span class="line">	// 3. +/- 符号</span><br><span class="line">	boolean positive = true;</span><br><span class="line">	int i = 0;</span><br><span class="line">	if (str.charAt(0) == &apos;+&apos;) &#123;</span><br><span class="line">		i++;</span><br><span class="line">	&#125; else if (str.charAt(0) == &apos;-&apos;) &#123;</span><br><span class="line">		positive = false;</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 4.计算真实的值</span><br><span class="line">	double tmp = 0;</span><br><span class="line">	for (; i &lt; str.length(); i++) &#123;</span><br><span class="line">		int digit = str.charAt(i) - &apos;0&apos;;</span><br><span class="line">		if (digit &lt; 0 || digit &gt; 9)</span><br><span class="line">			break;</span><br><span class="line"></span><br><span class="line">		// 处理极值</span><br><span class="line">		if (positive) &#123;</span><br><span class="line">			tmp = 10 * tmp + digit;</span><br><span class="line">			if (tmp &gt; Integer.MAX_VALUE)</span><br><span class="line">				return Integer.MAX_VALUE;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			tmp = 10 * tmp - digit;</span><br><span class="line">			if (tmp &lt; Integer.MIN_VALUE)</span><br><span class="line">				return Integer.MIN_VALUE;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	int returnValue = (int) tmp;</span><br><span class="line">	return returnValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/01/26/Leetcode-7-Reverse-Integer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1688,7 +1854,7 @@ m≤n, i&gt;0 ===&gt; j=(m+n+1)/2-i&lt;(m+n+1)≤(2n+1)/2≤n
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1699,7 +1865,7 @@ m≤n, i&gt;0 ===&gt; j=(m+n+1)/2-i&lt;(m+n+1)≤(2n+1)/2≤n
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1710,7 +1876,7 @@ m≤n, i&gt;0 ===&gt; j=(m+n+1)/2-i&lt;(m+n+1)≤(2n+1)/2≤n
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
