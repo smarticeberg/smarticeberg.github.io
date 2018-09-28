@@ -256,6 +256,165 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/03/01/Leetcode-18-4Sum/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/01/Leetcode-18-4Sum/" itemprop="url">Leetcode#18 4Sum</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T16:47:40+08:00">
+                2018-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="4Sum"><a href="#4Sum" class="headerlink" title="4Sum"></a>4Sum</h1><blockquote>
+<p>Given an array S of n integers, are there elements a, b, c, and d in S such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.</p>
+<p>Note: The solution set must not contain duplicate quadruplets.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">For example, given array S = [1, 0, -1, 0, -2, 2], and target = 0.</span><br><span class="line"></span><br><span class="line">A solution set is:</span><br><span class="line">[</span><br><span class="line">  [-1,  0, 0, 1],</span><br><span class="line">  [-2, -1, 1, 2],</span><br><span class="line">  [-2,  0, 0, 2]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
+<p>给定一个包含n个数的整数数组S，在S中找到所有是的和为给定整数target的四元组(a,b,c,d)。</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n^3)</p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>最基本的思想就是用3Sum和2Sum的子函数，摒弃所有不可能的结果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">	public List&lt;List&lt;Integer&gt;&gt; fourSum(int[] nums, int target) &#123;</span><br><span class="line">		List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;List&lt;Integer&gt;&gt;();</span><br><span class="line">		int len = nums.length;</span><br><span class="line">		if (nums == null || len &lt; 4) return result;</span><br><span class="line"></span><br><span class="line">		Arrays.sort(nums);</span><br><span class="line"></span><br><span class="line">		int max = nums[len - 1];</span><br><span class="line">		if (4 * nums[0] &gt; target || 4 * max &lt; target) return result;</span><br><span class="line"></span><br><span class="line">		int i, z;</span><br><span class="line">		for (i = 0; i &lt; len; i++) &#123;</span><br><span class="line">			z = nums[i];</span><br><span class="line">			if (i &gt; 0 &amp;&amp; z == nums[i - 1]) // 避免重复</span><br><span class="line">				continue;</span><br><span class="line">			if (z + 3 * max &lt; target) // z太小</span><br><span class="line">				continue;</span><br><span class="line">			if (4 * z &gt; target) // z太大</span><br><span class="line">				break;</span><br><span class="line">			if (4 * z == target) &#123; // z是边界</span><br><span class="line">				if (i + 3 &lt; len &amp;&amp; nums[i + 3] == z) &#123;</span><br><span class="line">					result.add(Arrays.asList(z, z, z, z));</span><br><span class="line">				&#125;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">			threeSumForFourSum(nums, target - z, i + 1, len - 1, result, z);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void threeSumForFourSum(int[] nums, int target, int low, int high, List&lt;List&lt;Integer&gt;&gt; fourSumList, int z1) &#123;</span><br><span class="line">		if (low + 1 &gt;= high) return;</span><br><span class="line">		int max = nums[high];</span><br><span class="line">		if (3 * nums[low] &gt; target || 3 * max &lt; target) return;</span><br><span class="line"></span><br><span class="line">		int i, z;</span><br><span class="line">		for (i = low; i &lt; high - 1; i++) &#123;</span><br><span class="line">			z = nums[i];</span><br><span class="line">			if (i &gt; low &amp;&amp; z == nums[i - 1]) // 避免重复</span><br><span class="line">				continue;</span><br><span class="line"></span><br><span class="line">			if (z + 2 * max &lt; target) continue; // z太小</span><br><span class="line">			if (3 * z == target) // z太大</span><br><span class="line">				break;</span><br><span class="line">			if (3 * z == target) &#123;</span><br><span class="line">				if (i + 1 &lt; high &amp;&amp; nums[i + 2] == z) &#123;</span><br><span class="line">					fourSumList.add(Arrays.asList(z1, z, z, z));</span><br><span class="line">				&#125;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">			twoSumForFourSum(nums, target - z, i + 1, high, fourSumList, z1, z);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void twoSumForFourSum(int[] nums, int target, int low, int high, List&lt;List&lt;Integer&gt;&gt; fourSumList, int z1, int z2) &#123;</span><br><span class="line">		if (low &gt;= high) return;</span><br><span class="line">		if (2 * nums[low] &gt; target || 2 * nums[high] &lt; target) return;</span><br><span class="line"></span><br><span class="line">		int i = low, j = high, sum, x;</span><br><span class="line">		while (i &lt; j) &#123;</span><br><span class="line">			sum = nums[i] + nums[j];</span><br><span class="line">			if (sum == target) &#123;</span><br><span class="line">				fourSumList.add(Arrays.asList(z1, z2, nums[i], nums[j]));</span><br><span class="line"></span><br><span class="line">				x = nums[i];</span><br><span class="line">				while (++i &lt; j &amp;&amp; x == nums[i]) // 避免重复</span><br><span class="line">					;</span><br><span class="line">				x = nums[j];</span><br><span class="line">				while (i &lt; --j &amp;&amp; x == nums[j])// 避免重复</span><br><span class="line">					;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">			if (sum &lt; target) i++;</span><br><span class="line">			if (sum &gt; target) j--;</span><br><span class="line">		&#125;</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/03/01/Leetcode-17-Letter-Combinations-of-a-Phone-Number/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1822,171 +1981,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/01/29/Leetcode-9-Palindrome-Number/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Iceberg">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarvis的技术小黑屋">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/29/Leetcode-9-Palindrome-Number/" itemprop="url">Leetcode#9 Palindrome Number</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-29T15:38:30+08:00">
-                2018-01-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">Leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Palindrome-Number"><a href="#Palindrome-Number" class="headerlink" title="Palindrome Number"></a>Palindrome Number</h1><blockquote>
-<p>Determine whether an integer is a palindrome. Do this without extra space.</p>
-<p>Some hints:</p>
-<p>Could negative integers be palindromes? (ie, -1)</p>
-<p>If you are thinking of converting the integer to string, note the restriction of using extra space.</p>
-<p>You could also try reversing an integer. However, if you have solved the problem “Reverse Integer”, you know that the reversed integer might overflow. How would you handle such case?</p>
-<p>There is a more generic way of solving this problem.</p>
-</blockquote>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>判断一个整数是否是回文，不要使用额外的空间。</p>
-<p>1.负数不是回文数。</p>
-<p>2.如果将整数转化成字符串来判断，则会使用额外的空间。</p>
-<p>3.如果将整数直接逆转来判断，逆转后的整数可能会超出int的上界。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(log10n)，空间复杂度O(1)</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>为了避免超出int的上界，我们可以只逆转一半。其中的问题点在于，我们怎么知道处理了一半的数字？只要当反转的数字大于原来的数字时，就可以判定此时已经处理了一半的数据。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public boolean isPalindrome(int x) &#123;</span><br><span class="line">	// 负数和整十的</span><br><span class="line">	if (x &lt; 0 || (x &gt; 0 &amp;&amp; x % 10 == 0))</span><br><span class="line">		return false;</span><br><span class="line"></span><br><span class="line">	int revertedNumber = 0;</span><br><span class="line">	while (x &gt; revertedNumber) &#123;</span><br><span class="line">		revertedNumber = revertedNumber * 10 + x % 10;</span><br><span class="line">		x /= 10;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return x == revertedNumber || x == revertedNumber / 10;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-   
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2037,7 +2031,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2059,7 +2053,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
