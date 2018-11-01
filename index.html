@@ -361,6 +361,7 @@
 <h3 id="查看进程中的线程使用情况"><a href="#查看进程中的线程使用情况" class="headerlink" title="查看进程中的线程使用情况"></a>查看进程中的线程使用情况</h3><p>很多时候，只看进程并不能快速的定位问题的所在，这时候需要清除应用程序到底在什么地方，耗费了大量的资源。通过<code>top -Hp [进程号]</code>可看到进程中详细的线程。当某个数据库操作比较耗时，或者某个算法比较耗时，可以通过线程的pid去定位问题，然而怎么去定位问题，这时候jstack就登场了。<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/top2.png" alt="Alt text"></p>
 <h2 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h2><p>首先将堆栈的日志输出到文件，上面获取的线程号需要转换成16进制，可以通过<code>cat [日志文件]|grep [16进制线程号]</code>，这样就能够具体分析堆栈的具体情况。<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/jstack1.png" alt="Alt text"><br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/jstack2.png" alt="Alt text"></p>
 <h2 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h2><p>另外，<code>watch</code>命令是一个比较方便的命令，<code>watch &quot;jstack [进程号]|grep [包的部分路径关键字]&quot;</code>，这样就能每隔2s打印堆栈信息，当然这个时间间隔可以通过参数自行设置。<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/watch1.png" alt="Alt text"><br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/watch2.png" alt="Alt text"></p>
+<h2 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h2><p>前面介绍GC那篇文章有着重讲过这个工具，这边文章主要也是通过该命令去分析是否存在eden区和old区空间设置不合理，导致频繁GC，或者GC时间过长，STW等问题。常用命令:<br><code>jstat -gcutil [进程号] 1000</code>，该命令的作用是每1s输出gc情况，具体分析，可查看上一篇日志。</p>
 
           
         
