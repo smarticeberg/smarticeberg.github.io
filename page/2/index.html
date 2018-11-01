@@ -256,6 +256,171 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/07/10/Leetcode-25-Reverse-Nodes-in-k-Group/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/10/Leetcode-25-Reverse-Nodes-in-k-Group/" itemprop="url">Leetcode#25 Reverse Nodes in k-Group</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-10T14:26:24+08:00">
+                2018-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Reverse-Nodes-in-k-Group"><a href="#Reverse-Nodes-in-k-Group" class="headerlink" title="Reverse Nodes in k-Group"></a>Reverse Nodes in k-Group</h1><blockquote>
+<p>Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.<br>k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.</p>
+</blockquote>
+<p><strong>Example</strong>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Given this linked list: 1-&gt;2-&gt;3-&gt;4-&gt;5</span><br><span class="line">For k = 2, you should return: 2-&gt;1-&gt;4-&gt;3-&gt;5</span><br><span class="line">For k = 3, you should return: 3-&gt;2-&gt;1-&gt;4-&gt;5</span><br></pre></td></tr></table></figure>
+<p><strong>Note</strong>:</p>
+<ul>
+<li>Only constant extra memory is allowed.</li>
+<li>You may not alter the values in the list’s nodes, only nodes itself may be changed.</li>
+</ul>
+<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
+<p>对于一个给定的链表，将其按照K个为一组进行翻转操作，不足K个的保持不变。这道题目其实是Swap Nodes int Pairs的基本情形。</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一-递归法"><a href="#思路一-递归法" class="headerlink" title="思路一 递归法"></a>思路一 递归法</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n)，空间复杂度:O(1)。</p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">	public class ListNode &#123;</span><br><span class="line">		int val;</span><br><span class="line">		ListNode next;</span><br><span class="line"></span><br><span class="line">		ListNode(int x) &#123;</span><br><span class="line">			val = x;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ListNode reverseKGroup(ListNode head, int k) &#123;</span><br><span class="line"></span><br><span class="line">		if (head == null || head.next == null || k &lt; 2) return head;</span><br><span class="line"></span><br><span class="line">		ListNode next_group = head;</span><br><span class="line">		for (int i = 0; i &lt; k; i++) &#123;</span><br><span class="line">			if (next_group != null) &#123;</span><br><span class="line">				next_group = next_group.next;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				return head;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// next_group是下一组的head</span><br><span class="line">		// reverse_next_group是nextgroup递归后的新头部</span><br><span class="line">		ListNode reverse_next_group = reverseKGroup(next_group, k);</span><br><span class="line">		ListNode prev = null, cur = head;</span><br><span class="line">		while (cur != next_group) &#123;</span><br><span class="line">			ListNode next = cur.next;</span><br><span class="line">			cur.next = prev != null ? prev : reverse_next_group;</span><br><span class="line">			prev = cur;</span><br><span class="line">			cur = next;</span><br><span class="line">		&#125;</span><br><span class="line">		// prev为这个group的新的head</span><br><span class="line">		return prev;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="思路二-迭代法"><a href="#思路二-迭代法" class="headerlink" title="思路二 迭代法"></a>思路二 迭代法</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>空间复杂度:O(1)。</p>
+<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">public class Solution2 &#123;</span><br><span class="line">	public class ListNode &#123;</span><br><span class="line">		int val;</span><br><span class="line">		ListNode next;</span><br><span class="line"></span><br><span class="line">		ListNode(int x) &#123;</span><br><span class="line">			val = x;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ListNode reverseKGroup(ListNode head, int k) &#123;</span><br><span class="line">		if (head == null || head.next == null || k &lt; 2) return head;</span><br><span class="line"></span><br><span class="line">		ListNode fake = new ListNode(0);</span><br><span class="line">		fake.next = head;</span><br><span class="line">		ListNode pre = fake;</span><br><span class="line">		int i = 0;</span><br><span class="line"></span><br><span class="line">		ListNode p = head;</span><br><span class="line">		while (p != null) &#123;</span><br><span class="line">			i++;</span><br><span class="line">			if (i % k == 0) &#123;</span><br><span class="line">				pre = reverse(pre, p.next);</span><br><span class="line">				p = pre.next;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				p = p.next;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return fake.next;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ListNode reverse(ListNode pre, ListNode next) &#123;</span><br><span class="line">		ListNode last = pre.next;</span><br><span class="line">		ListNode curr = last.next;</span><br><span class="line"></span><br><span class="line">		while (curr != next) &#123;</span><br><span class="line">			last.next = curr.next;</span><br><span class="line">			curr.next = pre.next;</span><br><span class="line">			pre.next = curr;</span><br><span class="line">			curr = last.next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return last;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/07/09/Leetcode-24-Swap-Nodes-in-Pairs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1890,177 +2055,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/03/05/Leetcode-19-Remove-Nth-Node-From-End-of-List/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Iceberg">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarvis的技术小黑屋">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/05/Leetcode-19-Remove-Nth-Node-From-End-of-List/" itemprop="url">Leetcode#19 Remove Nth Node From End of List</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T11:15:06+08:00">
-                2018-03-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">Leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Remove-Nth-Node-From-End-of-List"><a href="#Remove-Nth-Node-From-End-of-List" class="headerlink" title="Remove Nth Node From End of List"></a>Remove Nth Node From End of List</h1><blockquote>
-<p>Given a linked list, remove the nth node from the end of list and return its head.<br>For example,</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Given linked list: 1-&gt;2-&gt;3-&gt;4-&gt;5, and n = 2.</span><br><span class="line">After removing the second node from the end, the linked list becomes 1-&gt;2-&gt;3-&gt;5.</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>Note:<br>Given n will always be valid.<br>Try to do this in one pass.</p>
-</blockquote>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定一个指针链表，删除其倒数第N个元素。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度：O(L)，空间复杂度为O(1)。<br>这个算法进行了两次链表的遍历。第一次遍历计算了链表的长度L，第二次遍历是为了找到第(L-n)个节点。总共进行了(2L-n)次操作，所以时间复杂度为O(L).</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>问题可以简化成：移除链表的第(L-n+1)个节点，其中L为链表的长度。当我们知道链表的长度L时，问题就迎刃而解了。<br>首先在链表的头部增加一个虚拟的节点。这个节点用来简化一些边缘情况的处理，比如链表只有一个节点，或者移除链表的头部。第一步，我们找到链表长度L。然后我们设置一个指针指向虚拟的节点并且开始移动直至第(L-n)个节点。此时重新使得第(L-n)个节点的next指针指向第(L-n+2)个节点，问题得解。</p>
-<p><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180305/19_Remove_nth_node_from_end_of_listA.png" alt="Alt text"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	public ListNode removeNthFromEnd(ListNode head, int n) &#123;</span><br><span class="line">		ListNode dummy = new ListNode(0);</span><br><span class="line">		dummy.next = head;</span><br><span class="line">		int length = 0;</span><br><span class="line">		ListNode first = head;</span><br><span class="line">		while (first != null) &#123;</span><br><span class="line">			length++;</span><br><span class="line">			first = first.next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		length -= n;</span><br><span class="line">		first = dummy;</span><br><span class="line">		while (length &gt; 0) &#123;</span><br><span class="line">			length--;</span><br><span class="line">			first = first.next;</span><br><span class="line">		&#125;</span><br><span class="line">		first.next = first.next.next;</span><br><span class="line">		return dummy.next;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public class ListNode &#123;</span><br><span class="line">		int val;</span><br><span class="line">		ListNode next;</span><br><span class="line"></span><br><span class="line">		ListNode(int x) &#123;</span><br><span class="line">			val = x;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(L)，空间复杂度:O(1)。此算法只遍历了一次链表的L个节点，因此时间复杂度为O(L)。</p>
-<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>上述方法可以只需要进行一次遍历就可完成相同功能。我们用两个指针来解决这个问题。第一个指针相较于第二个指针先走n+1步，通俗的来讲，先讲first、second指针之间的间距为n。然后同时移动指针直到first指针移动到最后一个节点。然后进行与方法一相同的思路操作。</p>
-<p><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180305/19_Remove_nth_node_from_end_of_listB.png" alt="Alt text"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class Solution2 &#123;</span><br><span class="line"></span><br><span class="line">	public ListNode removeNthFromEnd(ListNode head, int n) &#123;</span><br><span class="line">		ListNode dummy = new Solution().new ListNode(0);</span><br><span class="line">		dummy.next = head;</span><br><span class="line">		ListNode first = dummy;</span><br><span class="line">		ListNode second = dummy;</span><br><span class="line"></span><br><span class="line">		// 先让first先跑与second节点间有n个节点的距离</span><br><span class="line">		for (int i = 1; i &lt;= n + 1; i++) &#123;</span><br><span class="line">			first = first.next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// 移动first到最后</span><br><span class="line">		while (first != null) &#123;</span><br><span class="line">			first = first.next;</span><br><span class="line">			second = second.next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		second.next = second.next.next;</span><br><span class="line">		return dummy.next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-   
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2106,7 +2105,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2128,7 +2127,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
