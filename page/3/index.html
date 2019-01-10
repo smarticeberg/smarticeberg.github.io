@@ -256,6 +256,163 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/03/05/Leetcode-20-Valid-Parentheses/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/05/Leetcode-20-Valid-Parentheses/" itemprop="url">Leetcode#20 Valid Parentheses</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T13:26:37+08:00">
+                2018-03-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">Leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Valid-Parentheses"><a href="#Valid-Parentheses" class="headerlink" title="Valid Parentheses"></a>Valid Parentheses</h1><blockquote>
+<p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.<br>The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.</p>
+</blockquote>
+<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
+<p>给定一个只包含’(‘, ‘)’, ‘{‘, ‘}’, ‘[‘和 ‘]’的字符串，确定给定的字符串是否有效。括号的闭合是按照正确的顺序，例：”()” 和 “()[]{}”是有效的，但是”(]” 和 “([)]”是无效的。</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(n)</p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>左符号入栈，右符号出栈，最后检查栈是否为空。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public boolean isValid(String s) &#123;</span><br><span class="line">	if (s == null || s.length() &lt; 2) return false;</span><br><span class="line"></span><br><span class="line">	Stack&lt;Character&gt; stack = new Stack&lt;Character&gt;();</span><br><span class="line">	for (char c : s.toCharArray()) &#123;</span><br><span class="line">		if (c == &apos;(&apos;) stack.push(&apos;)&apos;);</span><br><span class="line">		else if (c == &apos;&#123;&apos;) stack.push(&apos;&#125;&apos;);</span><br><span class="line">		else if (c == &apos;[&apos;) stack.push(&apos;]&apos;);</span><br><span class="line">		else if (stack.isEmpty() || stack.pop() != c) return false;</span><br><span class="line">	&#125;</span><br><span class="line">	return stack.isEmpty();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/03/05/Leetcode-19-Remove-Nth-Node-From-End-of-List/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1756,189 +1913,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/02/26/Leetcode-10-Regular-Expression-Matching/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Iceberg">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarvis的技术小黑屋">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/26/Leetcode-10-Regular-Expression-Matching/" itemprop="url">Leetcode #10 Regular Expression Matching</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-26T15:17:52+08:00">
-                2018-02-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">Leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Regular-Expression-Matching"><a href="#Regular-Expression-Matching" class="headerlink" title="Regular Expression Matching"></a>Regular Expression Matching</h1><blockquote>
-<p>Implement regular expression matching with support for ‘.’ and ‘*’.</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&apos;.&apos; Matches any single character.</span><br><span class="line">&apos;*&apos; Matches zero or more of the preceding element.</span><br><span class="line"></span><br><span class="line">The matching should cover the entire input string (not partial).</span><br><span class="line"></span><br><span class="line">The function prototype should be:</span><br><span class="line">bool isMatch(const char *s, const char *p)</span><br><span class="line"></span><br><span class="line">Some examples:</span><br><span class="line">isMatch(&quot;aa&quot;,&quot;a&quot;) → false</span><br><span class="line">isMatch(&quot;aa&quot;,&quot;aa&quot;) → true</span><br><span class="line">isMatch(&quot;aaa&quot;,&quot;aa&quot;) → false</span><br><span class="line">isMatch(&quot;aa&quot;, &quot;a*&quot;) → true</span><br><span class="line">isMatch(&quot;aa&quot;, &quot;.*&quot;) → true</span><br><span class="line">isMatch(&quot;ab&quot;, &quot;.*&quot;) → true</span><br><span class="line">isMatch(&quot;aab&quot;, &quot;c*a*b&quot;) → true</span><br></pre></td></tr></table></figure>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>常见表达式匹配，支持’.‘和’*‘。其实，这道题目不是正宗的正则表达式匹配问题，这里的<em>的意思并不是可以匹配0+个字符，而是对于前面的那个字符，可以匹配0+个。比如，在example中的最后一个用例，isMatch(“aab”,”c</em>a<em>b”) –&gt;true，其中的c</em>a*b，它的意思是这样的，一个有N个c，N个a，一个b的字符串。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一-Brute-Force"><a href="#思路一-Brute-Force" class="headerlink" title="思路一 Brute Force"></a>思路一 Brute Force</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度最坏情况是指数量级的复杂度。</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>先看字符串s和p从i和j开始的子串是否匹配，用递归的方法知道串的最后，最后回溯回来得到的结果。假设现在走到s的i位置，p的j位置，情况分为下列两种:</p>
-<ul>
-<li><p>p[j+1]不是’*‘。情况比较简单，只要判断当前s的i和p的j上的字符是否一样（如果有p在j上的字符是’.’，也是相同），如果不同，返回false，否则，递归下一层i+1，j+1。</p>
-</li>
-<li><p>p[j+1]是”*“ 。那么此时看从s[i]开始的子串，假设s[i],s[i+1]…s[i+k]都等于p[j]，那么意味着这些都有可能是合适的匹配，那么递归对于剩下的(i,j+2),(i+1,j+2),…(i+k,j+2)都要尝试，(j+2是因为跳过当前和下一个’*’字符)。</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	public boolean isMatch(String s, String p) &#123;</span><br><span class="line">		return helper(s, p, 0, 0);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private boolean helper(String s, String p, int i, int j) &#123;</span><br><span class="line">		if (j == p.length())</span><br><span class="line">			return i == s.length();</span><br><span class="line"></span><br><span class="line">		if (j == p.length() - 1 || p.charAt(j + 1) != &apos;*&apos;) &#123;</span><br><span class="line">			if (i == s.length() || s.charAt(i) != p.charAt(j) &amp;&amp; p.charAt(j) != &apos;.&apos;)</span><br><span class="line">				return false;</span><br><span class="line">			else</span><br><span class="line">				return helper(s, p, i + 1, j + 1);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// p.charAt(j+1)==&apos;*&apos;</span><br><span class="line">		while (i &lt; s.length() &amp;&amp; (p.charAt(j) == &apos;.&apos; || s.charAt(i) == p.charAt(j))) &#123;</span><br><span class="line">			if (helper(s, p, i, j + 2))</span><br><span class="line">				return true;</span><br><span class="line">			i++;</span><br><span class="line">		&#125;</span><br><span class="line">		return helper(s, p, i, j + 2);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路二-Dynamic-Programming"><a href="#思路二-Dynamic-Programming" class="headerlink" title="思路二 Dynamic Programming"></a>思路二 Dynamic Programming</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度是O(n^2),空间复杂度也是O(n^2)</p>
-<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p> 这个思路是很接近动态规划的。动态规划的基本思想就是把我们计算过的历史信息记录下来，等到要用到的时候就直接使用，不用重新计算。维护一个二维布尔数组<br> <code>res[i][j]</code>，代表s的前i个字符和p的前j个字符是否匹配(注意这里的res的纬度是s.length+1,p.length+1)。递推公式和上面类似，分三种情况:</p>
-<ul>
-<li><p>p[j+1]不是’*‘。情况比较简单，只要判断如果当前s的i和p的j上的字符一样（如果有p在j上的字符是’.’，也是相同），并且<br><code>res[i+1][j]==true</code> ,则<code>res[i+1][j+1]</code>也为true，<code>res[i+1][j+1]=false</code>。</p>
-</li>
-<li><p>p[j+1]是’*‘，但是p[j]!=’.‘。那么只要以下条件有一个满足即可对<br><code>res[i+1][j+1]</code>赋值为true:</p>
-<ul>
-<li><code>res[i+1][j]</code>为真（’*‘只取前面的字符一次）；</li>
-<li><code>res[i+1][j-1]</code>为真(‘*‘前面的字符一次都不取，也就是忽略这两个字符)；</li>
-<li><code>res[i][j+1]&amp;&amp;s[i]==s[i-1]&amp;&amp;s[i-1]==p[j-1]</code>（这种情况是相当于i从0到s.length()扫过来，如果p[j+1]对应的字符是’<em>‘那就意味着接下来的串就可以一次匹配下来，如果下面的字符一直重复，并且就是’</em>‘前面的那个字符）。</li>
-</ul>
-</li>
-<li><p>p[j+1]是’*‘,并且p[j]==’.‘。因为’.*’可以匹配任意字符串，所以在前面的<br><code>res[i+1][j-1]</code>或者<code>res[i+1][j]</code>中只要有i+1是true，那么剩下的<code>res[i+1][j+1],res[i+2][j+1],...,res[s.length()][j+1]</code>就都是true了。</p>
-</li>
-<li><p>这道题目有一个很重要的点，就是实现的时候外层循环应该是p，然后待匹配串s内层循环扫描。</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">public boolean isMatch(String s, String p) &#123;</span><br><span class="line">	if (s.length() == 0 &amp;&amp; p.length() == 0)</span><br><span class="line">		return true;</span><br><span class="line">	if (p.length() == 0)</span><br><span class="line">		return false;</span><br><span class="line">	boolean[][] res = new boolean[s.length() + 1][p.length() + 1];</span><br><span class="line">	res[0][0] = true;</span><br><span class="line">	for (int j = 0; j &lt; p.length(); j++) &#123;</span><br><span class="line">		if (p.charAt(j) == &apos;*&apos;) &#123;</span><br><span class="line">			if (j &gt; 0 &amp;&amp; res[0][j - 1])</span><br><span class="line">				res[0][j + 1] = true;</span><br><span class="line">			if (j &lt; 1)</span><br><span class="line">				continue;</span><br><span class="line">			if (p.charAt(j - 1) != &apos;.&apos;) &#123;</span><br><span class="line">				for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">					if (res[i + 1][j] || j &gt; 0 &amp;&amp; res[i + 1][j - 1] || i &gt; 0 &amp;&amp; j &gt; 0 &amp;&amp; res[i][j + 1]</span><br><span class="line">							&amp;&amp; s.charAt(i) == s.charAt(i - 1) &amp;&amp; s.charAt(i - 1) == p.charAt(j - 1))</span><br><span class="line">						res[i + 1][j + 1] = true;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				int i = 0;</span><br><span class="line">				while (j &gt; 0 &amp;&amp; i &lt; s.length() &amp;&amp; !res[i + 1][j - 1] &amp;&amp; !res[i + 1][j])</span><br><span class="line">					i++;</span><br><span class="line">				for (; i &lt; s.length(); i++) &#123;</span><br><span class="line">					res[i + 1][j + 1] = true;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">				if (s.charAt(i) == p.charAt(j) || p.charAt(j) == &apos;.&apos;)</span><br><span class="line">					res[i + 1][j + 1] = res[i][j];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return res[s.length()][p.length()];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-   
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1989,7 +1963,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2011,7 +1985,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2079,7 +2053,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
