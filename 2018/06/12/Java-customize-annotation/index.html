@@ -86,19 +86,19 @@
 
 
 
-<meta name="description" content="背景写这篇文章的背景是项目中需要一个测试方法执行时间的功能。主要有两种实现方式:  在每个方法执行前后写入代码，这样冗余代码比较多，发布项目的话，还要去修改逻辑代码，不便于操作。 在第一种方案不可行的情况下，就思考到了结合AOP，来实现我们自定义的注解。  知识准备@interface在编写自定义的注解类之前，我们先要了解@interface，这是标识了一个注解类的主要元素，这里不再赘述。然后我们">
+<meta name="description" content="背景写这篇文章的背景是项目中需要一个测试方法执行时间的功能。主要有两种实现方式:  在每个方法执行前后写入代码，这样冗余代码比较多，发布项目的话，还要去修改逻辑代码，不便于操作。 在第一种方案不可行的情况下，就思考到了结合AOP，来实现我们自定义的注解。">
 <meta name="keywords" content="Java,Annotation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java自定义注解">
 <meta property="og:url" content="http://smarticeberg.github.io/2018/06/12/Java-customize-annotation/index.html">
 <meta property="og:site_name" content="Jarvis的技术小黑屋">
-<meta property="og:description" content="背景写这篇文章的背景是项目中需要一个测试方法执行时间的功能。主要有两种实现方式:  在每个方法执行前后写入代码，这样冗余代码比较多，发布项目的话，还要去修改逻辑代码，不便于操作。 在第一种方案不可行的情况下，就思考到了结合AOP，来实现我们自定义的注解。  知识准备@interface在编写自定义的注解类之前，我们先要了解@interface，这是标识了一个注解类的主要元素，这里不再赘述。然后我们">
+<meta property="og:description" content="背景写这篇文章的背景是项目中需要一个测试方法执行时间的功能。主要有两种实现方式:  在每个方法执行前后写入代码，这样冗余代码比较多，发布项目的话，还要去修改逻辑代码，不便于操作。 在第一种方案不可行的情况下，就思考到了结合AOP，来实现我们自定义的注解。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180612/1.png">
-<meta property="og:updated_time" content="2018-09-03T06:02:30.894Z">
+<meta property="og:updated_time" content="2019-01-10T09:46:07.327Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java自定义注解">
-<meta name="twitter:description" content="背景写这篇文章的背景是项目中需要一个测试方法执行时间的功能。主要有两种实现方式:  在每个方法执行前后写入代码，这样冗余代码比较多，发布项目的话，还要去修改逻辑代码，不便于操作。 在第一种方案不可行的情况下，就思考到了结合AOP，来实现我们自定义的注解。  知识准备@interface在编写自定义的注解类之前，我们先要了解@interface，这是标识了一个注解类的主要元素，这里不再赘述。然后我们">
+<meta name="twitter:description" content="背景写这篇文章的背景是项目中需要一个测试方法执行时间的功能。主要有两种实现方式:  在每个方法执行前后写入代码，这样冗余代码比较多，发布项目的话，还要去修改逻辑代码，不便于操作。 在第一种方案不可行的情况下，就思考到了结合AOP，来实现我们自定义的注解。">
 <meta name="twitter:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180612/1.png">
 
 
@@ -354,9 +354,10 @@
         <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>写这篇文章的背景是项目中需要一个测试方法执行时间的功能。主要有两种实现方式:</p>
 <ul>
 <li>在每个方法执行前后写入代码，这样冗余代码比较多，发布项目的话，还要去修改逻辑代码，不便于操作。</li>
-<li>在第一种方案不可行的情况下，就思考到了结合AOP，来实现我们自定义的注解。</li>
+<li>在第一种方案不可行的情况下，就思考到了结合AOP，来实现我们自定义的注解。<a id="more"></a>
+<h1 id="知识准备"><a href="#知识准备" class="headerlink" title="知识准备"></a>知识准备</h1></li>
 </ul>
-<h1 id="知识准备"><a href="#知识准备" class="headerlink" title="知识准备"></a>知识准备</h1><h2 id="interface"><a href="#interface" class="headerlink" title="@interface"></a>@interface</h2><p>在编写自定义的注解类之前，我们先要了解@interface，这是标识了一个注解类的主要元素，这里不再赘述。然后我们需要看看注解类上面的元注解</p>
+<h2 id="interface"><a href="#interface" class="headerlink" title="@interface"></a>@interface</h2><p>在编写自定义的注解类之前，我们先要了解@interface，这是标识了一个注解类的主要元素，这里不再赘述。然后我们需要看看注解类上面的元注解</p>
 <h2 id="Target"><a href="#Target" class="headerlink" title="@Target"></a>@Target</h2><p>该注解表明注解类能够作用的范围，也就是作用在哪个上面:类，方法，参数等等。</p>
 <table>
 <thead>
@@ -469,7 +470,7 @@
   <p><span>本文标题:</span><a href="/2018/06/12/Java-customize-annotation/">Java自定义注解</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
   <p><span>发布时间:</span>2018年06月12日 - 16:06</p>
-  <p><span>最后更新:</span>2018年09月03日 - 14:09</p>
+  <p><span>最后更新:</span>2019年01月10日 - 17:01</p>
   <p><span>原始链接:</span><a href="/2018/06/12/Java-customize-annotation/" title="Java自定义注解">http://smarticeberg.github.io/2018/06/12/Java-customize-annotation/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2018/06/12/Java-customize-annotation/"  aria-label="复制成功！"></i></span>
   </p>

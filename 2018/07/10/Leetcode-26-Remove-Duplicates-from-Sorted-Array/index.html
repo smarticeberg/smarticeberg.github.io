@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="Jarvis的技术小黑屋">
 <meta property="og:description" content="Remove Duplicates from Sorted Array Given a sorted array nums, remove the duplicates in-place such that each element appear only once and return the new length.Do not allocate extra space for another">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-03T06:02:30.894Z">
+<meta property="og:updated_time" content="2019-01-10T09:47:53.740Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode#26 Remove Duplicates from Sorted Array">
 <meta name="twitter:description" content="Remove Duplicates from Sorted Array Given a sorted array nums, remove the duplicates in-place such that each element appear only once and return the new length.Do not allocate extra space for another">
@@ -361,6 +361,7 @@
 <p>Confused why the returned value is an integer but your answer is an array?<br>Note that the input array is passed in by reference, which means modification to the input array will be known to the caller as well.<br>Internally you can think of this:</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// nums is passed in by reference. (i.e., without making a copy)</span><br><span class="line">int len = removeDuplicates(nums);</span><br><span class="line"></span><br><span class="line">// any modification to nums in your function would be known by the caller.</span><br><span class="line">// using the length returned by your function, it prints the first len elements.</span><br><span class="line">for (int i = 0; i &lt; len; i++) &#123;</span><br><span class="line">    print(nums[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n)，空间复杂度:O(1)</p>
 <h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>如题，数组是排好序的，我们可以使用两个指针i和j，i较之于j移动缓慢。当nums[i]=nums[j]，通过移动j来跳过重复的值。当遇到nums[i]!=nums[j],我们将nums[j]的值赋值给nums[i+1],重复这个操作一直到j遍历到数组的结束。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	public int removeDuplicates(int[] nums) &#123;</span><br><span class="line">		if (nums.length == 0) return 0;</span><br><span class="line"></span><br><span class="line">		int i = 0;</span><br><span class="line">		for (int j = 1; j &lt; nums.length; j++) &#123;</span><br><span class="line">			if (nums[j] != nums[i]) &#123;</span><br><span class="line">				i++;</span><br><span class="line">				nums[i] = nums[j];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return i + 1;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -391,7 +392,7 @@
   <p><span>本文标题:</span><a href="/2018/07/10/Leetcode-26-Remove-Duplicates-from-Sorted-Array/">Leetcode#26 Remove Duplicates from Sorted Array</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
   <p><span>发布时间:</span>2018年07月10日 - 14:07</p>
-  <p><span>最后更新:</span>2018年09月03日 - 14:09</p>
+  <p><span>最后更新:</span>2019年01月10日 - 17:01</p>
   <p><span>原始链接:</span><a href="/2018/07/10/Leetcode-26-Remove-Duplicates-from-Sorted-Array/" title="Leetcode#26 Remove Duplicates from Sorted Array">http://smarticeberg.github.io/2018/07/10/Leetcode-26-Remove-Duplicates-from-Sorted-Array/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2018/07/10/Leetcode-26-Remove-Duplicates-from-Sorted-Array/"  aria-label="复制成功！"></i></span>
   </p>

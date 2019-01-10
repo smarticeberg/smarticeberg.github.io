@@ -348,43 +348,17 @@
 
       
         
-          
-            <h1 id="Regular-Expression-Matching"><a href="#Regular-Expression-Matching" class="headerlink" title="Regular Expression Matching"></a>Regular Expression Matching</h1><blockquote>
+          <h1 id="Regular-Expression-Matching"><a href="#Regular-Expression-Matching" class="headerlink" title="Regular Expression Matching"></a>Regular Expression Matching</h1><blockquote>
 <p>Implement regular expression matching with support for ‘.’ and ‘*’.</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&apos;.&apos; Matches any single character.</span><br><span class="line">&apos;*&apos; Matches zero or more of the preceding element.</span><br><span class="line"></span><br><span class="line">The matching should cover the entire input string (not partial).</span><br><span class="line"></span><br><span class="line">The function prototype should be:</span><br><span class="line">bool isMatch(const char *s, const char *p)</span><br><span class="line"></span><br><span class="line">Some examples:</span><br><span class="line">isMatch(&quot;aa&quot;,&quot;a&quot;) → false</span><br><span class="line">isMatch(&quot;aa&quot;,&quot;aa&quot;) → true</span><br><span class="line">isMatch(&quot;aaa&quot;,&quot;aa&quot;) → false</span><br><span class="line">isMatch(&quot;aa&quot;, &quot;a*&quot;) → true</span><br><span class="line">isMatch(&quot;aa&quot;, &quot;.*&quot;) → true</span><br><span class="line">isMatch(&quot;ab&quot;, &quot;.*&quot;) → true</span><br><span class="line">isMatch(&quot;aab&quot;, &quot;c*a*b&quot;) → true</span><br></pre></td></tr></table></figure>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>常见表达式匹配，支持’.‘和’*‘。其实，这道题目不是正宗的正则表达式匹配问题，这里的<em>的意思并不是可以匹配0+个字符，而是对于前面的那个字符，可以匹配0+个。比如，在example中的最后一个用例，isMatch(“aab”,”c</em>a<em>b”) –&gt;true，其中的c</em>a*b，它的意思是这样的，一个有N个c，N个a，一个b的字符串。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一-Brute-Force"><a href="#思路一-Brute-Force" class="headerlink" title="思路一 Brute Force"></a>思路一 Brute Force</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度最坏情况是指数量级的复杂度。</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>先看字符串s和p从i和j开始的子串是否匹配，用递归的方法知道串的最后，最后回溯回来得到的结果。假设现在走到s的i位置，p的j位置，情况分为下列两种:</p>
-<ul>
-<li><p>p[j+1]不是’*‘。情况比较简单，只要判断当前s的i和p的j上的字符是否一样（如果有p在j上的字符是’.’，也是相同），如果不同，返回false，否则，递归下一层i+1，j+1。</p>
-</li>
-<li><p>p[j+1]是”*“ 。那么此时看从s[i]开始的子串，假设s[i],s[i+1]…s[i+k]都等于p[j]，那么意味着这些都有可能是合适的匹配，那么递归对于剩下的(i,j+2),(i+1,j+2),…(i+k,j+2)都要尝试，(j+2是因为跳过当前和下一个’*’字符)。</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	public boolean isMatch(String s, String p) &#123;</span><br><span class="line">		return helper(s, p, 0, 0);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private boolean helper(String s, String p, int i, int j) &#123;</span><br><span class="line">		if (j == p.length())</span><br><span class="line">			return i == s.length();</span><br><span class="line"></span><br><span class="line">		if (j == p.length() - 1 || p.charAt(j + 1) != &apos;*&apos;) &#123;</span><br><span class="line">			if (i == s.length() || s.charAt(i) != p.charAt(j) &amp;&amp; p.charAt(j) != &apos;.&apos;)</span><br><span class="line">				return false;</span><br><span class="line">			else</span><br><span class="line">				return helper(s, p, i + 1, j + 1);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// p.charAt(j+1)==&apos;*&apos;</span><br><span class="line">		while (i &lt; s.length() &amp;&amp; (p.charAt(j) == &apos;.&apos; || s.charAt(i) == p.charAt(j))) &#123;</span><br><span class="line">			if (helper(s, p, i, j + 2))</span><br><span class="line">				return true;</span><br><span class="line">			i++;</span><br><span class="line">		&#125;</span><br><span class="line">		return helper(s, p, i, j + 2);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路二-Dynamic-Programming"><a href="#思路二-Dynamic-Programming" class="headerlink" title="思路二 Dynamic Programming"></a>思路二 Dynamic Programming</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度是O(n^2),空间复杂度也是O(n^2)</p>
-<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p> 这个思路是很接近动态规划的。动态规划的基本思想就是把我们计算过的历史信息记录下来，等到要用到的时候就直接使用，不用重新计算。维护一个二维布尔数组<br> <code>res[i][j]</code>，代表s的前i个字符和p的前j个字符是否匹配(注意这里的res的纬度是s.length+1,p.length+1)。递推公式和上面类似，分三种情况:</p>
-<ul>
-<li><p>p[j+1]不是’*‘。情况比较简单，只要判断如果当前s的i和p的j上的字符一样（如果有p在j上的字符是’.’，也是相同），并且<br><code>res[i+1][j]==true</code> ,则<code>res[i+1][j+1]</code>也为true，<code>res[i+1][j+1]=false</code>。</p>
-</li>
-<li><p>p[j+1]是’*‘，但是p[j]!=’.‘。那么只要以下条件有一个满足即可对<br><code>res[i+1][j+1]</code>赋值为true:</p>
-<ul>
-<li><code>res[i+1][j]</code>为真（’*‘只取前面的字符一次）；</li>
-<li><code>res[i+1][j-1]</code>为真(‘*‘前面的字符一次都不取，也就是忽略这两个字符)；</li>
-<li><code>res[i][j+1]&amp;&amp;s[i]==s[i-1]&amp;&amp;s[i-1]==p[j-1]</code>（这种情况是相当于i从0到s.length()扫过来，如果p[j+1]对应的字符是’<em>‘那就意味着接下来的串就可以一次匹配下来，如果下面的字符一直重复，并且就是’</em>‘前面的那个字符）。</li>
-</ul>
-</li>
-<li><p>p[j+1]是’*‘,并且p[j]==’.‘。因为’.*’可以匹配任意字符串，所以在前面的<br><code>res[i+1][j-1]</code>或者<code>res[i+1][j]</code>中只要有i+1是true，那么剩下的<code>res[i+1][j+1],res[i+2][j+1],...,res[s.length()][j+1]</code>就都是true了。</p>
-</li>
-<li><p>这道题目有一个很重要的点，就是实现的时候外层循环应该是p，然后待匹配串s内层循环扫描。</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">public boolean isMatch(String s, String p) &#123;</span><br><span class="line">	if (s.length() == 0 &amp;&amp; p.length() == 0)</span><br><span class="line">		return true;</span><br><span class="line">	if (p.length() == 0)</span><br><span class="line">		return false;</span><br><span class="line">	boolean[][] res = new boolean[s.length() + 1][p.length() + 1];</span><br><span class="line">	res[0][0] = true;</span><br><span class="line">	for (int j = 0; j &lt; p.length(); j++) &#123;</span><br><span class="line">		if (p.charAt(j) == &apos;*&apos;) &#123;</span><br><span class="line">			if (j &gt; 0 &amp;&amp; res[0][j - 1])</span><br><span class="line">				res[0][j + 1] = true;</span><br><span class="line">			if (j &lt; 1)</span><br><span class="line">				continue;</span><br><span class="line">			if (p.charAt(j - 1) != &apos;.&apos;) &#123;</span><br><span class="line">				for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">					if (res[i + 1][j] || j &gt; 0 &amp;&amp; res[i + 1][j - 1] || i &gt; 0 &amp;&amp; j &gt; 0 &amp;&amp; res[i][j + 1]</span><br><span class="line">							&amp;&amp; s.charAt(i) == s.charAt(i - 1) &amp;&amp; s.charAt(i - 1) == p.charAt(j - 1))</span><br><span class="line">						res[i + 1][j + 1] = true;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				int i = 0;</span><br><span class="line">				while (j &gt; 0 &amp;&amp; i &lt; s.length() &amp;&amp; !res[i + 1][j - 1] &amp;&amp; !res[i + 1][j])</span><br><span class="line">					i++;</span><br><span class="line">				for (; i &lt; s.length(); i++) &#123;</span><br><span class="line">					res[i + 1][j + 1] = true;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">				if (s.charAt(i) == p.charAt(j) || p.charAt(j) == &apos;.&apos;)</span><br><span class="line">					res[i + 1][j + 1] = res[i][j];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return res[s.length()][p.length()];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/26/Leetcode-10-Regular-Expression-Matching/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -531,8 +505,7 @@
 
       
         
-          
-            <h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><h2 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a>Eureka</h2><blockquote>
+          <h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><h2 id="Eureka"><a href="#Eureka" class="headerlink" title="Eureka"></a>Eureka</h2><blockquote>
 <p>Eureka is a REST (Representational State Transfer) based service that is primarily used in the AWS cloud for locating services for the purpose of load balancing and failover of middle-tier servers.</p>
 <p>At Netflix, Eureka is used for the following purposes apart from playing a critical part in mid-tier load balancing.</p>
 <ul>
@@ -546,53 +519,14 @@
 <li>For carrying other additional application specific metadata about services for various other reasons.</li>
 </ul>
 </blockquote>
-<p>Github地址:<a href="https://github.com/Netflix/eureka" target="_blank" rel="noopener">Eureka</a></p>
-<h2 id="使用背景"><a href="#使用背景" class="headerlink" title="使用背景"></a>使用背景</h2><blockquote>
-<p>TODO 解释</p>
-</blockquote>
-<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>Spring Cloud已经实现了服务注册中心，只要简单的几个步骤就能完成Eureka Server的搭建。</p>
-<h2 id="单机"><a href="#单机" class="headerlink" title="单机"></a>单机</h2><h3 id="1-新建maven项目"><a href="#1-新建maven项目" class="headerlink" title="1.新建maven项目"></a>1.新建maven项目</h3><p>略</p>
-<h3 id="2-pom文件添加依赖"><a href="#2-pom文件添加依赖" class="headerlink" title="2.pom文件添加依赖"></a>2.pom文件添加依赖</h3><p>SpringCloud是建立在Springboot之上的，从下面的pom中不难发现。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">&lt;parent&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;1.3.5.RELEASE&lt;/version&gt;</span><br><span class="line">	&lt;relativePath /&gt; &lt;!-- lookup parent from repository --&gt;</span><br><span class="line">&lt;/parent&gt;</span><br><span class="line">&lt;properties&gt;</span><br><span class="line">	&lt;docker.image.prefix&gt;xuejiawei&lt;/docker.image.prefix&gt;</span><br><span class="line">&lt;/properties&gt;</span><br><span class="line">&lt;dependencyManagement&gt;</span><br><span class="line">	&lt;dependencies&gt;</span><br><span class="line">		&lt;dependency&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;Brixton.RELEASE&lt;/version&gt;</span><br><span class="line">			&lt;type&gt;pom&lt;/type&gt;</span><br><span class="line">			&lt;scope&gt;import&lt;/scope&gt;</span><br><span class="line">		&lt;/dependency&gt;</span><br><span class="line">	&lt;/dependencies&gt;</span><br><span class="line">&lt;/dependencyManagement&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-cloud-starter-eureka-server&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line">	&lt;dependency&gt;</span><br><span class="line">		&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">		&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;</span><br><span class="line">		&lt;scope&gt;test&lt;/scope&gt;</span><br><span class="line">	&lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">&lt;build&gt;</span><br><span class="line">	&lt;plugins&gt;</span><br><span class="line">		&lt;plugin&gt;</span><br><span class="line">			&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">		&lt;/plugin&gt;</span><br><span class="line">		&lt;plugin&gt;</span><br><span class="line">			&lt;groupId&gt;com.spotify&lt;/groupId&gt;</span><br><span class="line">			&lt;artifactId&gt;docker-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">			&lt;version&gt;0.4.11&lt;/version&gt;</span><br><span class="line">			&lt;configuration&gt;</span><br><span class="line">				&lt;imageName&gt;$&#123;docker.image.prefix&#125;/$&#123;project.artifactId&#125;&lt;/imageName&gt;</span><br><span class="line">				&lt;dockerDirectory&gt;src/main/docker&lt;/dockerDirectory&gt;</span><br><span class="line">				&lt;resources&gt;</span><br><span class="line">					&lt;resource&gt;</span><br><span class="line">						&lt;targetPath&gt;/&lt;/targetPath&gt;</span><br><span class="line">						&lt;directory&gt;$&#123;project.build.directory&#125;&lt;/directory&gt;</span><br><span class="line">						&lt;include&gt;$&#123;project.build.finalName&#125;.jar&lt;/include&gt;</span><br><span class="line">					&lt;/resource&gt;</span><br><span class="line">				&lt;/resources&gt;</span><br><span class="line">			&lt;/configuration&gt;</span><br><span class="line">		&lt;/plugin&gt;</span><br><span class="line">	&lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;</span><br></pre></td></tr></table></figure></p>
-<p>这里的build节点里的东西可以先不用看，先把注意力放在Eureka上。上面的pom代码在<a href="http://projects.spring.io/spring-cloud/" target="_blank" rel="noopener">SpringCloud</a>的官网上可以直接获得。</p>
-<h3 id="3-Springboot项目启动类"><a href="#3-Springboot项目启动类" class="headerlink" title="3.Springboot项目启动类"></a>3.Springboot项目启动类</h3><p>唯一不同于springboot项目的是，需要添加<code>@EnableEurekaServer</code>注解。后面的<code>@EnableEurekaClient</code>和<code>@EnableDiscoveryClient</code>在此处用不到。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package com.jarvis;</span><br><span class="line"></span><br><span class="line">import org.springframework.boot.SpringApplication;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;</span><br><span class="line"></span><br><span class="line">@SpringBootApplication</span><br><span class="line">@EnableEurekaServer</span><br><span class="line">public class Application &#123;</span><br><span class="line"></span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		SpringApplication.run(Application.class, args);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="4-添加配置文件-当前使用的是properties，没有使用yml"><a href="#4-添加配置文件-当前使用的是properties，没有使用yml" class="headerlink" title="4.添加配置文件(当前使用的是properties，没有使用yml)"></a>4.添加配置文件(当前使用的是properties，没有使用yml)</h3><p>Eureka默认设置是，服务注册中心会将自己作为客户端来注册自己，我们需要去禁用默认注册行为，<code>application.properties</code>:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spring.application.name=spring-cloud-eureka</span><br><span class="line">eureka.client.fetch-registry=false</span><br><span class="line">eureka.client.register-with-eureka=false</span><br><span class="line">server.port=8090</span><br><span class="line"></span><br><span class="line">eureka.client.serviceUrl.defaultZone=http://localhost:$&#123;server.port&#125;/eureka/</span><br></pre></td></tr></table></figure></p>
-<p>这里需要对配置文件进行分解:</p>
-<ul>
-<li><code>eureka.client.register-with-eureka</code> 从名字中不难看出，这个就是允许自己注册自己的配置选项，默认不写的情况为true。</li>
-<li><code>eureka.client.fetch-registry</code> 表示是否从Eureka获取注册系你想，默认还是true</li>
-<li><code>eureka.client.serviceUrl.defaultZone</code> 最关键的来啦，这是设置Eureka Server交互的地址，这也是配置集群的关键所在，查询和注册服务都要依托于此地址，多个地址用<code>,</code>隔开</li>
-</ul>
-<h3 id="5-启动-Ctrl-F11，我是eclipse"><a href="#5-启动-Ctrl-F11，我是eclipse" class="headerlink" title="5.启动(Ctrl+F11，我是eclipse)"></a>5.启动(Ctrl+F11，我是eclipse)</h3><p>启动啦，打开浏览器，访问:<a href="http://localhost:8090/，就可以看到管理界面咯（下面无效果图）。" target="_blank" rel="noopener">http://localhost:8090/，就可以看到管理界面咯（下面无效果图）。</a></p>
-<h2 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h2><p>TODO</p>
-<h3 id="配置文件1"><a href="#配置文件1" class="headerlink" title="配置文件1"></a>配置文件1</h3><h4 id="application-properties"><a href="#application-properties" class="headerlink" title="application.properties"></a>application.properties</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.profiles.active=peer2</span><br></pre></td></tr></table></figure>
-<h4 id="application-node1-properties"><a href="#application-node1-properties" class="headerlink" title="application-node1.properties"></a>application-node1.properties</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spring.application.name=spring-cloud-eureka</span><br><span class="line">eureka.instance.preferIpAddress=true</span><br><span class="line">server.port=8090</span><br><span class="line"></span><br><span class="line">eureka.client.serviceUrl.defaultZone=http://192.168.1.60:8090/eureka/</span><br></pre></td></tr></table></figure>
-<h4 id="application-node2-properties"><a href="#application-node2-properties" class="headerlink" title="application-node2.properties"></a>application-node2.properties</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spring.application.name=spring-cloud-eureka</span><br><span class="line">eureka.instance.preferIpAddress=true</span><br><span class="line">server.port=8090</span><br><span class="line"></span><br><span class="line">eureka.client.serviceUrl.defaultZone=http://192.168.197.131:8090/eureka/</span><br></pre></td></tr></table></figure>
-<h3 id="配置文件2"><a href="#配置文件2" class="headerlink" title="配置文件2"></a>配置文件2</h3><p>有些配置是这样的:</p>
-<h4 id="application-node1-properties-1"><a href="#application-node1-properties-1" class="headerlink" title="application-node1.properties"></a>application-node1.properties</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spring.application.name=spring-cloud-eureka</span><br><span class="line">server.port=8000</span><br><span class="line">eureka.instance.hostname=node1</span><br><span class="line"></span><br><span class="line">eureka.client.serviceUrl.defaultZone=http://node2:8001/eureka/</span><br></pre></td></tr></table></figure>
-<h4 id="application-node2-properties-1"><a href="#application-node2-properties-1" class="headerlink" title="application-node2.properties"></a>application-node2.properties</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spring.application.name=spring-cloud-eureka</span><br><span class="line">server.port=8001</span><br><span class="line">eureka.instance.hostname=node2</span><br><span class="line"></span><br><span class="line">eureka.client.serviceUrl.defaultZone=http://node1:8000/eureka/</span><br></pre></td></tr></table></figure>
-<h4 id="修改host"><a href="#修改host" class="headerlink" title="修改host"></a>修改host</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 node1  </span><br><span class="line">127.0.0.1 node2</span><br></pre></td></tr></table></figure>
-<p>这样的配置可能会遇到一个问题就是<code>registered-replicas</code>,<code>unavailable-replicas</code>,<code>available-replicas</code>为空，出现这样的情况后续补上（有点懒）。解决方法就是配置文件1。解决完之后的效果图:<br><img src="http://p1cwch5gs.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180202170349.png" alt="Alt text"><br><img src="http://p1cwch5gs.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180202170400.png" alt="Alt text"></p>
-<h4 id="集群使用"><a href="#集群使用" class="headerlink" title="集群使用"></a>集群使用</h4><p>只要修改eureka.client.serviceUrl.defaultZone配置，用逗号隔开要注册的中心地址如：eureka.client.serviceUrl.defaultZone=<a href="http://node1:8000/eureka/,http://node2:8000/eureka/即可。" target="_blank" rel="noopener">http://node1:8000/eureka/,http://node2:8000/eureka/即可。</a></p>
-<h3 id="docker-镜像的生成"><a href="#docker-镜像的生成" class="headerlink" title="docker 镜像的生成"></a>docker 镜像的生成</h3><h4 id="添加pom-build-插件"><a href="#添加pom-build-插件" class="headerlink" title="添加pom build 插件"></a>添加pom build 插件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;plugin&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br><span class="line">&lt;plugin&gt;</span><br><span class="line">    &lt;groupId&gt;com.spotify&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;docker-maven-plugin&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;0.4.11&lt;/version&gt;</span><br><span class="line">    &lt;configuration&gt;</span><br><span class="line">        &lt;imageName&gt;$&#123;docker.image.prefix&#125;/$&#123;project.artifactId&#125;&lt;/imageName&gt;</span><br><span class="line">        &lt;dockerDirectory&gt;src/main/docker&lt;/dockerDirectory&gt;</span><br><span class="line">        &lt;resources&gt;</span><br><span class="line">            &lt;resource&gt;</span><br><span class="line">                &lt;targetPath&gt;/&lt;/targetPath&gt;</span><br><span class="line">                &lt;directory&gt;$&#123;project.build.directory&#125;&lt;/directory&gt;</span><br><span class="line">                &lt;include&gt;$&#123;project.build.finalName&#125;.jar&lt;/include&gt;</span><br><span class="line">            &lt;/resource&gt;</span><br><span class="line">        &lt;/resources&gt;</span><br><span class="line">    &lt;/configuration&gt;</span><br><span class="line">&lt;/plugin&gt;</span><br></pre></td></tr></table></figure>
-<p> 这里的<code>${docker.image.prefix}</code>自己在properties中定义哦。</p>
-<h4 id="编写Dockerfile文件-没有后缀"><a href="#编写Dockerfile文件-没有后缀" class="headerlink" title="编写Dockerfile文件(没有后缀)"></a>编写Dockerfile文件(没有后缀)</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FROM java:8u111-jdk</span><br><span class="line">VOLUME /tmp</span><br><span class="line">ADD spring-cloud-eureka-1.0.0.jar app.jar</span><br><span class="line">RUN sh -c &apos;touch /app.jar&apos;</span><br><span class="line">ENV JAVA_OPTS=&quot;&quot;</span><br><span class="line">ENTRYPOINT [ &quot;sh&quot;, &quot;-c&quot;, &quot;java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar&quot; ]</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>解释 TODO </p>
-</blockquote>
-<h4 id="docker服务器端编译镜像"><a href="#docker服务器端编译镜像" class="headerlink" title="docker服务器端编译镜像"></a>docker服务器端编译镜像</h4><p>前置条件:</p>
-<ul>
-<li>docker</li>
-<li>jdk</li>
-<li><p>maven</p>
-<p>到项目根目录下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn package -Dmaven.test.skip=true docker:build</span><br></pre></td></tr></table></figure>
-<p>可以通过命令docker images查看生成的镜像</p>
-</li>
-</ul>
-<h4 id="docker启动镜像"><a href="#docker启动镜像" class="headerlink" title="docker启动镜像"></a>docker启动镜像</h4> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 8090[宿主端口]:8090 --name port-eureka [生成的镜像名称]</span><br></pre></td></tr></table></figure>
-<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p> 没啥好说的，完。</p>
-
-          
+<p>Github地址:<a href="https://github.com/Netflix/eureka" target="_blank" rel="noopener">Eureka</a><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/02/SpringCloud-eureka/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -739,25 +673,20 @@
 
       
         
-          
-            <h1 id="Palindrome-Number"><a href="#Palindrome-Number" class="headerlink" title="Palindrome Number"></a>Palindrome Number</h1><blockquote>
+          <h1 id="Palindrome-Number"><a href="#Palindrome-Number" class="headerlink" title="Palindrome Number"></a>Palindrome Number</h1><blockquote>
 <p>Determine whether an integer is a palindrome. Do this without extra space.</p>
 <p>Some hints:</p>
 <p>Could negative integers be palindromes? (ie, -1)</p>
 <p>If you are thinking of converting the integer to string, note the restriction of using extra space.</p>
 <p>You could also try reversing an integer. However, if you have solved the problem “Reverse Integer”, you know that the reversed integer might overflow. How would you handle such case?</p>
-<p>There is a more generic way of solving this problem.</p>
-</blockquote>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>判断一个整数是否是回文，不要使用额外的空间。</p>
-<p>1.负数不是回文数。</p>
-<p>2.如果将整数转化成字符串来判断，则会使用额外的空间。</p>
-<p>3.如果将整数直接逆转来判断，逆转后的整数可能会超出int的上界。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(log10n)，空间复杂度O(1)</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>为了避免超出int的上界，我们可以只逆转一半。其中的问题点在于，我们怎么知道处理了一半的数字？只要当反转的数字大于原来的数字时，就可以判定此时已经处理了一半的数据。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public boolean isPalindrome(int x) &#123;</span><br><span class="line">	// 负数和整十的</span><br><span class="line">	if (x &lt; 0 || (x &gt; 0 &amp;&amp; x % 10 == 0))</span><br><span class="line">		return false;</span><br><span class="line"></span><br><span class="line">	int revertedNumber = 0;</span><br><span class="line">	while (x &gt; revertedNumber) &#123;</span><br><span class="line">		revertedNumber = revertedNumber * 10 + x % 10;</span><br><span class="line">		x /= 10;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return x == revertedNumber || x == revertedNumber / 10;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
+<p>There is a more generic way of solving this problem.<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/29/Leetcode-9-Palindrome-Number/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -904,26 +833,21 @@
 
       
         
-          
-            <h1 id="String-to-Integer-atoi"><a href="#String-to-Integer-atoi" class="headerlink" title="String to Integer (atoi)"></a>String to Integer (atoi)</h1><blockquote>
+          <h1 id="String-to-Integer-atoi"><a href="#String-to-Integer-atoi" class="headerlink" title="String to Integer (atoi)"></a>String to Integer (atoi)</h1><blockquote>
 <p>Implement atoi to convert a string to an integer.</p>
 <p>Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.</p>
 <p>Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.</p>
 <p>Requirements for atoi:<br>The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.</p>
 <p>The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.</p>
 <p>If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.</p>
-<p>If no valid conversion could be performed, a zero value is returned. If the correct value is out of the range of representable values, INT_MAX (2147483647) or INT_MIN (-2147483648) is returned.</p>
-</blockquote>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><p>题目要求将字符串转换成整型数。类似于C++的atoi，不符合要求的返回-1,符合要求的返回0。</p>
-<blockquote>
-<p>1.首先需要丢弃字符串前面的空格。</p>
-<p>2.可能有正负号（注意只取一个，如果有多个正负号，那么说这个字符串是无法转换的，返回0。）</p>
-<p>3.字符串可以包含0~9以外的字符，如果遇到非数字字符，那么只取该字符之前的部分，如“-00123a66”返回“-123”。</p>
-<p>4.如果超出int的范围，返回边界值(2147483647或-2147483648)</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h4><p>见题目翻译。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">public int myAtoi(String str) &#123;</span><br><span class="line"></span><br><span class="line">	// 1.空字符串</span><br><span class="line">	if (str == null || str.length() == 0)</span><br><span class="line">		return 0;</span><br><span class="line"></span><br><span class="line">	// 2.去除空格</span><br><span class="line">	str.trim();</span><br><span class="line"></span><br><span class="line">	// 3. +/- 符号</span><br><span class="line">	boolean positive = true;</span><br><span class="line">	int i = 0;</span><br><span class="line">	if (str.charAt(0) == &apos;+&apos;) &#123;</span><br><span class="line">		i++;</span><br><span class="line">	&#125; else if (str.charAt(0) == &apos;-&apos;) &#123;</span><br><span class="line">		positive = false;</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 4.计算真实的值</span><br><span class="line">	double tmp = 0;</span><br><span class="line">	for (; i &lt; str.length(); i++) &#123;</span><br><span class="line">		int digit = str.charAt(i) - &apos;0&apos;;</span><br><span class="line">		if (digit &lt; 0 || digit &gt; 9)</span><br><span class="line">			break;</span><br><span class="line"></span><br><span class="line">		// 处理极值</span><br><span class="line">		if (positive) &#123;</span><br><span class="line">			tmp = 10 * tmp + digit;</span><br><span class="line">			if (tmp &gt; Integer.MAX_VALUE)</span><br><span class="line">				return Integer.MAX_VALUE;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			tmp = 10 * tmp - digit;</span><br><span class="line">			if (tmp &lt; Integer.MIN_VALUE)</span><br><span class="line">				return Integer.MIN_VALUE;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	int returnValue = (int) tmp;</span><br><span class="line">	return returnValue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
+<p>If no valid conversion could be performed, a zero value is returned. If the correct value is out of the range of representable values, INT_MAX (2147483647) or INT_MIN (-2147483648) is returned.<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/29/Leetcode-8-String-to-Integer-atoi/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1070,30 +994,15 @@
 
       
         
-          
-            <h1 id="Reverse-Integer"><a href="#Reverse-Integer" class="headerlink" title="Reverse Integer"></a>Reverse Integer</h1><blockquote>
-<p>Given a 32-bit signed integer, reverse digits of an integer.</p>
-</blockquote>
-<h3 id="Example-1"><a href="#Example-1" class="headerlink" title="Example 1:"></a>Example 1:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 123</span><br><span class="line">Output:  321</span><br></pre></td></tr></table></figure>
-<h3 id="Example-2"><a href="#Example-2" class="headerlink" title="Example 2:"></a>Example 2:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: -123</span><br><span class="line">Output: -321</span><br></pre></td></tr></table></figure>
-<h3 id="Example-3"><a href="#Example-3" class="headerlink" title="Example 3:"></a>Example 3:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: 120</span><br><span class="line">Output: 21</span><br></pre></td></tr></table></figure>
-<h3 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h3><blockquote>
-<p>Assume we are dealing with an environment which could only hold integers within the 32-bit signed integer range. For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.</p>
-</blockquote>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定一个32位有符号整形数，反转这个整形数。注意：假设我们所处的环境只能存放32位有符号的整形数范围。为了处理这个问题，假定当反转的整形数溢出时函数返回0。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一-模十法"><a href="#思路一-模十法" class="headerlink" title="思路一  模十法"></a>思路一  模十法</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(n),空间复杂度O(1)</p>
-<h4 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h4><p>通过对数字模十取余得到它的最低位。其实主要是对溢出的处理，检查溢出的几种办法:</p>
-<ul>
-<li>两个正数相加得到复数，或者两个负数相加得到证书，但是某些编译器溢出或优化的方式不一样。</li>
-<li>对于正数，如果最大整数减去一个数小于另一个数，或者对于复数，最小整数减去一个数大于另一个数，则溢出。这是用减法来避免加法的溢出。</li>
-<li>使用long来保存可能溢出的结果，再与最大/最小整数相比较。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public int reverse(int x) &#123;</span><br><span class="line">	// 分离出x的数值部分和符号部分</span><br><span class="line">	int y = Math.abs(x);</span><br><span class="line">	int z = x == y ? 1 : -1;</span><br><span class="line"></span><br><span class="line">	long result = 0;</span><br><span class="line">	while (y &gt; 0) &#123;</span><br><span class="line">		result *= 10;</span><br><span class="line">		result += y % 10;</span><br><span class="line">		y /= 10;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 判断是否越界</span><br><span class="line">	if (z * result &gt; Integer.MAX_VALUE || z * result &lt; Integer.MIN_VALUE)</span><br><span class="line">		return 0;</span><br><span class="line"></span><br><span class="line">	return (int) (z * result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h3><h4 id="详解-1"><a href="#详解-1" class="headerlink" title="详解"></a>详解</h4><p>上述代码先将数字转换为正数。注意，Integer.MIN_VALUE的绝对值是比Integer.MAX_VALUE是要大1的，所以经常要单独处理。如果不转为正数也可以，只是在后面要对符号进行一下判断。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public int reverse(int x) &#123;</span><br><span class="line"></span><br><span class="line">	if (x == Integer.MIN_VALUE)</span><br><span class="line">		return 0;</span><br><span class="line"></span><br><span class="line">	int num = Math.abs(x);</span><br><span class="line">	int result = 0;</span><br><span class="line">	while (num != 0) &#123;</span><br><span class="line">		if (result &gt; (Integer.MAX_VALUE - num % 10) / 10)</span><br><span class="line">			return 0;</span><br><span class="line">		result = result * 10 + num % 10;</span><br><span class="line">		num /= 10;</span><br><span class="line">	&#125;</span><br><span class="line">	return x &gt; 0 ? result : -result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
+          <h1 id="Reverse-Integer"><a href="#Reverse-Integer" class="headerlink" title="Reverse Integer"></a>Reverse Integer</h1><blockquote>
+<p>Given a 32-bit signed integer, reverse digits of an integer.<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/26/Leetcode-7-Reverse-Integer/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1240,20 +1149,17 @@
 
       
         
-          
-            <h1 id="ZigZag-Conversion"><a href="#ZigZag-Conversion" class="headerlink" title="ZigZag Conversion"></a>ZigZag Conversion</h1><blockquote>
+          <h1 id="ZigZag-Conversion"><a href="#ZigZag-Conversion" class="headerlink" title="ZigZag Conversion"></a>ZigZag Conversion</h1><blockquote>
 <p>The string “PAYPALISHIRING” is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility).<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">P   A   H   N</span><br><span class="line">A P L S I I G</span><br><span class="line">Y   I   R</span><br></pre></td></tr></table></figure></p>
 <p>And then read line by line: “PAHNAPLSIIGYIR”,Write the code that will take a string and make this conversion given a number of rows:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string convert(string text, int nRows);</span><br></pre></td></tr></table></figure></p>
-<p>convert(“PAYPALISHIRING”, 3) should return “PAHNAPLSIIGYIR”.</p>
-</blockquote>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>将给定的字符串按照”Z”字锯齿形进行重排。</p>
-</blockquote>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><p>将字符串分区，如下所示:<br><img src="http://p1cwch5gs.bkt.clouddn.com/20150603195903865.jpg" alt="Alt Text"></p>
-<p>分行分区扫描给定的字符串，分别计算出每行每区的竖直索引和斜值索引，即可得到结果集，这里需要注意一点的是，第一行和最后一行是没有斜值索引的，所以在计算斜值索引的时候需要进行一次判断。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public String convert(String s, int numRows) &#123;</span><br><span class="line">	int length = s.length();</span><br><span class="line">	if (length == 0 || numRows &lt;= 1)</span><br><span class="line">		return s;</span><br><span class="line"></span><br><span class="line">	// 计算分区的大小，最后一个分区可能充满也可能不满，所以向上取整。</span><br><span class="line">	int blockSize = (int) Math.ceil((double) length / (2 * numRows - 2));</span><br><span class="line">	// 分区内有多少元素，竖行是numRows个，斜行去掉头尾两个元素</span><br><span class="line">	int blockNums = 2 * numRows - 2;</span><br><span class="line">	StringBuffer sb = new StringBuffer();</span><br><span class="line">	int index1 = 0, index2 = 0;</span><br><span class="line">	// 按行扫描输出</span><br><span class="line">	for (int iR = 1; iR &lt;= numRows; iR++) &#123;</span><br><span class="line">		// 扫描行的不同分区</span><br><span class="line">		for (int jBlock = 1; jBlock &lt;= blockSize; jBlock++) &#123;</span><br><span class="line">			// index1为第jBlock块的第iR行的竖直索引</span><br><span class="line">			index1 = (jBlock - 1) * blockNums + iR;</span><br><span class="line">			if (index1 &lt;= length) &#123;</span><br><span class="line">				sb.append(s.charAt(index1 - 1));</span><br><span class="line">			&#125;</span><br><span class="line">			// 不是第一行也不是最后一行，因为只有其余行才需要计算斜值索引</span><br><span class="line">			if ((iR != 1) &amp;&amp; (iR != numRows)) &#123;</span><br><span class="line">				index2 = (jBlock - 1) * blockNums + 2 * numRows - iR;</span><br><span class="line">				if (index2 &lt;= length) &#123;</span><br><span class="line">					sb.append(s.charAt(index2 - 1));</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return sb.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h3><p>最直接的方法就是用一个字符串数组存储每一行，最后拼接的就是最终的结果。用delta表示遍历方向是否是逆向的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public String convert(String s, int numRows) &#123;</span><br><span class="line">	int length = s.length();</span><br><span class="line">	if (length == 0 || numRows &lt;= 1)</span><br><span class="line">		return s;</span><br><span class="line"></span><br><span class="line">	String[] ans = new String[length];</span><br><span class="line"></span><br><span class="line">	int row = 0;</span><br><span class="line">	int delta = 1;</span><br><span class="line">	for (int i = 0; i &lt; length; i++) &#123;</span><br><span class="line">		ans[row] += s.charAt(i);</span><br><span class="line">		row += delta;</span><br><span class="line">		if (row &gt;= numRows) &#123;</span><br><span class="line">			row = numRows - 2;</span><br><span class="line">			delta = -1;</span><br><span class="line">		&#125;</span><br><span class="line">		if (row &lt; 0) &#123;</span><br><span class="line">			delta = 1;</span><br><span class="line">			row = 1;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	String retstr = &quot;&quot;;</span><br><span class="line">	for (int i = 0; i &lt; numRows; i++) &#123;</span><br><span class="line">		retstr += ans[i];</span><br><span class="line">	&#125;</span><br><span class="line">	return retstr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+<p>convert(“PAYPALISHIRING”, 3) should return “PAHNAPLSIIGYIR”.<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/26/Leetcode-6-ZigZag-Conversion/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1400,32 +1306,15 @@
 
       
         
-          
-            <h1 id="Longest-Palindromic-Substring"><a href="#Longest-Palindromic-Substring" class="headerlink" title="Longest Palindromic Substring"></a>Longest Palindromic Substring</h1><blockquote>
-<p>Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.</p>
-</blockquote>
-<h2 id="Example1"><a href="#Example1" class="headerlink" title="Example1"></a>Example1</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: &quot;babad&quot;</span><br><span class="line">Output: &quot;bab&quot;</span><br><span class="line">Note: &quot;aba&quot; is also a valid answer.</span><br></pre></td></tr></table></figure>
-<h2 id="Example2"><a href="#Example2" class="headerlink" title="Example2"></a>Example2</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: &quot;cbbd&quot;</span><br><span class="line">Output: &quot;bb&quot;</span><br></pre></td></tr></table></figure>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定一个字符串，找出最长的回文字串。假设给定的字符串最大长度是1000。</p>
-</blockquote>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="思路一-暴力法-Brute-Force"><a href="#思路一-暴力法-Brute-Force" class="headerlink" title="思路一  暴力法 Brute Force"></a>思路一  暴力法 Brute Force</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(n^3)，空间复杂度O(1)</p>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>穷举出所有子字符串的可能，然后依次判断是否是回文，并更新结果，虽然时间复杂度比较高，但是空间复杂度要求低。</p>
-<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public String longestPalindrome(String s) &#123;</span><br><span class="line">	int length = s.length();</span><br><span class="line">	int maxLength = 0;</span><br><span class="line">	int maxStart = 0;</span><br><span class="line">	// i 字符串长度</span><br><span class="line">	for (int i = 0; i &lt; length; i++) &#123;</span><br><span class="line">		// j 字符串的起始位置</span><br><span class="line">		for (int j = 0; j &lt; length - i; j++) &#123;</span><br><span class="line">			// 判断是否是回文串</span><br><span class="line">			if (isPalindrome(s, i, j) &amp;&amp; (i + 1) &gt; maxLength) &#123;</span><br><span class="line">				maxLength = i + 1;</span><br><span class="line">				maxStart = j;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return s.substring(maxStart, maxStart + maxLength);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private boolean isPalindrome(String s, int i, int j) &#123;</span><br><span class="line">	int left = j;</span><br><span class="line">	int right = j + i;</span><br><span class="line">	while (left &lt; right) &#123;</span><br><span class="line">		if (s.charAt(left) != s.charAt(right)) &#123;</span><br><span class="line">			return false;</span><br><span class="line">		&#125;</span><br><span class="line">		left++;</span><br><span class="line">		right--;</span><br><span class="line">	&#125;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路二-动态规划-Dynamic-Programming"><a href="#思路二-动态规划-Dynamic-Programming" class="headerlink" title="思路二  动态规划 Dynamic Programming"></a>思路二  动态规划 Dynamic Programming</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(n^2)，空间复杂度O(n^2)</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>根据回文的特性，一个大的回文按比例缩小后的字符串也必定是回文，比如ABCCBA,那BCCB肯定也是回文。所以我们根据动态规划的两个特点:1.大问题拆解成小问题，2.重复利用之前的计算结果，来解答这题。如何划分成小问题呢？可以先把所有长度最短为1的子字符串计算出来，根据起始位置从左向右，这些必定是回文。计算所有长度为2的子字符串，再根据起始位置从左向右。到长度为3的时候，可以利用上次的计算结果：如果中心对称的短字符串不是回文，那长字符串也不是，如果短字符串是回文，那就要看长字符串两头是否一样。这样，一直到长度最大的子字符串，就可以把整个字符串集穷举完。由于使用动态规划，计算时间从O(n^3)减少到O(n^2)。</p>
-<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul>
-<li>外循环的变量控制的实际上不是字符串的长度，而是字符串首到尾的增量。</li>
-<li>二维数组的第一维是指子字符串起始位置，第二维是指终止位置，所存数据表示是否是回文。</li>
-</ul>
-<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TODO</span><br></pre></td></tr></table></figure>
-<h3 id="思路三-中心扩散法-Spread-From-Center"><a href="#思路三-中心扩散法-Spread-From-Center" class="headerlink" title="思路三  中心扩散法 Spread From Center"></a>思路三  中心扩散法 Spread From Center</h3><h4 id="复杂度-2"><a href="#复杂度-2" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(n^2)，空间复杂度O(1)</p>
-<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>动态规划虽然优化了时间，但是浪费了空间。实际上我们并不需要一直存储所有子字符串的回文情况，我们需要知道的只是中心对称的较小一层是否是回文。所以如果我们从小到大连续以某点为中心的所有子字符串进行计算，就能省略空间。这种解法中，外层循环遍历的是子字符串的中心点，内层循环则是从中心扩散，一旦不是回文就不再计算其他以此为中心的较大的字符串。由于中心对称有两种情况，一是奇数个字母以某个字母对称，二是偶数个字母以两个字母中间为对称，所以我们要分别计算两种对称情况。</p>
-<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class Solution3 &#123;</span><br><span class="line">	String longest = &quot;&quot;;</span><br><span class="line"></span><br><span class="line">	public String longestPalindrome(String s) &#123;</span><br><span class="line">		for (int i = 0; i &lt; s.length(); i++) &#123;</span><br><span class="line">			// 计算奇数子字符串</span><br><span class="line">			helper(s, i, 0);</span><br><span class="line">			// 计算偶数子字符串</span><br><span class="line">			helper(s, i, 1);</span><br><span class="line">		&#125;</span><br><span class="line">		return longest;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private void helper(String s, int idx, int offset) &#123;</span><br><span class="line">		int left = idx;</span><br><span class="line">		int right = idx + offset;</span><br><span class="line">		while (left &gt;= 0 &amp;&amp; right &lt; s.length() &amp;&amp; s.charAt(left) == s.charAt(right)) &#123;</span><br><span class="line">			left--;</span><br><span class="line">			right++;</span><br><span class="line">		&#125;</span><br><span class="line">		// 截取出当前最长的子串</span><br><span class="line">		String currentLongest = s.substring(left + 1, right);</span><br><span class="line">		// 判断是否比全局最长的要长</span><br><span class="line">		if (currentLongest.length() &gt; longest.length()) &#123;</span><br><span class="line">			longest = currentLongest;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路四-马拉车算法-Manacher-Algorithm"><a href="#思路四-马拉车算法-Manacher-Algorithm" class="headerlink" title="思路四  马拉车算法 Manacher Algorithm"></a>思路四  马拉车算法 Manacher Algorithm</h3><h4 id="复杂度-3"><a href="#复杂度-3" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(n)，空间复杂度O(n)</p>
-<h4 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h4><p>Manacher算法是非常经典的计算连续下标回文的算法。它利用了回文的对称性，更具体的来说，是回文内回文的对称性来解决这个问题。<br>详见:<a href="https://www.felix021.com/blog/read.php?2040" target="_blank" rel="noopener">Manacher</a></p>
-<h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4>
-          
+          <h1 id="Longest-Palindromic-Substring"><a href="#Longest-Palindromic-Substring" class="headerlink" title="Longest Palindromic Substring"></a>Longest Palindromic Substring</h1><blockquote>
+<p>Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/23/Leetcode-5-Longest-Palindromic-Substring/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1572,103 +1461,15 @@
 
       
         
-          
-            <h1 id="Median-of-Two-Sorted-Arrays"><a href="#Median-of-Two-Sorted-Arrays" class="headerlink" title="Median of Two Sorted Arrays"></a>Median of Two Sorted Arrays</h1><blockquote>
-<p>There are two sorted arrays nums1 and nums2 of size m and n respectively.Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
-</blockquote>
-<h4 id="Examples"><a href="#Examples" class="headerlink" title="Examples"></a>Examples</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nums1 = [1, 3]</span><br><span class="line">nums2 = [2]</span><br><span class="line"></span><br><span class="line">The median is 2.0</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nums1 = [1, 2]</span><br><span class="line">nums2 = [3, 4]</span><br><span class="line"></span><br><span class="line">The median is (2 + 3)/2 = 2.5</span><br></pre></td></tr></table></figure>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定两个排序数组nums1、nums2的大小为各自为m,n,找出两个排序数组的中位数，总体的时间复杂度为O(log(m+n))</p>
-</blockquote>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h4 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h4><p>为了解决这个问题，我们需要理解中位数是用来做什么的，在统计学中，中位数是用来:</p>
-<blockquote>
-<p>将集合分割成长度相同的两个子集，其中一个子集的值总是大于另外一个</p>
-</blockquote>
-<p>如果我们理解了中位数划分的作用，就已经很接近答案了。首先将A集合在任意位置i分成两个部分</p>
-<blockquote>
-<pre><code>      left_A             |        right_A
-A[0], A[1], ..., A[i-1]  |  A[i], A[i+1], ..., A[m-1]
-</code></pre></blockquote>
-<p>因为A有m个元素，所以有m+1种分割方式(i=0~m)。<br>我们知道:</p>
-<blockquote>
-<pre><code>len(left_A)=i,len(right_A)=m−i.
-注意:当i=0时，left_A是空的，当i=m时，right_A是空的。
-</code></pre></blockquote>
-<p>用相同的方法，将B也在随机的位置分成两个部分:</p>
-<blockquote>
-<pre><code>      left_B             |        right_B
-B[0], B[1], ..., B[j-1]  |  B[j], B[j+1], ..., B[n-1]
-</code></pre></blockquote>
-<p>将left_A和 left_B放进同一个集合，将right_A和right_B放进另一个集合，并分别命名为left_part和right_part：</p>
-<blockquote>
-<pre><code>      left_part          |        right_part
-A[0], A[1], ..., A[i-1]  |  A[i], A[i+1], ..., A[m-1]
-B[0], B[1], ..., B[j-1]  |  B[j], B[j+1], ..., B[n-1]
-</code></pre></blockquote>
-<p>如果我们能够确认</p>
-<blockquote>
-<pre><code>1.len(left_part)=len(right_part)
-2.max(left_part)≤min(right_part)
-</code></pre></blockquote>
-<p>我们就可以将所有{A,B}中的元素划分成长度相同的两个部分，其中一个部分的值总是大于另外一个部分的。那么：</p>
-<blockquote>
-<pre><code>median=(max(left_part)+min(right_part))/2
-</code></pre></blockquote>
-<p>为了确认上面的两个条件，只需要确认:</p>
-<blockquote>
-<pre><code>1.i+j=m-i+n-j(或者m-i+n-j+1) 如果n&gt;=m,我们只需要这样设置,i=0~m,j=(m+n+1)/2-i
-2.B[j-1]&lt;=A[i]，A[i-1]&lt;=B[j]
-</code></pre></blockquote>
-<p>附录1:简单起见，假设A[i-1],B[j-1],A[i],B[j]总是有效的，即使i=0,i=m,j=0或者j=n，我们在最后将会去讨论如何去处理这些边缘值。</p>
-<p>附录2:为什么n&gt;=m?因为确定j是一个非负数，范围在0≤i≤m，j=(m+n+1)/2-i,如果n&lt;m,那么j可能是负数，那么将会产生错误的答案。</p>
-<p>所以，我们所要做的是:</p>
-<blockquote>
-<pre><code>在[0,m]中查找i满足:
-B[j-1]&lt;=A[i],A[i-1]&lt;=B[j]，j=(m+n+1)/2-i
-</code></pre></blockquote>
-<p>下面我们按照以下的步骤做一个二分查找:</p>
-<ul>
-<li>设置imin=0,imax=m,然后开始搜索[imin,imax]</li>
-<li>设置i=(imin+imax)/2,j=(m+n+1)/2-i</li>
-<li><p>现在我们有<code>len(left_part)=len(right_part)</code>。我们只可能出现下面三种情况</p>
-<ul>
-<li><code>B[j−1]≤A[i] and A[i-1]≤B[j]</code> 我们找到了满足条件的i，停止搜索。</li>
-<li><p><code>B[j-1]&gt;A[i]</code> A[i]太小，我们必须调整i,B[j-1]≤A[i]。</p>
-<p>  能增加i？</p>
-<ul>
-<li><p>可以。因为i增加，j将会变小，所以B[j-1]是减小的,A[i]是增加的，同时满足B[j-1]≤A[i]</p>
-<p>能减小i？</p>
-</li>
-<li>不能。因为当i减小时，j将增大。所以B[j-1]增大，A[i]减小，同时将永远不会满足B[j-1]≤A[i]<br>所以我们必须增大i，换句话说，我们必须调整搜索范围至[i+1,imax],设置imin=i+1,返回执行步骤二</li>
-</ul>
-</li>
-<li><code>A[i−1]&gt;B[j]</code> A[i−1]太大。我们必须减小i才能满足A[i−1]≤B[j].换句话说，我们必须调整搜索范围至[imin,i-1],设置imax=i-1，返回执行步骤二<br>当i被查找到时，中位数是:</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<pre><code>max(A[i−1],B[j−1]),当m+n是奇数时
-(max(A[i-1],B[j-1])+min(A[i],B[j]))/2，当m+n是偶数时
-</code></pre></blockquote>
-<p>我们现在来考虑边缘值i=0,i=m,j=0,j=n,A[i-1],B[j-1],A[i],B[j]不一定存在。事实上情况要比想象的容易。<br>当你需要去确认max(left-part)≤min(right_part)。所以，如果i和j不是边缘值（A[i-1],B[j-1],A[i],B[j]都存在），那么我们必须检查B[j-1]≤A[i]和A[i-1]≤B[j]是否都满足。但是，如果A[i-1],B[j-1],A[i],B[j]中的某几项不存在时，那么，我们不必检查其中一个（所有）的情况。比如:如果i=0,那么A[i-1]不存在，我们就不必要检查A[i−1]≤B[j]，所以我们必须这样做:</p>
-<blockquote>
-<pre><code>在[0,m]中查找这样的i，满足当j=(m+n+1)/2-i时:
-(j=0 或者 i=m 或者 B[j-1]≤A[i]) 和 (i=0 or j=n or A[i-1]≤B[j])
-</code></pre></blockquote>
-<p>在搜索循环中，我们将只会遇到三种情形:</p>
-<blockquote>
-<pre><code>1.(j=0 或者 i=m 或者 B[j-1]≤A[i]) 和 (i=0 or j=n or A[i-1]≤B[j]),i正好满足，停止搜索
-2.j&gt;0,i&lt;m ,B[j−1]&gt;A[i],i太小，必须增大i
-3.i&gt;0,j&lt;n,A[i-1]&gt;B[j]，i太大，必须减小i
-</code></pre></blockquote>
-<p>补充:<br>i<m =="="> j&gt;0,i&gt;0 ===&gt; j&lt;n:</m></p>
-<blockquote>
-<pre><code>m≤n, i&lt;m ===&gt; j=(m+n+1)/2-i&gt;(m+n+1)/2-m≥(2m+1)/2-m≥0
-m≤n, i&gt;0 ===&gt; j=(m+n+1)/2-i&lt;(m+n+1)≤(2n+1)/2≤n
-</code></pre></blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">public double findMedianSortedArrays(int[] nums1, int[] nums2) &#123;</span><br><span class="line">	int m = nums1.length;</span><br><span class="line">	int n = nums2.length;</span><br><span class="line"></span><br><span class="line">	// 确定m&lt;=n</span><br><span class="line">	if (m &gt; n) &#123;</span><br><span class="line">		// 交换数组</span><br><span class="line">		int[] temp = nums1;</span><br><span class="line">		nums1 = nums2;</span><br><span class="line">		nums2 = temp;</span><br><span class="line"></span><br><span class="line">		// 交换数组长度</span><br><span class="line">		int tmp = m;</span><br><span class="line">		m = n;</span><br><span class="line">		n = tmp;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	int iMin = 0, iMax = m, halfLen = (m + n + 1) / 2;</span><br><span class="line"></span><br><span class="line">	// 二分法查找</span><br><span class="line">	while (iMin &lt;= iMax) &#123;</span><br><span class="line">		int i = (iMin + iMax) / 2;</span><br><span class="line">		int j = halfLen - i;</span><br><span class="line">		if (i &lt; iMax &amp;&amp; nums2[j - 1] &gt; nums1[i]) &#123;</span><br><span class="line">			// i 太小</span><br><span class="line">			iMin = iMin + 1;</span><br><span class="line">		&#125; else if (i &gt; iMin &amp;&amp; nums1[i - 1] &gt; nums2[j]) &#123;</span><br><span class="line">			// i 太大</span><br><span class="line">			iMax = iMax - 1;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			// i 正好</span><br><span class="line">			int maxLeft = 0;</span><br><span class="line">			if (i == 0) &#123;</span><br><span class="line">				maxLeft = nums2[j - 1];</span><br><span class="line">			&#125; else if (j == 0) &#123;</span><br><span class="line">				maxLeft = nums1[i - 1];</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				maxLeft = Math.max(nums1[i - 1], nums2[j - 1]);</span><br><span class="line">			&#125;</span><br><span class="line">			if ((m + n) % 2 == 1) &#123;</span><br><span class="line">				return maxLeft;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			int minRight = 0;</span><br><span class="line">			if (i == m) &#123;</span><br><span class="line">				minRight = nums2[j];</span><br><span class="line">			&#125; else if (j == n) &#123;</span><br><span class="line">				minRight = nums1[i];</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				minRight = Math.min(nums2[j], nums1[i]);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			return (maxLeft + minRight) / 2.0;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return 0.0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          <h1 id="Median-of-Two-Sorted-Arrays"><a href="#Median-of-Two-Sorted-Arrays" class="headerlink" title="Median of Two Sorted Arrays"></a>Median of Two Sorted Arrays</h1><blockquote>
+<p>There are two sorted arrays nums1 and nums2 of size m and n respectively.Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/22/Leetcode-4-Median-of-Two-Sorted-Arrays/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1815,27 +1616,17 @@ m≤n, i&gt;0 ===&gt; j=(m+n+1)/2-i&lt;(m+n+1)≤(2n+1)/2≤n
 
       
         
-          
-            <h1 id="Longest-Substring-Without-Repeating-Characters"><a href="#Longest-Substring-Without-Repeating-Characters" class="headerlink" title="Longest Substring Without Repeating Characters"></a>Longest Substring Without Repeating Characters</h1><blockquote>
+          <h1 id="Longest-Substring-Without-Repeating-Characters"><a href="#Longest-Substring-Without-Repeating-Characters" class="headerlink" title="Longest Substring Without Repeating Characters"></a>Longest Substring Without Repeating Characters</h1><blockquote>
 <p>Given a string, find the length of the longest substring without repeating characters.</p>
 </blockquote>
 <h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Given &quot;abcabcbb&quot;, the answer is &quot;abc&quot;, which the length is 3.</span><br><span class="line">Given &quot;bbbbb&quot;, the answer is &quot;b&quot;, with the length of 1.</span><br><span class="line">Given &quot;pwwkew&quot;, the answer is &quot;wke&quot;, with the length of 3. </span><br><span class="line">Note that the answer must be a substring,&quot;pwke&quot; is a subsequence and not a substring.</span><br></pre></td></tr></table></figure>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定一个字符串，从中找出不含重复字符的最长字串的长度。</p>
-</blockquote>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h4 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h4><p>不难想到暴力的方式去解决这个问题，不过会超时。找出字符串的所有字串，判断是否有重复的字符，记录每个不重复字串的长度，找出最大长度。时间复杂度为 O(n^3)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public int lengthOfLongestSubstring(String s) &#123;</span><br><span class="line">	int length=s.length();</span><br><span class="line">	int ans=0;</span><br><span class="line">	for (int i = 0; i &lt; length; i++) &#123;</span><br><span class="line">		for (int j = i+1; j &lt; length; j++) &#123;</span><br><span class="line">			if (allUnique(s, i, j)) ans=Math.max(ans, j-i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public boolean allUnique(String s, int start, int end) &#123;</span><br><span class="line">	Set&lt;Character&gt; set = new HashSet&lt;Character&gt;();</span><br><span class="line">	for (int i = start; i &lt; end; i++) &#123;</span><br><span class="line">		Character ch = s.charAt(i);</span><br><span class="line">		if (set.contains(ch)) return false;</span><br><span class="line">		set.add(ch);</span><br><span class="line">	&#125;</span><br><span class="line">	return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h4><p>第一种方式太过于直截了当，带来的是效率上的缓慢。在上述方法中，我们重复检查了一个一个字串，看它是否有重复的字符。但是这是不必要的。在子串Sij中，从i到j-1已经检查了没有重复的字符。我们只需去验证s[j]是否已经在子串Sij中。为了检查一个字符是否在子串中，我们可以遍历字串，时间复杂度为O(n^2)，但是我们可以Hashset作为一个滑动窗口，检查当前字符，时间复杂度为O(1)。我们用Hashset存储当前[i,j)(初始值j=i)中的字符。然后我们向右移动j。如果j一直不在Hashset中，我们就一直移动，直到s[j]在hashset中。这时，找出不重复字符子串的最大值与之前的结果去最大值。遍历所有i，执行此项操作，即可得到答案。时间复杂度为O(2n)=O(n)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public int lengthOfLongestSubstring(String s) &#123;</span><br><span class="line">	int length = s.length();</span><br><span class="line">	int ans = 0, i = 0, j = 0;</span><br><span class="line">	Set&lt;Character&gt; set = new HashSet&lt;Character&gt;();</span><br><span class="line">	while (i &lt; length &amp;&amp; j &lt; length) &#123;</span><br><span class="line">		if (!set.contains(s.charAt(j))) &#123;</span><br><span class="line">			set.add(s.charAt(j++));</span><br><span class="line">			ans = Math.max(ans, j - i);</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			set.remove(s.charAt(i++));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="思路三"><a href="#思路三" class="headerlink" title="思路三"></a>思路三</h4><p>上述的方案最多需要2n步,可以优化成只需要n步。我们可以定义一个字符下标的映射map来替代验证字符是否存在的set。当发现重复字符的时候，我们可以迅速跳过这些字符。如果s[j]在[i,j)中有重复的一个字符，下标是j’，我们不需要慢慢的增加i，我们可以跳过在[i,j’]范围内的所有字符，同时直接让i等于j’+1。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public int lengthOfLongestSubstring(String s) &#123;</span><br><span class="line">	int length = s.length(), ans = 0;</span><br><span class="line">	Map&lt;Character, Integer&gt; map = new HashMap&lt;Character, Integer&gt;();</span><br><span class="line">	for (int j = 0, i = 0; j &lt; length; j++) &#123;</span><br><span class="line">		if (map.containsKey(s.charAt(j))) &#123;</span><br><span class="line">			i = Math.max(map.get(s.charAt(j)), i);</span><br><span class="line">		&#125;</span><br><span class="line">		ans = Math.max(ans, j - i + 1);</span><br><span class="line">		map.put(s.charAt(j), j + 1);</span><br><span class="line">	&#125;</span><br><span class="line">	return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="思路四"><a href="#思路四" class="headerlink" title="思路四"></a>思路四</h4><p>上述所有实现是基于对s没有任何假设性范围的，如果知道字符集的范围是很小的，我们可以用一个直接访问的整型数组替代map，常见的有:</p>
-<ul>
-<li>int[26] :’a’-‘z’,’A’-‘Z’</li>
-<li>int[128] ASCII码</li>
-<li>int[256] 扩展的ASCII码<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public int lengthOfLongestSubstring(String s) &#123;</span><br><span class="line">	int length = s.length(), ans = 0;</span><br><span class="line">	int[] index = new int[128];</span><br><span class="line"></span><br><span class="line">	for (int j = 0, i = 0; j &lt; length; j++) &#123;</span><br><span class="line">		i = Math.max(index[s.charAt(j)], i);</span><br><span class="line">		ans = Math.max(ans, j - i + 1);</span><br><span class="line">		index[s.charAt(j)] = j + 1;</span><br><span class="line">	&#125;</span><br><span class="line">	return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>该方案时间复杂度为O(n)</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/19/Leetcode-3-Longest-Substring-Without-Repeating-Characters/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1982,22 +1773,15 @@ m≤n, i&gt;0 ===&gt; j=(m+n+1)/2-i&lt;(m+n+1)≤(2n+1)/2≤n
 
       
         
-          
-            <h1 id="Add-Two-Numbers"><a href="#Add-Two-Numbers" class="headerlink" title="Add Two Numbers"></a>Add Two Numbers</h1><blockquote>
-<p>You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.You may assume the two numbers do not contain any leading zero, except the number 0 itself.</p>
-</blockquote>
-<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)</span><br><span class="line">Output: 7 -&gt; 0 -&gt; 8</span><br><span class="line">Explanation: 342 + 465 = 807.</span><br></pre></td></tr></table></figure>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定两个非空非负数的链表，这些数字以逆序的方式存储并且每一个节点包含了一个个位数的数字(0-9)，将两个链表相加并返回一个新的链表。可以假设两个数字没有前置0，除了0本身之外。</p>
-</blockquote>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h4 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h4><p>分析题目给定的例子不难发现，题目的加数是倒着给的，并且进位也是反着进的，加数大于等于10的时候，进位为1。但是这边需要注意:</p>
-<ul>
-<li>题目并没有说明链表的长度，所以A和B两个链表可能不一定相同长度。如果一个链表更长，那么相加怎么处理？这里可以考虑直接返回即可，相当于+0。</li>
-<li>如果相加溢出怎么处理？根据题目给出的例子不难发现，溢出会向后进位。</li>
-<li>如果最后一位发生进位，如何处理？这时需要新增一个节点。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	class ListNode &#123;</span><br><span class="line">		int val;</span><br><span class="line">		ListNode next;</span><br><span class="line"></span><br><span class="line">		ListNode(int val) &#123;</span><br><span class="line">			this.val = val;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public ListNode addTwoNumbers(ListNode l1, ListNode l2) &#123;</span><br><span class="line">		// 存储结果</span><br><span class="line">		ListNode newHead = new ListNode(0);</span><br><span class="line">		// 进位</span><br><span class="line">		int carry = 0;</span><br><span class="line">		ListNode p1 = l1, p2 = l2, p3 = newHead;</span><br><span class="line">		while (p1 != null || p2 != null || carry != 0) &#123;</span><br><span class="line">			if (p1 != null) &#123;</span><br><span class="line">				carry += p1.val;</span><br><span class="line">				p1 = p1.next;</span><br><span class="line">			&#125;</span><br><span class="line">			if (p2 != null) &#123;</span><br><span class="line">				carry += p2.val;</span><br><span class="line">				p2 = p2.next;</span><br><span class="line">			&#125;</span><br><span class="line">			int digit = carry % 10;</span><br><span class="line">			p3.next = new ListNode(digit);</span><br><span class="line">			p3 = p3.next;</span><br><span class="line">			carry /= 10;</span><br><span class="line">		&#125;</span><br><span class="line">		return newHead.next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-          
+          <h1 id="Add-Two-Numbers"><a href="#Add-Two-Numbers" class="headerlink" title="Add Two Numbers"></a>Add Two Numbers</h1><blockquote>
+<p>You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.You may assume the two numbers do not contain any leading zero, except the number 0 itself.<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/18/Leetcode-2-add-two-numbers/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="Jarvis的技术小黑屋">
 <meta property="og:description" content="String to Integer (atoi) Implement atoi to convert a string to an integer. Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-03T06:02:30.904Z">
+<meta property="og:updated_time" content="2019-01-10T09:46:53.623Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode#8 String to Integer(atoi)">
 <meta name="twitter:description" content="String to Integer (atoi) Implement atoi to convert a string to an integer. Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are">
@@ -356,10 +356,8 @@
 <p>Requirements for atoi:<br>The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.</p>
 <p>The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.</p>
 <p>If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.</p>
-<p>If no valid conversion could be performed, a zero value is returned. If the correct value is out of the range of representable values, INT_MAX (2147483647) or INT_MIN (-2147483648) is returned.</p>
-</blockquote>
+<p>If no valid conversion could be performed, a zero value is returned. If the correct value is out of the range of representable values, INT_MAX (2147483647) or INT_MIN (-2147483648) is returned.<br><a id="more"></a></p>
 <h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><p>题目要求将字符串转换成整型数。类似于C++的atoi，不符合要求的返回-1,符合要求的返回0。</p>
-<blockquote>
 <p>1.首先需要丢弃字符串前面的空格。</p>
 <p>2.可能有正负号（注意只取一个，如果有多个正负号，那么说这个字符串是无法转换的，返回0。）</p>
 <p>3.字符串可以包含0~9以外的字符，如果遇到非数字字符，那么只取该字符之前的部分，如“-00123a66”返回“-123”。</p>
@@ -394,7 +392,7 @@
   <p><span>本文标题:</span><a href="/2018/01/29/Leetcode-8-String-to-Integer-atoi/">Leetcode#8 String to Integer(atoi)</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
   <p><span>发布时间:</span>2018年01月29日 - 11:01</p>
-  <p><span>最后更新:</span>2018年09月03日 - 14:09</p>
+  <p><span>最后更新:</span>2019年01月10日 - 17:01</p>
   <p><span>原始链接:</span><a href="/2018/01/29/Leetcode-8-String-to-Integer-atoi/" title="Leetcode#8 String to Integer(atoi)">http://smarticeberg.github.io/2018/01/29/Leetcode-8-String-to-Integer-atoi/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2018/01/29/Leetcode-8-String-to-Integer-atoi/"  aria-label="复制成功！"></i></span>
   </p>

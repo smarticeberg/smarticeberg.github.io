@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="Jarvis的技术小黑屋">
 <meta property="og:description" content="概述Java GCJava对象被回收，必须满足两个条件:  没有任何（有效）引用指向它 GC被运行通常，我们通过手动置空的方式来满足对象下次GC运行的时候被回收，如下这种方式比较常见:12Object obj = new Object();obj = null;   这种方式较为繁琐，且违背JAVA GC自动回收的本质。另，缓存对象一般常为程序需要，随着缓存中的引用逐渐增加，GC无法回收的对象增多">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-03T06:02:30.904Z">
+<meta property="og:updated_time" content="2019-01-10T09:48:27.420Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="强引用、弱引用、虚引用、软引用">
 <meta name="twitter:description" content="概述Java GCJava对象被回收，必须满足两个条件:  没有任何（有效）引用指向它 GC被运行通常，我们通过手动置空的方式来满足对象下次GC运行的时候被回收，如下这种方式比较常见:12Object obj = new Object();obj = null;   这种方式较为繁琐，且违背JAVA GC自动回收的本质。另，缓存对象一般常为程序需要，随着缓存中的引用逐渐增加，GC无法回收的对象增多">
@@ -355,7 +355,7 @@
 <li>GC被运行<br>通常，我们通过手动置空的方式来满足对象下次GC运行的时候被回收，如下这种方式比较常见:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Object obj = new Object();</span><br><span class="line">obj = null;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>这种方式较为繁琐，且违背JAVA GC自动回收的本质。另，缓存对象一般常为程序需要，随着缓存中的引用逐渐增加，GC无法回收的对象增多，导致无法自动回收，也是一个比较常见的问题。</p>
+<p>这种方式较为繁琐，且违背JAVA GC自动回收的本质。另，缓存对象一般常为程序需要，随着缓存中的引用逐渐增加，GC无法回收的对象增多，导致无法自动回收，也是一个比较常见的问题。<br><a id="more"></a></p>
 <h2 id="弱引用-WeakReference"><a href="#弱引用-WeakReference" class="headerlink" title="弱引用(WeakReference)"></a>弱引用(WeakReference)</h2><h3 id="WeakReference-And-WeakHashMap"><a href="#WeakReference-And-WeakHashMap" class="headerlink" title="WeakReference And WeakHashMap"></a>WeakReference And WeakHashMap</h3><h4 id="WeakReference"><a href="#WeakReference" class="headerlink" title="WeakReference"></a>WeakReference</h4><p>当一个对象仅仅被WeakReference指向时，而没有其他强引用指向的时候,GC运行，这个对象将会被回收。</p>
 <h4 id="WeakHashMap"><a href="#WeakHashMap" class="headerlink" title="WeakHashMap"></a>WeakHashMap</h4><ul>
 <li>WeakHashMap 是存储键值对(key-value)的非同步且无序的散列表，键和值都允许为null，基本跟 HashMap一致。</li>
@@ -410,7 +410,7 @@
   <p><span>本文标题:</span><a href="/2018/08/13/WeakReference-And-WeakHashMap/">强引用、弱引用、虚引用、软引用</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
   <p><span>发布时间:</span>2018年08月13日 - 10:08</p>
-  <p><span>最后更新:</span>2018年09月03日 - 14:09</p>
+  <p><span>最后更新:</span>2019年01月10日 - 17:01</p>
   <p><span>原始链接:</span><a href="/2018/08/13/WeakReference-And-WeakHashMap/" title="强引用、弱引用、虚引用、软引用">http://smarticeberg.github.io/2018/08/13/WeakReference-And-WeakHashMap/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2018/08/13/WeakReference-And-WeakHashMap/"  aria-label="复制成功！"></i></span>
   </p>

@@ -348,17 +348,15 @@
 
       
         
-          
-            <h1 id="Valid-Parentheses"><a href="#Valid-Parentheses" class="headerlink" title="Valid Parentheses"></a>Valid Parentheses</h1><blockquote>
-<p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.<br>The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.</p>
-</blockquote>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定一个只包含’(‘, ‘)’, ‘{‘, ‘}’, ‘[‘和 ‘]’的字符串，确定给定的字符串是否有效。括号的闭合是按照正确的顺序，例：”()” 和 “()[]{}”是有效的，但是”(]” 和 “([)]”是无效的。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(n)</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>左符号入栈，右符号出栈，最后检查栈是否为空。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public boolean isValid(String s) &#123;</span><br><span class="line">	if (s == null || s.length() &lt; 2) return false;</span><br><span class="line"></span><br><span class="line">	Stack&lt;Character&gt; stack = new Stack&lt;Character&gt;();</span><br><span class="line">	for (char c : s.toCharArray()) &#123;</span><br><span class="line">		if (c == &apos;(&apos;) stack.push(&apos;)&apos;);</span><br><span class="line">		else if (c == &apos;&#123;&apos;) stack.push(&apos;&#125;&apos;);</span><br><span class="line">		else if (c == &apos;[&apos;) stack.push(&apos;]&apos;);</span><br><span class="line">		else if (stack.isEmpty() || stack.pop() != c) return false;</span><br><span class="line">	&#125;</span><br><span class="line">	return stack.isEmpty();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          <h1 id="Valid-Parentheses"><a href="#Valid-Parentheses" class="headerlink" title="Valid Parentheses"></a>Valid Parentheses</h1><blockquote>
+<p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.<br>The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/05/Leetcode-20-Valid-Parentheses/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -505,26 +503,19 @@
 
       
         
-          
-            <h1 id="Remove-Nth-Node-From-End-of-List"><a href="#Remove-Nth-Node-From-End-of-List" class="headerlink" title="Remove Nth Node From End of List"></a>Remove Nth Node From End of List</h1><blockquote>
+          <h1 id="Remove-Nth-Node-From-End-of-List"><a href="#Remove-Nth-Node-From-End-of-List" class="headerlink" title="Remove Nth Node From End of List"></a>Remove Nth Node From End of List</h1><blockquote>
 <p>Given a linked list, remove the nth node from the end of list and return its head.<br>For example,</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Given linked list: 1-&gt;2-&gt;3-&gt;4-&gt;5, and n = 2.</span><br><span class="line">After removing the second node from the end, the linked list becomes 1-&gt;2-&gt;3-&gt;5.</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>Note:<br>Given n will always be valid.<br>Try to do this in one pass.</p>
-</blockquote>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定一个指针链表，删除其倒数第N个元素。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度：O(L)，空间复杂度为O(1)。<br>这个算法进行了两次链表的遍历。第一次遍历计算了链表的长度L，第二次遍历是为了找到第(L-n)个节点。总共进行了(2L-n)次操作，所以时间复杂度为O(L).</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>问题可以简化成：移除链表的第(L-n+1)个节点，其中L为链表的长度。当我们知道链表的长度L时，问题就迎刃而解了。<br>首先在链表的头部增加一个虚拟的节点。这个节点用来简化一些边缘情况的处理，比如链表只有一个节点，或者移除链表的头部。第一步，我们找到链表长度L。然后我们设置一个指针指向虚拟的节点并且开始移动直至第(L-n)个节点。此时重新使得第(L-n)个节点的next指针指向第(L-n+2)个节点，问题得解。</p>
-<p><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180305/19_Remove_nth_node_from_end_of_listA.png" alt="Alt text"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	public ListNode removeNthFromEnd(ListNode head, int n) &#123;</span><br><span class="line">		ListNode dummy = new ListNode(0);</span><br><span class="line">		dummy.next = head;</span><br><span class="line">		int length = 0;</span><br><span class="line">		ListNode first = head;</span><br><span class="line">		while (first != null) &#123;</span><br><span class="line">			length++;</span><br><span class="line">			first = first.next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		length -= n;</span><br><span class="line">		first = dummy;</span><br><span class="line">		while (length &gt; 0) &#123;</span><br><span class="line">			length--;</span><br><span class="line">			first = first.next;</span><br><span class="line">		&#125;</span><br><span class="line">		first.next = first.next.next;</span><br><span class="line">		return dummy.next;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public class ListNode &#123;</span><br><span class="line">		int val;</span><br><span class="line">		ListNode next;</span><br><span class="line"></span><br><span class="line">		ListNode(int x) &#123;</span><br><span class="line">			val = x;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(L)，空间复杂度:O(1)。此算法只遍历了一次链表的L个节点，因此时间复杂度为O(L)。</p>
-<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>上述方法可以只需要进行一次遍历就可完成相同功能。我们用两个指针来解决这个问题。第一个指针相较于第二个指针先走n+1步，通俗的来讲，先讲first、second指针之间的间距为n。然后同时移动指针直到first指针移动到最后一个节点。然后进行与方法一相同的思路操作。</p>
-<p><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180305/19_Remove_nth_node_from_end_of_listB.png" alt="Alt text"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class Solution2 &#123;</span><br><span class="line"></span><br><span class="line">	public ListNode removeNthFromEnd(ListNode head, int n) &#123;</span><br><span class="line">		ListNode dummy = new Solution().new ListNode(0);</span><br><span class="line">		dummy.next = head;</span><br><span class="line">		ListNode first = dummy;</span><br><span class="line">		ListNode second = dummy;</span><br><span class="line"></span><br><span class="line">		// 先让first先跑与second节点间有n个节点的距离</span><br><span class="line">		for (int i = 1; i &lt;= n + 1; i++) &#123;</span><br><span class="line">			first = first.next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// 移动first到最后</span><br><span class="line">		while (first != null) &#123;</span><br><span class="line">			first = first.next;</span><br><span class="line">			second = second.next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		second.next = second.next.next;</span><br><span class="line">		return dummy.next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+<p>Note:<br>Given n will always be valid.<br>Try to do this in one pass.<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/05/Leetcode-19-Remove-Nth-Node-From-End-of-List/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -671,19 +662,18 @@
 
       
         
-          
-            <h1 id="4Sum"><a href="#4Sum" class="headerlink" title="4Sum"></a>4Sum</h1><blockquote>
+          <h1 id="4Sum"><a href="#4Sum" class="headerlink" title="4Sum"></a>4Sum</h1><blockquote>
 <p>Given an array S of n integers, are there elements a, b, c, and d in S such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.</p>
 <p>Note: The solution set must not contain duplicate quadruplets.</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">For example, given array S = [1, 0, -1, 0, -2, 2], and target = 0.</span><br><span class="line"></span><br><span class="line">A solution set is:</span><br><span class="line">[</span><br><span class="line">  [-1,  0, 0, 1],</span><br><span class="line">  [-2, -1, 1, 2],</span><br><span class="line">  [-2,  0, 0, 2]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定一个包含n个数的整数数组S，在S中找到所有是的和为给定整数target的四元组(a,b,c,d)。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n^3)</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>最基本的思想就是用3Sum和2Sum的子函数，摒弃所有不可能的结果。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">	public List&lt;List&lt;Integer&gt;&gt; fourSum(int[] nums, int target) &#123;</span><br><span class="line">		List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;List&lt;Integer&gt;&gt;();</span><br><span class="line">		int len = nums.length;</span><br><span class="line">		if (nums == null || len &lt; 4) return result;</span><br><span class="line"></span><br><span class="line">		Arrays.sort(nums);</span><br><span class="line"></span><br><span class="line">		int max = nums[len - 1];</span><br><span class="line">		if (4 * nums[0] &gt; target || 4 * max &lt; target) return result;</span><br><span class="line"></span><br><span class="line">		int i, z;</span><br><span class="line">		for (i = 0; i &lt; len; i++) &#123;</span><br><span class="line">			z = nums[i];</span><br><span class="line">			if (i &gt; 0 &amp;&amp; z == nums[i - 1]) // 避免重复</span><br><span class="line">				continue;</span><br><span class="line">			if (z + 3 * max &lt; target) // z太小</span><br><span class="line">				continue;</span><br><span class="line">			if (4 * z &gt; target) // z太大</span><br><span class="line">				break;</span><br><span class="line">			if (4 * z == target) &#123; // z是边界</span><br><span class="line">				if (i + 3 &lt; len &amp;&amp; nums[i + 3] == z) &#123;</span><br><span class="line">					result.add(Arrays.asList(z, z, z, z));</span><br><span class="line">				&#125;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">			threeSumForFourSum(nums, target - z, i + 1, len - 1, result, z);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void threeSumForFourSum(int[] nums, int target, int low, int high, List&lt;List&lt;Integer&gt;&gt; fourSumList, int z1) &#123;</span><br><span class="line">		if (low + 1 &gt;= high) return;</span><br><span class="line">		int max = nums[high];</span><br><span class="line">		if (3 * nums[low] &gt; target || 3 * max &lt; target) return;</span><br><span class="line"></span><br><span class="line">		int i, z;</span><br><span class="line">		for (i = low; i &lt; high - 1; i++) &#123;</span><br><span class="line">			z = nums[i];</span><br><span class="line">			if (i &gt; low &amp;&amp; z == nums[i - 1]) // 避免重复</span><br><span class="line">				continue;</span><br><span class="line"></span><br><span class="line">			if (z + 2 * max &lt; target) continue; // z太小</span><br><span class="line">			if (3 * z == target) // z太大</span><br><span class="line">				break;</span><br><span class="line">			if (3 * z == target) &#123;</span><br><span class="line">				if (i + 1 &lt; high &amp;&amp; nums[i + 2] == z) &#123;</span><br><span class="line">					fourSumList.add(Arrays.asList(z1, z, z, z));</span><br><span class="line">				&#125;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">			twoSumForFourSum(nums, target - z, i + 1, high, fourSumList, z1, z);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void twoSumForFourSum(int[] nums, int target, int low, int high, List&lt;List&lt;Integer&gt;&gt; fourSumList, int z1, int z2) &#123;</span><br><span class="line">		if (low &gt;= high) return;</span><br><span class="line">		if (2 * nums[low] &gt; target || 2 * nums[high] &lt; target) return;</span><br><span class="line"></span><br><span class="line">		int i = low, j = high, sum, x;</span><br><span class="line">		while (i &lt; j) &#123;</span><br><span class="line">			sum = nums[i] + nums[j];</span><br><span class="line">			if (sum == target) &#123;</span><br><span class="line">				fourSumList.add(Arrays.asList(z1, z2, nums[i], nums[j]));</span><br><span class="line"></span><br><span class="line">				x = nums[i];</span><br><span class="line">				while (++i &lt; j &amp;&amp; x == nums[i]) // 避免重复</span><br><span class="line">					;</span><br><span class="line">				x = nums[j];</span><br><span class="line">				while (i &lt; --j &amp;&amp; x == nums[j])// 避免重复</span><br><span class="line">					;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">			if (sum &lt; target) i++;</span><br><span class="line">			if (sum &gt; target) j--;</span><br><span class="line">		&#125;</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/01/Leetcode-18-4Sum/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -830,8 +820,7 @@
 
       
         
-          
-            <h1 id="Letter-Combinations-of-a-Phone-Number"><a href="#Letter-Combinations-of-a-Phone-Number" class="headerlink" title="Letter Combinations of a Phone Number"></a>Letter Combinations of a Phone Number</h1><blockquote>
+          <h1 id="Letter-Combinations-of-a-Phone-Number"><a href="#Letter-Combinations-of-a-Phone-Number" class="headerlink" title="Letter Combinations of a Phone Number"></a>Letter Combinations of a Phone Number</h1><blockquote>
 <p>Given a digit string, return all possible letter combinations that the number could represent.A mapping of digit to letters (just like on the telephone buttons) is given below.</p>
 </blockquote>
 <p><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180301/200px-Telephone-keypad2.svg.png" alt="Alt text"></p>
@@ -839,13 +828,13 @@
 <blockquote>
 <p>Note:<br>Although the above answer is in lexicographical order, your answer could be in any order you want.</p>
 </blockquote>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定一个数字字符串，找出这个字符串在九宫格键盘上对应字母的所有组合。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一-深度优先搜索"><a href="#思路一-深度优先搜索" class="headerlink" title="思路一  深度优先搜索"></a>思路一  深度优先搜索</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间 O(n) 空间 O(n)</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>首先建立号码与字母的映射表，然后对号码进行深度优先搜索，对于每一位，找出数字对应的字母，这些字母就是本轮搜索的几种可能。需要注意的一点是，当临时字符串为空的时候，不用将其加入结果列表中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">	private List&lt;String&gt; result;</span><br><span class="line"></span><br><span class="line">	public List&lt;String&gt; letterCombinations(String digits) &#123;</span><br><span class="line">		// 建立对应的映射表</span><br><span class="line">		String[] table = &#123; &quot;&quot;, &quot;&quot;, &quot;abc&quot;, &quot;def&quot;, &quot;ghi&quot;, &quot;jkl&quot;, &quot;mno&quot;, &quot;pqrs&quot;, &quot;tuv&quot;, &quot;wxyz&quot; &#125;;</span><br><span class="line">		StringBuilder tmp = new StringBuilder();</span><br><span class="line">		result = new LinkedList&lt;String&gt;();</span><br><span class="line">		helper(table, 0, tmp, digits);</span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private void helper(String[] table, int idx, StringBuilder tmp, String digits) &#123;</span><br><span class="line">		if (idx == digits.length()) &#123;</span><br><span class="line">			// 找到一种结果，加入到结果集中</span><br><span class="line">			if (tmp.length() != 0)</span><br><span class="line">				result.add(tmp.toString());</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			// 找出当前位数字对应可能的字母</span><br><span class="line">			String candidates = table[digits.charAt(idx) - &apos;0&apos;];</span><br><span class="line">			// 对每个可能的字母进行搜索</span><br><span class="line">			for (int i = 0; i &lt; candidates.length(); i++) &#123;</span><br><span class="line">				tmp.append(candidates.charAt(i));</span><br><span class="line">				helper(table, idx + 1, tmp, digits);</span><br><span class="line">				tmp.deleteCharAt(tmp.length() - 1);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/01/Leetcode-17-Letter-Combinations-of-a-Phone-Number/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -992,18 +981,17 @@
 
       
         
-          
-            <h1 id="3Sum-Closest"><a href="#3Sum-Closest" class="headerlink" title="3Sum Closest"></a>3Sum Closest</h1><blockquote>
+          <h1 id="3Sum-Closest"><a href="#3Sum-Closest" class="headerlink" title="3Sum Closest"></a>3Sum Closest</h1><blockquote>
 <p>Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">For example, given array S = &#123;-1 2 1 -4&#125;, and target = 1.</span><br><span class="line">The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).</span><br></pre></td></tr></table></figure>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>这道题目和3Sum的区别在于，找出三个数之和与目标数最接近的解。所以在查找遍历的时候需要维护一个min来存储最接近target的值。还有一点，就是不需要判断重复问题，You may assume that each input would have exactly one solution.当然，如果要去重的话，用指针法去重即可。这里还有一个需要注意，判断closest的方法是要与target-sum的绝对值与min相比，很容易理解，无论这个closest在target的左还是右。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(n^2+nlogn)=O(n^2)</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>维护一个存储最接近target的值,先排序，后用夹逼的方法找出答案。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	public int threeSumClosest(int[] nums, int target) &#123;</span><br><span class="line">		if (nums == null || nums.length &lt; 3)</span><br><span class="line">			return Integer.MIN_VALUE;</span><br><span class="line"></span><br><span class="line">		Arrays.sort(nums);</span><br><span class="line"></span><br><span class="line">		int closest = nums[0] + nums[1] + nums[2] - target;</span><br><span class="line">		for (int i = 0; i &lt; nums.length - 2; i++) &#123;</span><br><span class="line">			int cur = twoSum(nums, target - nums[i], i + 1);</span><br><span class="line">			if (Math.abs(cur) &lt; Math.abs(closest)) &#123;</span><br><span class="line">				closest = cur;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return target + closest;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private int twoSum(int[] nums, int target, int start) &#123;</span><br><span class="line">		int closest = nums[start] + nums[start + 1] - target;</span><br><span class="line">		int l = start;</span><br><span class="line">		int r = nums.length - 1;</span><br><span class="line">		while (l &lt; r) &#123;</span><br><span class="line">			if (nums[l] + nums[r] == target) &#123;</span><br><span class="line">				return 0;</span><br><span class="line">			&#125;</span><br><span class="line">			int diff = nums[l] + nums[r] - target;</span><br><span class="line">			if (Math.abs(diff) &lt; Math.abs(closest)) &#123;</span><br><span class="line">				closest = diff;</span><br><span class="line">			&#125;</span><br><span class="line">			if (nums[l] + nums[r] &gt; target) &#123;</span><br><span class="line">				r--;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				l++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return closest;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/28/Leetcode-16-3Sum-Closest/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1150,20 +1138,18 @@
 
       
         
-          
-            <h1 id="3Sum"><a href="#3Sum" class="headerlink" title="3Sum"></a>3Sum</h1><blockquote>
+          <h1 id="3Sum"><a href="#3Sum" class="headerlink" title="3Sum"></a>3Sum</h1><blockquote>
 <p>Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.</p>
 <p>Note: The solution set must not contain duplicate triplets.</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">For example, given array S = [-1, 0, 1, 2, -1, -4],</span><br><span class="line"></span><br><span class="line">A solution set is:</span><br><span class="line">[</span><br><span class="line">  [-1, 0, 1],</span><br><span class="line">  [-1, -1, 2]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定一个n个整数的数组S，是否存在三个元素a,b,c使得a+b+c=0？找出所有三元数组满足和为0。</p>
-<p>答案中不能包含重复的三元组。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(n^2)</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>暴力解决法的时间复杂度是O(n^3)，而且还要处理重复问题，所以在此舍去。可以先对数组进行排序，排序的时间复杂度为O(nlgn)，小于O(n^2)。排序之后，就可以对数组用两个指针从前后两端向中间扫描了。如果是2Sum，我们找到两个指针之和为target就ok了，那么3Sum是类似的。可以先固定一个数，然后找另外两个数之和为第一个数的相反数就可以了。注意，对于nums[i]，寻找另外两个数，只要从i+1找就可以了。这种写法的好处在于可以避免集中有重复，因为数组是排好序的，所以当一个数被放到结果集中的时候，其后面的与它相等的直接被跳过。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	List&lt;List&lt;Integer&gt;&gt; result = new ArrayList&lt;List&lt;Integer&gt;&gt;();</span><br><span class="line"></span><br><span class="line">	public List&lt;List&lt;Integer&gt;&gt; threeSum(int[] nums) &#123;</span><br><span class="line">		if (nums == null || nums.length &lt; 3)</span><br><span class="line">			return result;</span><br><span class="line"></span><br><span class="line">		Arrays.sort(nums);</span><br><span class="line"></span><br><span class="line">		int length = nums.length;</span><br><span class="line">		for (int i = 0; i &lt; length - 2; i++) &#123;</span><br><span class="line">			if (i &gt; 0 &amp;&amp; nums[i] == nums[i - 1])</span><br><span class="line">				continue;</span><br><span class="line">			find(nums, i + 1, length - 1, nums[i]);// 寻找两个数与nums[i]的和为0</span><br><span class="line">		&#125;</span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void find(int[] nums, int begin, int end, int target) &#123;</span><br><span class="line">		int l = begin, r = end;</span><br><span class="line">		while (l &lt; r) &#123;</span><br><span class="line">			if (nums[l] + nums[r] + target == 0) &#123;</span><br><span class="line">				List&lt;Integer&gt; ans = new ArrayList&lt;Integer&gt;();</span><br><span class="line">				ans.add(target);</span><br><span class="line">				ans.add(nums[l]);</span><br><span class="line">				ans.add(nums[r]);</span><br><span class="line">				result.add(ans); // 放入结果集中</span><br><span class="line">				while (l &lt; r &amp;&amp; nums[l] == nums[l + 1])</span><br><span class="line">					l++;</span><br><span class="line">				while (l &lt; r &amp;&amp; nums[r] == nums[r - 1])</span><br><span class="line">					r--;</span><br><span class="line">				l++;</span><br><span class="line">				r--;</span><br><span class="line">			&#125; else if (nums[l] + nums[r] + target &lt; 0) &#123;</span><br><span class="line">				l++;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				r--;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/28/Leetcode-15-3Sum/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1310,31 +1296,15 @@
 
       
         
-          
-            <h1 id="Longest-Common-Prefix"><a href="#Longest-Common-Prefix" class="headerlink" title="Longest Common Prefix"></a>Longest Common Prefix</h1><blockquote>
-<p>Write a function to find the longest common prefix string amongst an array of strings.</p>
-</blockquote>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定一组字符串，找出所有字符串的最长的公共前缀。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一-横向遍历"><a href="#思路一-横向遍历" class="headerlink" title="思路一  横向遍历"></a>思路一  横向遍历</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(S)，空间复杂度O(1),S是所有字符串字符的总和。最糟糕的情况就是所有字符串是相同的。</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>遍历字符串数组[S1,…,Sn],LCP(LCP(LCP(S1,S2),S3),…Sn)。</p>
-<p><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180228/14_basic.png" alt="Alt text"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public String longestCommonPrefix(String[] strs) &#123;</span><br><span class="line">	if (strs.length == 0)</span><br><span class="line">		return &quot;&quot;;</span><br><span class="line">	String prefix = strs[0];</span><br><span class="line">	for (int i = 1; i &lt; strs.length; i++) &#123;</span><br><span class="line">		while (strs[i].indexOf(prefix) != 0) &#123;</span><br><span class="line">			prefix = prefix.substring(0, prefix.length() - 1);</span><br><span class="line">			if (prefix.isEmpty())</span><br><span class="line">				return &quot;&quot;;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return prefix;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路二-垂直遍历"><a href="#思路二-垂直遍历" class="headerlink" title="思路二 垂直遍历"></a>思路二 垂直遍历</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(S)，空间复杂度O(1),S是minLen*n。相较于第一种方法，只需要横向遍历最短长度。</p>
-<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>上述的方法需要进行S次比较。优化此算法的办法就是进行垂直遍历。由上至下遍历每一列字符。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public String longestCommonPrefix(String[] strs) &#123;</span><br><span class="line">	if (strs == null || strs.length == 0)</span><br><span class="line">		return &quot;&quot;;</span><br><span class="line">	for (int i = 0; i &lt; strs[0].length(); i++) &#123;</span><br><span class="line">		char c = strs[0].charAt(i);</span><br><span class="line">		for (int j = 1; j &lt; strs.length; j++) &#123;</span><br><span class="line">			if (i == strs[j].length() || strs[j].charAt(i) != c) &#123;</span><br><span class="line">				return strs[0].substring(0, i);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return strs[0];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路三-分而治之"><a href="#思路三-分而治之" class="headerlink" title="思路三 分而治之"></a>思路三 分而治之</h3><h4 id="复杂度-2"><a href="#复杂度-2" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(S)，空间复杂度 O(m*log(n)),S的最好的情况是minLen*n，minLen为最短的字符串长度。</p>
-<h4 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h4><p>将LCP(Si…Sj)问题转化LCP(Si…Smid)和LCP(Smid+1…Sj)两个子问题进行处理，其中mid=(i+j)/2。用lcpLeft和lcpRight的结果来解决LCP(Si…Sj)。接着我们需要逐个比较lcpLeft和lcpRight每一个字符直到没有匹配的字符。这是对第一种解法的拆分处理。<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180228/14_lcp_diviso_et_lmpera.png" alt="Alt text"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class Solution3 &#123;</span><br><span class="line"></span><br><span class="line">	public String longestCommonPrefix(String[] strs) &#123;</span><br><span class="line">		if (strs == null || strs.length == 0)</span><br><span class="line">			return &quot;&quot;;</span><br><span class="line">		return longestCommonPrefix(strs, 0, strs.length - 1);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private String longestCommonPrefix(String[] strs, int l, int r) &#123;</span><br><span class="line">		if (l == r) &#123;</span><br><span class="line">			return strs[l];</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			int mid = (l + r) / 2;</span><br><span class="line">			String lcpLeft = longestCommonPrefix(strs, l, mid);</span><br><span class="line">			String lcpRight = longestCommonPrefix(strs, mid + 1, r);</span><br><span class="line">			return commonPrefix(lcpLeft, lcpRight);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	String commonPrefix(String left, String right) &#123;</span><br><span class="line">		int min = Math.min(left.length(), right.length());</span><br><span class="line">		for (int i = 0; i &lt; min; i++) &#123;</span><br><span class="line">			if (left.charAt(i) != right.charAt(i))</span><br><span class="line">				return left.substring(0, i);</span><br><span class="line">		&#125;</span><br><span class="line">		return left.substring(0, min);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路四-二分搜索"><a href="#思路四-二分搜索" class="headerlink" title="思路四 二分搜索"></a>思路四 二分搜索</h3><h4 id="复杂度-3"><a href="#复杂度-3" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(S*log(n))，空间复杂度 O(1),S为所有字符串的字符总和。二分搜索的复杂度为logN，所以整体复杂度为O(S*log(n))。</p>
-<h4 id="思路-4"><a href="#思路-4" class="headerlink" title="思路"></a>思路</h4><p>利用二分搜索法每次将对比的字符串分成两个部分。有两种情况</p>
-<ul>
-<li>S[1…mid]不是共同的字符串，所以我们放弃第二部分的搜索。</li>
-<li>S[1…mid]是共同的字符串，我们放弃第一部分的搜索，进行第二部分搜索，因为我们需要找到最长的共同前缀。<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180228/14_lcp_binary_search.png" alt="Alt text"></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class Solution4 &#123;</span><br><span class="line"></span><br><span class="line">	public String longestCommonPrefix(String[] strs) &#123;</span><br><span class="line">		if (strs == null || strs.length == 0)</span><br><span class="line">			return &quot;&quot;;</span><br><span class="line">		int minLen = Integer.MAX_VALUE;</span><br><span class="line">		// 找出最短的字符串长度</span><br><span class="line">		for (String str : strs) &#123;</span><br><span class="line">			minLen = Math.min(minLen, str.length());</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		int low = 1;</span><br><span class="line">		int high = minLen;</span><br><span class="line">		while (low &lt;= high) &#123;</span><br><span class="line">			int middle = (low + high) / 2;</span><br><span class="line">			if (isCommonPrefix(strs, middle)) &#123;</span><br><span class="line">				low = middle + 1;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				high = middle - 1;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return strs[0].substring(0, (low + high) / 2);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private boolean isCommonPrefix(String[] strs, int len) &#123;</span><br><span class="line">		String str1 = strs[0].substring(0, len);</span><br><span class="line">		for (int i = 1; i &lt; strs.length; i++) &#123;</span><br><span class="line">			if (!strs[i].startsWith(str1))</span><br><span class="line">				return false;</span><br><span class="line">		&#125;</span><br><span class="line">		return true;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          <h1 id="Longest-Common-Prefix"><a href="#Longest-Common-Prefix" class="headerlink" title="Longest Common Prefix"></a>Longest Common Prefix</h1><blockquote>
+<p>Write a function to find the longest common prefix string amongst an array of strings.<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/27/Leetcode-14-Longest-Common-Prefix/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1481,20 +1451,15 @@
 
       
         
-          
-            <h1 id="Roman-to-Integer"><a href="#Roman-to-Integer" class="headerlink" title="Roman to Integer"></a>Roman to Integer</h1><blockquote>
-<p>Given a roman numeral, convert it to an integer.Input is guaranteed to be within the range from 1 to 3999.</p>
-</blockquote>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定一个罗马数字，转换其为整数。输入范围[1,3999]。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>罗马数字中较小的字母在较大的字母之前意味着较大的字母减去较小的字母，而较小的字母在较大的字母之后意味着较大的字母加上较小的字母。而且这种前面最多只有一个较小的字母。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public int romanToInt(String s) &#123;</span><br><span class="line">	if (s == null || s.length() == 0)</span><br><span class="line">		return 0;</span><br><span class="line">	Map&lt;Character, Integer&gt; map = new HashMap&lt;Character, Integer&gt;();</span><br><span class="line">	map.put(&apos;I&apos;, 1);</span><br><span class="line">	map.put(&apos;V&apos;, 5);</span><br><span class="line">	map.put(&apos;X&apos;, 10);</span><br><span class="line">	map.put(&apos;L&apos;, 50);</span><br><span class="line">	map.put(&apos;C&apos;, 100);</span><br><span class="line">	map.put(&apos;D&apos;, 500);</span><br><span class="line">	map.put(&apos;M&apos;, 1000);</span><br><span class="line"></span><br><span class="line">	int length = s.length();</span><br><span class="line">	int result = map.get(s.charAt(length - 1));</span><br><span class="line">	for (int i = length - 2; i &gt;= 0; i--) &#123;</span><br><span class="line">		if (map.get(s.charAt(i + 1)) &lt;= map.get(s.charAt(i))) &#123;</span><br><span class="line">			result += map.get(s.charAt(i));</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			result -= map.get(s.charAt(i));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路二-减大加小法"><a href="#思路二-减大加小法" class="headerlink" title="思路二 减大加小法"></a>思路二 减大加小法</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(n)，空间复杂度O(1)</p>
-<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>将字符串转换为字符数组，依次对字符数组进行处理。如果当前字母比上一个小，说明直接加上就可以了。如果当前字母比上一个字母大，说明正确的值应该是该字母减去上一个字母，而我们之前就已经加上了上一个字母，所以我们要减去两倍的上一个字母，然后加上当前字母。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class Solution2 &#123;</span><br><span class="line"></span><br><span class="line">	public int romanToInt(String s) &#123;</span><br><span class="line">		int ans;</span><br><span class="line">		char[] sc = s.toCharArray();</span><br><span class="line">		ans = toInt(sc[0]);</span><br><span class="line">		for (int i = 1; i &lt; s.length(); i++) &#123;</span><br><span class="line">			ans += toInt(sc[i]);</span><br><span class="line">			if (toInt(sc[i - 1]) &lt; toInt(sc[i])) &#123;</span><br><span class="line">				ans -= toInt(sc[i - 1]) * 2;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return ans;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private int toInt(char s) &#123;</span><br><span class="line">		switch (s) &#123;</span><br><span class="line">		case &apos;I&apos;:</span><br><span class="line">			return 1;</span><br><span class="line">		case &apos;V&apos;:</span><br><span class="line">			return 5;</span><br><span class="line">		case &apos;X&apos;:</span><br><span class="line">			return 10;</span><br><span class="line">		case &apos;L&apos;:</span><br><span class="line">			return 50;</span><br><span class="line">		case &apos;C&apos;:</span><br><span class="line">			return 100;</span><br><span class="line">		case &apos;D&apos;:</span><br><span class="line">			return 500;</span><br><span class="line">		case &apos;M&apos;:</span><br><span class="line">			return 1000;</span><br><span class="line">		&#125;</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
+          <h1 id="Roman-to-Integer"><a href="#Roman-to-Integer" class="headerlink" title="Roman to Integer"></a>Roman to Integer</h1><blockquote>
+<p>Given a roman numeral, convert it to an integer.Input is guaranteed to be within the range from 1 to 3999.<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/26/Leetcode-13-Roman-to-Integer/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1641,77 +1606,15 @@
 
       
         
-          
-            <h1 id="Integer-to-Roman"><a href="#Integer-to-Roman" class="headerlink" title="Integer to Roman"></a>Integer to Roman</h1><blockquote>
-<p>Given an integer, convert it to a roman numeral.Input is guaranteed to be within the range from 1 to 3999.</p>
-</blockquote>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定一个整数，将其转换成罗马数字。整数的范围为[1.3999]。</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">罗马字符</th>
-<th style="text-align:left">I</th>
-<th style="text-align:left">V</th>
-<th>X</th>
-<th>L</th>
-<th>C</th>
-<th>D</th>
-<th>M</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">阿拉伯数字</td>
-<td style="text-align:left">1</td>
-<td style="text-align:left">5</td>
-<td>10</td>
-<td>50</td>
-<td>100</td>
-<td>500</td>
-<td>1000</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">阿拉伯数字</th>
-<th style="text-align:left">100</th>
-<th style="text-align:left">200</th>
-<th style="text-align:left">300</th>
-<th style="text-align:left">400</th>
-<th style="text-align:left">500</th>
-<th style="text-align:left">600</th>
-<th style="text-align:left">700</th>
-<th style="text-align:left">800</th>
-<th style="text-align:left">900</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">罗马字符</td>
-<td style="text-align:left">C</td>
-<td style="text-align:left">CC</td>
-<td style="text-align:left">CCC</td>
-<td style="text-align:left">CD</td>
-<td style="text-align:left">D</td>
-<td style="text-align:left">DC</td>
-<td style="text-align:left">DCC</td>
-<td style="text-align:left">DCCC</td>
-<td style="text-align:left">CM</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>例:1437的罗马表示法为:MCDXXXVII</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>将阿拉伯数字上的每一位替换成对应的罗马数字即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public String intToRoman(int num) &#123;</span><br><span class="line">	String M[] = &#123; &quot;&quot;, &quot;M&quot;, &quot;MM&quot;, &quot;MMM&quot; &#125;;</span><br><span class="line">	String C[] = &#123; &quot;&quot;, &quot;C&quot;, &quot;CC&quot;, &quot;CCC&quot;, &quot;CD&quot;, &quot;D&quot;, &quot;DC&quot;, &quot;DCC&quot;, &quot;DCCC&quot;, &quot;CM&quot; &#125;;</span><br><span class="line">	String X[] = &#123; &quot;&quot;, &quot;X&quot;, &quot;XX&quot;, &quot;XXX&quot;, &quot;XL&quot;, &quot;L&quot;, &quot;LX&quot;, &quot;LXX&quot;, &quot;LXXX&quot;, &quot;XC&quot; &#125;;</span><br><span class="line">	String I[] = &#123; &quot;&quot;, &quot;I&quot;, &quot;II&quot;, &quot;III&quot;, &quot;IV&quot;, &quot;V&quot;, &quot;VI&quot;, &quot;VII&quot;, &quot;VIII&quot;, &quot;IX&quot; &#125;;</span><br><span class="line">	return M[num / 1000] + C[(num / 100) % 10] + X[(num / 10) % 10] + I[num % 10];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路二"><a href="#思路二" class="headerlink" title="思路二"></a>思路二</h3><h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>罗马数字表示时，字母是可以重复的，但是不能够超过三次，超过三次的时候，与下一位组合表示。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public String intToRoman(int num) &#123;</span><br><span class="line">	int[] nums = &#123; 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 &#125;;</span><br><span class="line">	String[] symbols = &#123; &quot;M&quot;, &quot;CM&quot;, &quot;D&quot;, &quot;CD&quot;, &quot;C&quot;, &quot;XC&quot;, &quot;L&quot;, &quot;XL&quot;, &quot;X&quot;, &quot;IX&quot;, &quot;V&quot;, &quot;IV&quot;, &quot;I&quot; &#125;;</span><br><span class="line">	StringBuilder sb = new StringBuilder();</span><br><span class="line">	int digit = 0;</span><br><span class="line">	while (num &gt; 0) &#123;</span><br><span class="line">		int times = num / nums[digit];</span><br><span class="line">		num -= nums[digit] * times;</span><br><span class="line">		for (; times &gt; 0; times--) &#123;</span><br><span class="line">			sb.append(symbols[digit]);</span><br><span class="line">		&#125;</span><br><span class="line">		digit++;</span><br><span class="line">	&#125;</span><br><span class="line">	return sb.toString();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          <h1 id="Integer-to-Roman"><a href="#Integer-to-Roman" class="headerlink" title="Integer to Roman"></a>Integer to Roman</h1><blockquote>
+<p>Given an integer, convert it to a roman numeral.Input is guaranteed to be within the range from 1 to 3999.<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/26/Leetcode-12-Integer-to-Roman/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1858,20 +1761,15 @@
 
       
         
-          
-            <h1 id="Container-With-Most-Water"><a href="#Container-With-Most-Water" class="headerlink" title="Container With Most Water"></a>Container With Most Water</h1><blockquote>
-<p>Given n non-negative integers a1, a2, …, an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.<br>Note: You may not slant the container and n is at least 2.</p>
-</blockquote>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>给定n个非负整数a1,a2,…,an，其中每个坐标(i,ai)代表一个点。n条垂直线段组成的端点为(i,ai),(i,0)。从中找出两条线段满足，与X轴形成的容器使得包含最多的水。<br>备注：不必倾斜容器，n&gt;=2</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一-Brute-Force"><a href="#思路一-Brute-Force" class="headerlink" title="思路一  Brute Force"></a>思路一  Brute Force</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n^2)，空间复杂度:O(1)</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>简单的考虑每一种可能的线段对，找出符合最大面积要求的结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public int maxArea(int[] height) &#123;</span><br><span class="line">	int maxArea = 0;</span><br><span class="line">	for (int i = 0; i &lt; height.length; i++) &#123;</span><br><span class="line">		for (int j = i + 1; j &lt; height.length; j++) &#123;</span><br><span class="line">			maxArea = Math.max(maxArea, Math.min(height[i], height[j]) * (j - i));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return maxArea;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路二-Two-Pointer-Approach"><a href="#思路二-Two-Pointer-Approach" class="headerlink" title="思路二  Two Pointer Approach"></a>思路二  Two Pointer Approach</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n)，空间复杂度:O(1)</p>
-<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>两条线段组成的区域总是被短一点线段所限制。此外，两条线段相距越远，组成的面积将会越大。定义两个指针l,r，一个在数组起始位置，一个在数组终点位置，最终构成区域的宽度。另外，我们用maxArea来存储目前最大的面积。每走一步，我们找出他们组成的面积，并更新maxArea的值，同时移除指向短线段的指针直到最后间距为1。这个想法的基础是，如果l指针的长度小于r，无论如何移动r，短线在l，不可能找出比当前记录的area更大的值了，只能通过移动l来找到可能的更大的面积。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public int maxArea(int[] height) &#123;</span><br><span class="line">	int maxArea = 0, l = 0, r = height.length - 1;</span><br><span class="line">	while (l &lt; r) &#123;</span><br><span class="line">		maxArea = Math.max(maxArea, Math.min(height[l], height[r]) * (r - l));</span><br><span class="line">		if (height[l] &lt; height[r]) &#123;</span><br><span class="line">			l++;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			r--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	return maxArea;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          <h1 id="Container-With-Most-Water"><a href="#Container-With-Most-Water" class="headerlink" title="Container With Most Water"></a>Container With Most Water</h1><blockquote>
+<p>Given n non-negative integers a1, a2, …, an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.<br>Note: You may not slant the container and n is at least 2.<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/02/26/Leetcode-11-Container-With-Most-Water/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

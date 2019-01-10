@@ -348,8 +348,7 @@
 
       
         
-          <p><img src="https://assets.miaia.cn/posts/2018/how-to-play-with-live2d-on-hexo/how-to-play-with-live2d-on-hexo.png" alt="Alt Text"></p>
-<ul>
+          <ul>
 <li>标题：【Java源码阅读计划】 ArrayList</li>
 <li>进度：0%</li>
 <li>总结：</li>
@@ -507,22 +506,21 @@
 
       
         
-          
-            <h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><ul>
+          <h1 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h1><ul>
 <li>jps</li>
 <li>jstat</li>
 <li>top</li>
 <li>jstack</li>
 <li>watch</li>
 </ul>
-<h2 id="利用JPS命令获取Java程序进程号"><a href="#利用JPS命令获取Java程序进程号" class="headerlink" title="利用JPS命令获取Java程序进程号"></a>利用JPS命令获取Java程序进程号</h2><p>利用jps命令可以快速获取Java程序的进程号。效果如下图：<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/jps2.png" alt="Alt text"></p>
-<h2 id="利用TOP查看CPU、内存占用"><a href="#利用TOP查看CPU、内存占用" class="headerlink" title="利用TOP查看CPU、内存占用"></a>利用TOP查看CPU、内存占用</h2><p>可以使用<code>top</code>查看所有的进程使用CPU、内存的情况，有点类似于windows下的任务管理器。当然如果想只看特定的进程，可以使用<code>top -p [进程ID]</code>进行查看。以通知系统为例，上面获取的进程pid为24042，则可以使用<code>top -p 24042</code>就可以查看到内存、CPU使用情况了。<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/top1.png" alt="Alt text"></p>
-<h3 id="查看进程中的线程使用情况"><a href="#查看进程中的线程使用情况" class="headerlink" title="查看进程中的线程使用情况"></a>查看进程中的线程使用情况</h3><p>很多时候，只看进程并不能快速的定位问题的所在，这时候需要清除应用程序到底在什么地方，耗费了大量的资源。通过<code>top -Hp [进程号]</code>可看到进程中详细的线程。当某个数据库操作比较耗时，或者某个算法比较耗时，可以通过线程的pid去定位问题，然而怎么去定位问题，这时候jstack就登场了。<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/top2.png" alt="Alt text"></p>
-<h2 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h2><p>首先将堆栈的日志输出到文件，上面获取的线程号需要转换成16进制，可以通过<code>cat [日志文件]|grep [16进制线程号]</code>，这样就能够具体分析堆栈的具体情况。<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/jstack1.png" alt="Alt text"><br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/jstack2.png" alt="Alt text"></p>
-<h2 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h2><p>另外，<code>watch</code>命令是一个比较方便的命令，<code>watch &quot;jstack [进程号]|grep [包的部分路径关键字]&quot;</code>，这样就能每隔2s打印堆栈信息，当然这个时间间隔可以通过参数自行设置。<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/watch1.png" alt="Alt text"><br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/watch2.png" alt="Alt text"></p>
-<h2 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h2><p>前面介绍GC那篇文章有着重讲过这个工具，这边文章主要也是通过该命令去分析是否存在eden区和old区空间设置不合理，导致频繁GC，或者GC时间过长，STW等问题。常用命令:<br><code>jstat -gcutil [进程号] 1000</code>，该命令的作用是每1s输出gc情况，具体分析，可查看上一篇日志。</p>
-
-          
+<h2 id="利用JPS命令获取Java程序进程号"><a href="#利用JPS命令获取Java程序进程号" class="headerlink" title="利用JPS命令获取Java程序进程号"></a>利用JPS命令获取Java程序进程号</h2><p>利用jps命令可以快速获取Java程序的进程号。效果如下图：<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/jps2.png" alt="Alt text"><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/11/01/How-to-locate-the-online-java-problem/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -669,8 +667,7 @@
 
       
         
-          <p><img src="https://assets.miaia.cn/posts/2018/how-to-play-with-live2d-on-hexo/how-to-play-with-live2d-on-hexo.png" alt="Alt Text"></p>
-<ul>
+          <ul>
 <li>标题：【Java源码阅读计划】AtomicInteger</li>
 <li>进度：0%</li>
 <li>总结：</li>
@@ -977,42 +974,20 @@
 
       
         
-          
-            <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h1 id="Java-GC"><a href="#Java-GC" class="headerlink" title="Java GC"></a>Java GC</h1><p>Java对象被回收，必须满足两个条件:</p>
+          <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h1 id="Java-GC"><a href="#Java-GC" class="headerlink" title="Java GC"></a>Java GC</h1><p>Java对象被回收，必须满足两个条件:</p>
 <ul>
 <li>没有任何（有效）引用指向它</li>
 <li>GC被运行<br>通常，我们通过手动置空的方式来满足对象下次GC运行的时候被回收，如下这种方式比较常见:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Object obj = new Object();</span><br><span class="line">obj = null;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>这种方式较为繁琐，且违背JAVA GC自动回收的本质。另，缓存对象一般常为程序需要，随着缓存中的引用逐渐增加，GC无法回收的对象增多，导致无法自动回收，也是一个比较常见的问题。</p>
-<h2 id="弱引用-WeakReference"><a href="#弱引用-WeakReference" class="headerlink" title="弱引用(WeakReference)"></a>弱引用(WeakReference)</h2><h3 id="WeakReference-And-WeakHashMap"><a href="#WeakReference-And-WeakHashMap" class="headerlink" title="WeakReference And WeakHashMap"></a>WeakReference And WeakHashMap</h3><h4 id="WeakReference"><a href="#WeakReference" class="headerlink" title="WeakReference"></a>WeakReference</h4><p>当一个对象仅仅被WeakReference指向时，而没有其他强引用指向的时候,GC运行，这个对象将会被回收。</p>
-<h4 id="WeakHashMap"><a href="#WeakHashMap" class="headerlink" title="WeakHashMap"></a>WeakHashMap</h4><ul>
-<li>WeakHashMap 是存储键值对(key-value)的非同步且无序的散列表，键和值都允许为null，基本跟 HashMap一致。</li>
-<li>特殊之处在于 WeakHashMap 里的entry可能会被GC自动删除，即使没有主动调用 remove() 或者 clear() 方法。</li>
-<li>其键为弱键，除了自身有对key的引用外，此key没有其他引用那么此map会自动丢弃此值。</li>
-<li>消除陈旧对象时，使用WeakHashMap,用于短时间内就过期的缓存。</li>
-</ul>
-<p>通俗来讲，当使用WeakHashMap时，及时没有显示的进行添加和删除操作，也会发生如下情形</p>
-<ul>
-<li>调用两次size()方法返回不同的值。</li>
-<li>两次调用isEmpty()方法，第一次返回false，第二次返回true。</li>
-<li>两次调用containsKey()方法，第一次返回true，第二次返回false，尽管两次使用的是同一个key。</li>
-<li>两次调用get()方法，第一次返回一个value，第二次返回null，尽管两次使用的是同一个对象。</li>
-</ul>
-<p>那么出现这种情形的原理是啥？这里简述一下过程:WeakHashMap的键为弱键。在WeakHashMap中，当某个键不再正常使用时，会被从WeakHashMap中自动移除。换句话说，对于一个给定的键，其映射的存在并不阻止垃圾回收器对该键的丢弃。WeakHashMap中的弱键是通过WeakReference和ReferenceQueue实现的。ReferenceQueue是一个队列，保存被GC回收的弱键，主要用作同步。具体实现步骤为:</p>
-<ul>
-<li>新建WeakHashMap，将键值对添加到WeakHashMap中。实际上,WeakHashMap是通过table来保存Entry，每一个Entry实际上是一个单向链表。</li>
-<li>当某个弱键不再被其他对象引用，并被GC回收时，在GC回收该弱键的时候，这个弱键同时会被添加到ReferenceQueue队列中。</li>
-<li>当下一个操作WeakHashMap时，会先同步table和queue。table中保存了全部的键值对，而queue中保存被GC回收的键值对，同步其实就是<strong>删除table中被GC回收的键值对</strong>。</li>
-</ul>
-<h4 id="过程分析"><a href="#过程分析" class="headerlink" title="过程分析"></a>过程分析</h4><p>我们来看下面的例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">private static String test()&#123;</span><br><span class="line">    String a = new String(&quot;a&quot;);</span><br><span class="line">    //System.out.println(a);</span><br><span class="line">    WeakReference&lt;String&gt; b = new WeakReference&lt;String&gt;(a);</span><br><span class="line">    //System.out.println(b.get());</span><br><span class="line">    WeakHashMap&lt;String, Integer&gt; weakMap = new WeakHashMap&lt;String, Integer&gt;();</span><br><span class="line">    weakMap.put(b.get(), 1);</span><br><span class="line">    a = null;</span><br><span class="line">    System.out.println(&quot;GC前b.get()：&quot;+b.get());</span><br><span class="line">    System.out.println(&quot;GC前weakMap：&quot;+weakMap);</span><br><span class="line">    System.gc();</span><br><span class="line">    System.out.println(&quot;GC后&quot;+b.get());</span><br><span class="line">    System.out.println(&quot;GC后&quot;+weakMap);</span><br><span class="line">    String c = &quot;&quot;;</span><br><span class="line">    try&#123;</span><br><span class="line">        c = b.get().replace(&quot;a&quot;, &quot;b&quot;);</span><br><span class="line">        System.out.println(&quot;C:&quot;+c);</span><br><span class="line">        return c;</span><br><span class="line">    &#125;catch(Exception e)&#123;</span><br><span class="line">        c = &quot;c&quot;;</span><br><span class="line">        System.out.println(&quot;Exception&quot;);</span><br><span class="line">        return c;</span><br><span class="line">    &#125;finally&#123;</span><br><span class="line">        c += &quot;d&quot;;</span><br><span class="line">        return c + &quot;e&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h5 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GC前b.get()：a</span><br><span class="line">GC前weakMap：&#123;a=1&#125;</span><br><span class="line">GC后null</span><br><span class="line">GC后&#123;&#125;</span><br><span class="line">Exception</span><br><span class="line">cde</span><br></pre></td></tr></table></figure>
-<p>这道题目能够完美地使其理解好WeakReference和WeakHashMap。a=null,system.gc()后，a已经被系统回收，b没有强引用指向，所以b.get()则返回null，进行b.get().replace(“a”, “b”)时则抛出异常，故运行结果为“cde”。</p>
-<h2 id="软引用-SoftReference"><a href="#软引用-SoftReference" class="headerlink" title="软引用(SoftReference)"></a>软引用(SoftReference)</h2><p>软引用和弱引用的区别在于，如果一个对象是弱引用可达，无论当前内训是否充足，它都会被回收，而软引用可达的对象在内存不足时，才会被回收，因此软引用要比弱引用强一点。</p>
-<h2 id="虚引用-Phantom-Reference"><a href="#虚引用-Phantom-Reference" class="headerlink" title="虚引用(Phantom Reference)"></a>虚引用(Phantom Reference)</h2><p>虚引用是Java中最弱的引用，以至于我们通过虚引用无法获取到被引用的对象，虚引用存在的唯一作用就是当它指向的对象被回收后，虚引用本身就会被加入到引用队列中，用作记录它指向的对象已被回收。它的get()方法总是返回null。在finalize()方法中，通过一个强引用指向它，都无法复活PhantomReference指向的对象。虚引用适合用来查看对象什么时候被回收,优化内存的时候使用。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.cnblogs.com/romanjoy/p/8178071.html" target="_blank" rel="noopener">https://www.cnblogs.com/romanjoy/p/8178071.html</a><br><a href="http://www.importnew.com/23182.html" target="_blank" rel="noopener">http://www.importnew.com/23182.html</a></p>
-
-          
+<p>这种方式较为繁琐，且违背JAVA GC自动回收的本质。另，缓存对象一般常为程序需要，随着缓存中的引用逐渐增加，GC无法回收的对象增多，导致无法自动回收，也是一个比较常见的问题。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/13/WeakReference-And-WeakHashMap/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1159,8 +1134,7 @@
 
       
         
-          
-            <h1 id="Java-GC常用工具"><a href="#Java-GC常用工具" class="headerlink" title="Java GC常用工具"></a>Java GC常用工具</h1><h2 id="JVM监控工具"><a href="#JVM监控工具" class="headerlink" title="JVM监控工具"></a>JVM监控工具</h2><table>
+          <h1 id="Java-GC常用工具"><a href="#Java-GC常用工具" class="headerlink" title="Java GC常用工具"></a>Java GC常用工具</h1><h2 id="JVM监控工具"><a href="#JVM监控工具" class="headerlink" title="JVM监控工具"></a>JVM监控工具</h2><table>
 <thead>
 <tr>
 <th>工具名称</th>
@@ -1201,39 +1175,13 @@
 </tr>
 </tbody>
 </table>
-<h2 id="可视化分析工具"><a href="#可视化分析工具" class="headerlink" title="可视化分析工具"></a>可视化分析工具</h2><table>
-<thead>
-<tr>
-<th>工具名称</th>
-<th>作用</th>
-<th>补充</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>VisualVM</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>MAT</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>JProfile</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>HPjmeter</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h2 id="Java-GC-日志"><a href="#Java-GC-日志" class="headerlink" title="Java GC 日志"></a>Java GC 日志</h2><p>Java GC日志可以通过 +PrintGCDetails开启。对于Java GC日志的解析，可以以ParallelGC为例。<br>YoungGC:<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180806/younggc.jpeg" alt="Alt Text"><br>FullGC:<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180806/fullgc.jpeg" alt="Alt Text"></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/03/Java-GC-Analysis-And-Optimize/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1380,8 +1328,7 @@
 
       
         
-          
-            <h1 id="Eclipse相关问题整理"><a href="#Eclipse相关问题整理" class="headerlink" title="Eclipse相关问题整理"></a>Eclipse相关问题整理</h1><h2 id="修改Eclipse-Git插件中默认的作者和提交者"><a href="#修改Eclipse-Git插件中默认的作者和提交者" class="headerlink" title="修改Eclipse Git插件中默认的作者和提交者"></a>修改Eclipse Git插件中默认的作者和提交者</h2><ul>
+          <h1 id="Eclipse相关问题整理"><a href="#Eclipse相关问题整理" class="headerlink" title="Eclipse相关问题整理"></a>Eclipse相关问题整理</h1><h2 id="修改Eclipse-Git插件中默认的作者和提交者"><a href="#修改Eclipse-Git插件中默认的作者和提交者" class="headerlink" title="修改Eclipse Git插件中默认的作者和提交者"></a>修改Eclipse Git插件中默认的作者和提交者</h2><ul>
 <li>打开 Windows -&gt; Preferences -&gt; Team -&gt; Git -&gt; Configuration</li>
 <li>修改User Settings，点击Add Entry</li>
 <li>添加两个键值对分别为:<ul>
@@ -1389,10 +1336,14 @@
 <li>user.email  xxxxx@xxx.com</li>
 </ul>
 </li>
-<li>这时在Git Staging中的Commit message栏位中出现的Author和Committer就是你想要的提交者了。</li>
-</ul>
-
-          
+<li>这时在Git Staging中的Commit message栏位中出现的Author和Committer就是你想要的提交者了。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/24/Eclipse-Relevant-Questions/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1539,8 +1490,7 @@
 
       
         
-          
-            <h1 id="Divide-Two-Integers"><a href="#Divide-Two-Integers" class="headerlink" title="Divide Two Integers"></a>Divide Two Integers</h1><blockquote>
+          <h1 id="Divide-Two-Integers"><a href="#Divide-Two-Integers" class="headerlink" title="Divide Two Integers"></a>Divide Two Integers</h1><blockquote>
 <p>Given two integers dividend and divisor, divide two integers without using multiplication, division and mod operator.Return the quotient after dividing dividend by divisor.The integer division should truncate toward zero.</p>
 </blockquote>
 <p><strong>Example 1:</strong></p>
@@ -1551,22 +1501,14 @@
 <ul>
 <li>Both dividend and divisor will be 32-bit signed integers.</li>
 <li>The divisor will never be 0.</li>
-<li>Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−2^31,  2^31 − 1]. For the purpose of this problem, assume that your function returns 2^31 − 1 when the division result overflows.</li>
-</ul>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>两个数的除法，但是部允许用乘、除、取余符号。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一-位运算"><a href="#思路一-位运算" class="headerlink" title="思路一 位运算"></a>思路一 位运算</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n^2)，空间复杂度:O(1)。</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>解决这个问题需要注意几个点:</p>
-<ul>
-<li>Integer.MIN_VALUE取绝对值溢出问题</li>
-<li>使用位运算来进行计算</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	public int divide(int dividend, int divisor) &#123;</span><br><span class="line">		// 除数为0，根据被除数的符号取Integer最大最小值</span><br><span class="line">		if (divisor == 0) return dividend &gt;= 0 ? Integer.MAX_VALUE : Integer.MIN_VALUE;</span><br><span class="line">		// 被除数为0的情况，直接输出0。</span><br><span class="line">		if (dividend == 0) return 0;</span><br><span class="line">		// 被除数为Integer最小值且除数为-1时，结果会溢出，故取Integer最大值。</span><br><span class="line">		if (dividend == Integer.MIN_VALUE &amp;&amp; divisor == -1) return Integer.MAX_VALUE;</span><br><span class="line">		// 判断输出结果的符号</span><br><span class="line">		boolean isNegative = (dividend &lt; 0 &amp;&amp; divisor &gt; 0) || (dividend &gt; 0 &amp;&amp; divisor &lt; 0);</span><br><span class="line"></span><br><span class="line">		// 解决Integer.MIN_VALUE取绝对值溢出问题。</span><br><span class="line">		long ldividend = Math.abs((long) dividend);</span><br><span class="line">		long ldivisor = Math.abs((long) divisor);</span><br><span class="line"></span><br><span class="line">		int result = 0;</span><br><span class="line">		while (ldividend &gt;= ldivisor) &#123;</span><br><span class="line">			int shift = 0;</span><br><span class="line">			while (ldividend &gt;= (ldivisor &lt;&lt; shift)) &#123;</span><br><span class="line">				shift++;</span><br><span class="line">			&#125;</span><br><span class="line">			ldividend -= ldivisor &lt;&lt; (shift - 1);</span><br><span class="line">			result += 1 &lt;&lt; (shift - 1);</span><br><span class="line">		&#125;</span><br><span class="line">		return isNegative ? -result : result;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路二-位运算改进版"><a href="#思路二-位运算改进版" class="headerlink" title="思路二 位运算改进版"></a>思路二 位运算改进版</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n)，空间复杂度:O(1)。</p>
-<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>在上述方法中的while循环中，提取出最大的移动位数操作。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	public int divide(int dividend, int divisor) &#123;</span><br><span class="line">		// 除数为0，根据被除数的符号取Integer最大最小值</span><br><span class="line">		if (divisor == 0) return dividend &gt;= 0 ? Integer.MAX_VALUE : Integer.MIN_VALUE;</span><br><span class="line">		// 被除数为0的情况，直接输出0。</span><br><span class="line">		if (dividend == 0) return 0;</span><br><span class="line">		// 被除数为Integer最小值且除数为-1时，结果会溢出，故取Integer最大值。</span><br><span class="line">		if (dividend == Integer.MIN_VALUE &amp;&amp; divisor == -1) return Integer.MAX_VALUE;</span><br><span class="line">		// 判断输出结果的符号</span><br><span class="line">		boolean isNegative = (dividend &lt; 0 &amp;&amp; divisor &gt; 0) || (dividend &gt; 0 &amp;&amp; divisor &lt; 0);</span><br><span class="line"></span><br><span class="line">		// 解决Integer.MIN_VALUE取绝对值溢出问题。</span><br><span class="line">		long ldividend = Math.abs((long) dividend);</span><br><span class="line">		long ldivisor = Math.abs((long) divisor);</span><br><span class="line"></span><br><span class="line">		int result = 0;</span><br><span class="line">		int multiple = 1;</span><br><span class="line"></span><br><span class="line">		while ((ldivisor &lt;&lt; 1) &lt;= ldividend) &#123;</span><br><span class="line">			multiple &lt;&lt;= 1;</span><br><span class="line">			ldivisor &lt;&lt;= 1;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		while (multiple &gt; 0) &#123;</span><br><span class="line">			if (ldividend &gt;= ldivisor) &#123;</span><br><span class="line">				ldividend -= ldivisor;</span><br><span class="line">				result += multiple;</span><br><span class="line">			&#125;</span><br><span class="line">			multiple &gt;&gt;= 1;</span><br><span class="line">			ldivisor &gt;&gt;= 1;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return isNegative ? -result : result;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+<li>Assume we are dealing with an environment which could only store integers within the 32-bit signed integer range: [−2^31,  2^31 − 1]. For the purpose of this problem, assume that your function returns 2^31 − 1 when the division result overflows.
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/11/Leetcode-29-Divide-Two-Integers/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1713,8 +1655,7 @@
 
       
         
-          
-            <h1 id="Implement-strStr"><a href="#Implement-strStr" class="headerlink" title="Implement strStr()"></a>Implement strStr()</h1><blockquote>
+          <h1 id="Implement-strStr"><a href="#Implement-strStr" class="headerlink" title="Implement strStr()"></a>Implement strStr()</h1><blockquote>
 <p>Implement strStr().Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.</p>
 </blockquote>
 <p><strong>Example 1:</strong></p>
@@ -1723,16 +1664,13 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: haystack = &quot;aaaaa&quot;, needle = &quot;bba&quot;</span><br><span class="line">Output: -1</span><br></pre></td></tr></table></figure>
 <p><strong>Clarification:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">What should we return when needle is an empty string? This is a great question to ask during an interview.</span><br><span class="line"></span><br><span class="line">For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C&apos;s strstr() and Java&apos;s indexOf().</span><br></pre></td></tr></table></figure>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>判断needle是否是haystack的字串，类似indexOf方法。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一-Brute-Force"><a href="#思路一-Brute-Force" class="headerlink" title="思路一  Brute Force"></a>思路一  Brute Force</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(N^2)，空间复杂度：O(1)。</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>考虑边界条件，用暴力法进行求解。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line"></span><br><span class="line">	public int strStr(String haystack, String needle) &#123;</span><br><span class="line"></span><br><span class="line">		int start = 0;</span><br><span class="line">		// 如果剩下的字母不够needle的长度就停止遍历</span><br><span class="line">		while (start &lt;= haystack.length() - needle.length()) &#123;</span><br><span class="line">			int i1 = start, i2 = 0;</span><br><span class="line">			while (i2 &lt; needle.length() &amp;&amp; haystack.charAt(i1) == needle.charAt(i2)) &#123;</span><br><span class="line">				i1++;</span><br><span class="line">				i2++;</span><br><span class="line">			&#125;</span><br><span class="line">			if (i2 == needle.length()) return start;</span><br><span class="line">			start++;</span><br><span class="line">		&#125;</span><br><span class="line">		return -1;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="思路二-KMP算法"><a href="#思路二-KMP算法" class="headerlink" title="思路二  KMP算法"></a>思路二  KMP算法</h3><h4 id="复杂度-1"><a href="#复杂度-1" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(N+M)，空间复杂度：O(M)。</p>
-<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>KMP算法是较为高级的算法。它使用一个next数组，这个数组记录了模式串needle自身的前缀和后缀的重复情况。同样是双指针进行匹配，当失配时可以根据这个数组找到应该将模式串向后位移多少位，避免一些重复的比较。<a href="https://blog.csdn.net/v_july_v/article/details/7041827" target="_blank" rel="noopener">KMP算法</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">public class Solution2 &#123;</span><br><span class="line"></span><br><span class="line">	public int strStr(String haystack, String needle) &#123;</span><br><span class="line">		if (needle.length() == 0) return 0;</span><br><span class="line"></span><br><span class="line">		int[] next = new int[needle.length()];</span><br><span class="line">		// 得到next数组</span><br><span class="line">		getNextArr(next, needle);</span><br><span class="line">		// i是匹配串haystack的指针，j是模式串needle的指针</span><br><span class="line">		int i = 0, j = 0;</span><br><span class="line">		// 双指针开始匹配</span><br><span class="line">		while (i &lt; haystack.length() &amp;&amp; j &lt; needle.length()) &#123;</span><br><span class="line">			// 如果j=-1意味着刚刚失配过，下标+1后，下一轮就可以开始匹配各自的第一个了</span><br><span class="line">			// 如果指向的字母相同，则下一轮匹配各自的下一个</span><br><span class="line">			if (j == -1 || haystack.charAt(i) == needle.charAt(j)) &#123;</span><br><span class="line">				i++;</span><br><span class="line">				j++;</span><br><span class="line">				// 如果失配，则将更新j为next[j]</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				j = next[j];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return j == needle.length() ? i - j : -1;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	private void getNextArr(int[] next, String needle) &#123;</span><br><span class="line">		// k是前缀中相同部分的末尾，同时也是相同部分的长度，因为长度等于k-0。</span><br><span class="line">		// j是后缀的末尾，即后缀相同部分的末尾</span><br><span class="line">		int k = -1, j = 0;</span><br><span class="line">		next[0] = -1;</span><br><span class="line">		while (j &lt; needle.length() - 1) &#123;</span><br><span class="line">			// 如果k=-1，说明刚刚失配了，则重新开始计算前缀和后缀相同的长度</span><br><span class="line">			// 如果两个字符相等，则在上次前缀和后缀相同的长度加1就行了</span><br><span class="line">			if (k == -1 || needle.charAt(j) == needle.charAt(k)) &#123;</span><br><span class="line">				k++;</span><br><span class="line">				j++;</span><br><span class="line">				next[j] = k;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				// 否则，前缀长度缩短为next[k]</span><br><span class="line">				k = next[k];</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/11/Leetcode-28-Implement-strStr/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1879,8 +1817,7 @@
 
       
         
-          
-            <h1 id="Remove-Element"><a href="#Remove-Element" class="headerlink" title="Remove Element"></a>Remove Element</h1><blockquote>
+          <h1 id="Remove-Element"><a href="#Remove-Element" class="headerlink" title="Remove Element"></a>Remove Element</h1><blockquote>
 <p>Given an array nums and a value val, remove all instances of that value in-place and return the new length.Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.The order of elements can be changed. It doesn’t matter what you leave beyond the new length.</p>
 </blockquote>
 <p><strong>Example 1:</strong></p>
@@ -1892,13 +1829,13 @@
 <p>Confused why the returned value is an integer but your answer is an array?Note that the input array is passed in by reference, which means modification to the input array will be known to the caller as well.Internally you can think of this:</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// nums is passed in by reference. (i.e., without making a copy)</span><br><span class="line">int len = removeElement(nums, val);</span><br><span class="line"></span><br><span class="line">// any modification to nums in your function would be known by the caller.</span><br><span class="line">// using the length returned by your function, it prints the first len elements.</span><br><span class="line">for (int i = 0; i &lt; len; i++) &#123;</span><br><span class="line">    print(nums[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>删除数组中给定的值，并返回修改后的长度。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n)，空间复杂度:O(1)。</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>与#26 Remove Duplicates from Sorted Array.方法相似。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">	public int removeElement(int[] nums, int val) &#123;</span><br><span class="line">		int i = 0;</span><br><span class="line">		for (int j = 0; j &lt; nums.length; j++) &#123;</span><br><span class="line">			if (nums[j] != val) &#123;</span><br><span class="line">				nums[i] = nums[j];</span><br><span class="line">				i++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/10/Leetcode-27-Remove-Element/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="Jarvis的技术小黑屋">
 <meta property="og:description" content="Regular Expression Matching Implement regular expression matching with support for ‘.’ and ‘*’.  12345678910111213141516&amp;apos;.&amp;apos; Matches any single character.&amp;apos;*&amp;apos; Matches zero or more of">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-03T06:02:30.894Z">
+<meta property="og:updated_time" content="2019-01-10T09:47:01.053Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leetcode #10 Regular Expression Matching">
 <meta name="twitter:description" content="Regular Expression Matching Implement regular expression matching with support for ‘.’ and ‘*’.  12345678910111213141516&amp;apos;.&amp;apos; Matches any single character.&amp;apos;*&amp;apos; Matches zero or more of">
@@ -353,6 +353,7 @@
 <p>Implement regular expression matching with support for ‘.’ and ‘*’.</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&apos;.&apos; Matches any single character.</span><br><span class="line">&apos;*&apos; Matches zero or more of the preceding element.</span><br><span class="line"></span><br><span class="line">The matching should cover the entire input string (not partial).</span><br><span class="line"></span><br><span class="line">The function prototype should be:</span><br><span class="line">bool isMatch(const char *s, const char *p)</span><br><span class="line"></span><br><span class="line">Some examples:</span><br><span class="line">isMatch(&quot;aa&quot;,&quot;a&quot;) → false</span><br><span class="line">isMatch(&quot;aa&quot;,&quot;aa&quot;) → true</span><br><span class="line">isMatch(&quot;aaa&quot;,&quot;aa&quot;) → false</span><br><span class="line">isMatch(&quot;aa&quot;, &quot;a*&quot;) → true</span><br><span class="line">isMatch(&quot;aa&quot;, &quot;.*&quot;) → true</span><br><span class="line">isMatch(&quot;ab&quot;, &quot;.*&quot;) → true</span><br><span class="line">isMatch(&quot;aab&quot;, &quot;c*a*b&quot;) → true</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
 <p>常见表达式匹配，支持’.‘和’*‘。其实，这道题目不是正宗的正则表达式匹配问题，这里的<em>的意思并不是可以匹配0+个字符，而是对于前面的那个字符，可以匹配0+个。比如，在example中的最后一个用例，isMatch(“aab”,”c</em>a<em>b”) –&gt;true，其中的c</em>a*b，它的意思是这样的，一个有N个c，N个a，一个b的字符串。</p>
 </blockquote>
@@ -411,7 +412,7 @@
   <p><span>本文标题:</span><a href="/2018/02/26/Leetcode-10-Regular-Expression-Matching/">Leetcode #10 Regular Expression Matching</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
   <p><span>发布时间:</span>2018年02月26日 - 15:02</p>
-  <p><span>最后更新:</span>2018年09月03日 - 14:09</p>
+  <p><span>最后更新:</span>2019年01月10日 - 17:01</p>
   <p><span>原始链接:</span><a href="/2018/02/26/Leetcode-10-Regular-Expression-Matching/" title="Leetcode #10 Regular Expression Matching">http://smarticeberg.github.io/2018/02/26/Leetcode-10-Regular-Expression-Matching/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2018/02/26/Leetcode-10-Regular-Expression-Matching/"  aria-label="复制成功！"></i></span>
   </p>
