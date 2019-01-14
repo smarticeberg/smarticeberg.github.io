@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java,GC," />
 
 
 
@@ -87,6 +87,7 @@
 
 
 <meta name="description" content="概述Java GCJava对象被回收，必须满足两个条件:  没有任何（有效）引用指向它 GC被运行通常，我们通过手动置空的方式来满足对象下次GC运行的时候被回收，如下这种方式比较常见:12Object obj = new Object();obj = null;   这种方式较为繁琐，且违背JAVA GC自动回收的本质。另，缓存对象一般常为程序需要，随着缓存中的引用逐渐增加，GC无法回收的对象增多">
+<meta name="keywords" content="Java,GC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="强引用、弱引用、虚引用、软引用">
 <meta property="og:url" content="http://smarticeberg.github.io/2018/08/13/WeakReference-And-WeakHashMap/index.html">
@@ -299,6 +300,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -427,6 +450,14 @@
    
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
+          
+        </div>
+      
 
       
       
@@ -525,7 +556,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -542,6 +573,15 @@
               </div>
             
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>

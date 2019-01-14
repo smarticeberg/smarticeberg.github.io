@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,源码阅读计划,JDK1.8," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="标题：【Java源码阅读计划】 ServiceLoader 进度：60% 总结：我们使用SPI查找具体的实现的时候，需要遍历所有的实现，并实例化，然后我们在循环中才能找到我们需要实现。这应该也是最大的缺点，需要把所有的实现都实例化了，即便我们不需要，也都给实例化了。推荐参考Dubbo中的实现可以很好的避免这个问题。 类结构：">
+<meta name="keywords" content="Java,源码阅读计划,JDK1.8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Java源码阅读计划】 ServiceLoader">
+<meta property="og:url" content="http://smarticeberg.github.io/2019/01/14/Java-source-code-reading-ServiceLoader/index.html">
+<meta property="og:site_name" content="Jarvis的技术小黑屋">
+<meta property="og:description" content="标题：【Java源码阅读计划】 ServiceLoader 进度：60% 总结：我们使用SPI查找具体的实现的时候，需要遍历所有的实现，并实例化，然后我们在循环中才能找到我们需要实现。这应该也是最大的缺点，需要把所有的实现都实例化了，即便我们不需要，也都给实例化了。推荐参考Dubbo中的实现可以很好的避免这个问题。 类结构：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-14T02:58:28.812Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Java源码阅读计划】 ServiceLoader">
+<meta name="twitter:description" content="标题：【Java源码阅读计划】 ServiceLoader 进度：60% 总结：我们使用SPI查找具体的实现的时候，需要遍历所有的实现，并实例化，然后我们在循环中才能找到我们需要实现。这应该也是最大的缺点，需要把所有的实现都实例化了，即便我们不需要，也都给实例化了。推荐参考Dubbo中的实现可以很好的避免这个问题。 类结构：">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://smarticeberg.github.io/2019/01/14/Java-source-code-reading-ServiceLoader/"/>
+
+
+
+
+
+  <title>【Java源码阅读计划】 ServiceLoader | Jarvis的技术小黑屋</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+<a href="https://github.com/smarticeberg"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jarvis的技术小黑屋</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天学一点东西</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2019/01/14/Java-source-code-reading-ServiceLoader/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【Java源码阅读计划】 ServiceLoader</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-14T09:35:37+08:00">
+                2019-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>标题：【Java源码阅读计划】 ServiceLoader</li>
+<li>进度：60%</li>
+<li>总结：我们使用SPI查找具体的实现的时候，需要遍历所有的实现，并实例化，然后我们在循环中才能找到我们需要实现。这应该也是最大的缺点，需要把所有的实现都实例化了，即便我们不需要，也都给实例化了。推荐参考Dubbo中的实现可以很好的避免这个问题。</li>
+<li><p>类结构：</p>
+<a id="more"></a>
+<h1 id="ServiceLoader源码"><a href="#ServiceLoader源码" class="headerlink" title="ServiceLoader源码"></a>ServiceLoader源码</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br><span class="line">533</span><br><span class="line">534</span><br><span class="line">535</span><br><span class="line">536</span><br><span class="line">537</span><br><span class="line">538</span><br><span class="line">539</span><br><span class="line">540</span><br><span class="line">541</span><br><span class="line">542</span><br><span class="line">543</span><br><span class="line">544</span><br><span class="line">545</span><br><span class="line">546</span><br><span class="line">547</span><br><span class="line">548</span><br><span class="line">549</span><br><span class="line">550</span><br><span class="line">551</span><br><span class="line">552</span><br><span class="line">553</span><br><span class="line">554</span><br><span class="line">555</span><br><span class="line">556</span><br><span class="line">557</span><br><span class="line">558</span><br><span class="line">559</span><br><span class="line">560</span><br><span class="line">561</span><br><span class="line">562</span><br><span class="line">563</span><br><span class="line">564</span><br><span class="line">565</span><br><span class="line">566</span><br><span class="line">567</span><br><span class="line">568</span><br><span class="line">569</span><br><span class="line">570</span><br><span class="line">571</span><br><span class="line">572</span><br><span class="line">573</span><br><span class="line">574</span><br><span class="line">575</span><br><span class="line">576</span><br><span class="line">577</span><br><span class="line">578</span><br><span class="line">579</span><br><span class="line">580</span><br><span class="line">581</span><br><span class="line">582</span><br><span class="line">583</span><br><span class="line">584</span><br><span class="line">585</span><br><span class="line">586</span><br><span class="line">587</span><br><span class="line">588</span><br><span class="line">589</span><br><span class="line">590</span><br><span class="line">591</span><br><span class="line">592</span><br><span class="line">593</span><br><span class="line">594</span><br><span class="line">595</span><br><span class="line">596</span><br><span class="line">597</span><br><span class="line">598</span><br><span class="line">599</span><br><span class="line">600</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * Copyright (c) 2005, 2013, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"> * ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">package java.util;</span><br><span class="line"></span><br><span class="line">import java.io.BufferedReader;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.io.InputStream;</span><br><span class="line">import java.io.InputStreamReader;</span><br><span class="line">import java.net.URL;</span><br><span class="line">import java.security.AccessController;</span><br><span class="line">import java.security.AccessControlContext;</span><br><span class="line">import java.security.PrivilegedAction;</span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.Enumeration;</span><br><span class="line">import java.util.Iterator;</span><br><span class="line">import java.util.List;</span><br><span class="line">import java.util.NoSuchElementException;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * A simple service-provider loading facility.</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt; A &lt;i&gt;service&lt;/i&gt; is a well-known set of interfaces and (usually</span><br><span class="line"> * abstract) classes.  A &lt;i&gt;service provider&lt;/i&gt; is a specific implementation</span><br><span class="line"> * of a service.  The classes in a provider typically implement the interfaces</span><br><span class="line"> * and subclass the classes defined in the service itself.  Service providers</span><br><span class="line"> * can be installed in an implementation of the Java platform in the form of</span><br><span class="line"> * extensions, that is, jar files placed into any of the usual extension</span><br><span class="line"> * directories.  Providers can also be made available by adding them to the</span><br><span class="line"> * application&apos;s class path or by some other platform-specific means.</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt; For the purpose of loading, a service is represented by a single type,</span><br><span class="line"> * that is, a single interface or abstract class.  (A concrete class can be</span><br><span class="line"> * used, but this is not recommended.)  A provider of a given service contains</span><br><span class="line"> * one or more concrete classes that extend this &lt;i&gt;service type&lt;/i&gt; with data</span><br><span class="line"> * and code specific to the provider.  The &lt;i&gt;provider class&lt;/i&gt; is typically</span><br><span class="line"> * not the entire provider itself but rather a proxy which contains enough</span><br><span class="line"> * information to decide whether the provider is able to satisfy a particular</span><br><span class="line"> * request together with code that can create the actual provider on demand.</span><br><span class="line"> * The details of provider classes tend to be highly service-specific; no</span><br><span class="line"> * single class or interface could possibly unify them, so no such type is</span><br><span class="line"> * defined here.  The only requirement enforced by this facility is that</span><br><span class="line"> * provider classes must have a zero-argument constructor so that they can be</span><br><span class="line"> * instantiated during loading.</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt;&lt;a name=&quot;format&quot;&gt; A service provider is identified by placing a</span><br><span class="line"> * &lt;i&gt;provider-configuration file&lt;/i&gt; in the resource directory</span><br><span class="line"> * &lt;tt&gt;META-INF/services&lt;/tt&gt;.&lt;/a&gt;  The file&apos;s name is the fully-qualified &lt;a</span><br><span class="line"> * href=&quot;../lang/ClassLoader.html#name&quot;&gt;binary name&lt;/a&gt; of the service&apos;s type.</span><br><span class="line"> * The file contains a list of fully-qualified binary names of concrete</span><br><span class="line"> * provider classes, one per line.  Space and tab characters surrounding each</span><br><span class="line"> * name, as well as blank lines, are ignored.  The comment character is</span><br><span class="line"> * &lt;tt&gt;&apos;#&apos;&lt;/tt&gt; (&lt;tt&gt;&apos;&amp;#92;u0023&apos;&lt;/tt&gt;,</span><br><span class="line"> * &lt;font style=&quot;font-size:smaller;&quot;&gt;NUMBER SIGN&lt;/font&gt;); on</span><br><span class="line"> * each line all characters following the first comment character are ignored.</span><br><span class="line"> * The file must be encoded in UTF-8.</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt; If a particular concrete provider class is named in more than one</span><br><span class="line"> * configuration file, or is named in the same configuration file more than</span><br><span class="line"> * once, then the duplicates are ignored.  The configuration file naming a</span><br><span class="line"> * particular provider need not be in the same jar file or other distribution</span><br><span class="line"> * unit as the provider itself.  The provider must be accessible from the same</span><br><span class="line"> * class loader that was initially queried to locate the configuration file;</span><br><span class="line"> * note that this is not necessarily the class loader from which the file was</span><br><span class="line"> * actually loaded.</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt; Providers are located and instantiated lazily, that is, on demand.  A</span><br><span class="line"> * service loader maintains a cache of the providers that have been loaded so</span><br><span class="line"> * far.  Each invocation of the &#123;@link #iterator iterator&#125; method returns an</span><br><span class="line"> * iterator that first yields all of the elements of the cache, in</span><br><span class="line"> * instantiation order, and then lazily locates and instantiates any remaining</span><br><span class="line"> * providers, adding each one to the cache in turn.  The cache can be cleared</span><br><span class="line"> * via the &#123;@link #reload reload&#125; method.</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt; Service loaders always execute in the security context of the caller.</span><br><span class="line"> * Trusted system code should typically invoke the methods in this class, and</span><br><span class="line"> * the methods of the iterators which they return, from within a privileged</span><br><span class="line"> * security context.</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt; Instances of this class are not safe for use by multiple concurrent</span><br><span class="line"> * threads.</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt; Unless otherwise specified, passing a &lt;tt&gt;null&lt;/tt&gt; argument to any</span><br><span class="line"> * method in this class will cause a &#123;@link NullPointerException&#125; to be thrown.</span><br><span class="line"> *</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt;&lt;span style=&quot;font-weight: bold; padding-right: 1em&quot;&gt;Example&lt;/span&gt;</span><br><span class="line"> * Suppose we have a service type &lt;tt&gt;com.example.CodecSet&lt;/tt&gt; which is</span><br><span class="line"> * intended to represent sets of encoder/decoder pairs for some protocol.  In</span><br><span class="line"> * this case it is an abstract class with two abstract methods:</span><br><span class="line"> *</span><br><span class="line"> * &lt;blockquote&gt;&lt;pre&gt;</span><br><span class="line"> * public abstract Encoder getEncoder(String encodingName);</span><br><span class="line"> * public abstract Decoder getDecoder(String encodingName);&lt;/pre&gt;&lt;/blockquote&gt;</span><br><span class="line"> *</span><br><span class="line"> * Each method returns an appropriate object or &lt;tt&gt;null&lt;/tt&gt; if the provider</span><br><span class="line"> * does not support the given encoding.  Typical providers support more than</span><br><span class="line"> * one encoding.</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt; If &lt;tt&gt;com.example.impl.StandardCodecs&lt;/tt&gt; is an implementation of the</span><br><span class="line"> * &lt;tt&gt;CodecSet&lt;/tt&gt; service then its jar file also contains a file named</span><br><span class="line"> *</span><br><span class="line"> * &lt;blockquote&gt;&lt;pre&gt;</span><br><span class="line"> * META-INF/services/com.example.CodecSet&lt;/pre&gt;&lt;/blockquote&gt;</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt; This file contains the single line:</span><br><span class="line"> *</span><br><span class="line"> * &lt;blockquote&gt;&lt;pre&gt;</span><br><span class="line"> * com.example.impl.StandardCodecs    # Standard codecs&lt;/pre&gt;&lt;/blockquote&gt;</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt; The &lt;tt&gt;CodecSet&lt;/tt&gt; class creates and saves a single service instance</span><br><span class="line"> * at initialization:</span><br><span class="line"> *</span><br><span class="line"> * &lt;blockquote&gt;&lt;pre&gt;</span><br><span class="line"> * private static ServiceLoader&amp;lt;CodecSet&amp;gt; codecSetLoader</span><br><span class="line"> *     = ServiceLoader.load(CodecSet.class);&lt;/pre&gt;&lt;/blockquote&gt;</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt; To locate an encoder for a given encoding name it defines a static</span><br><span class="line"> * factory method which iterates through the known and available providers,</span><br><span class="line"> * returning only when it has located a suitable encoder or has run out of</span><br><span class="line"> * providers.</span><br><span class="line"> *</span><br><span class="line"> * &lt;blockquote&gt;&lt;pre&gt;</span><br><span class="line"> * public static Encoder getEncoder(String encodingName) &#123;</span><br><span class="line"> *     for (CodecSet cp : codecSetLoader) &#123;</span><br><span class="line"> *         Encoder enc = cp.getEncoder(encodingName);</span><br><span class="line"> *         if (enc != null)</span><br><span class="line"> *             return enc;</span><br><span class="line"> *     &#125;</span><br><span class="line"> *     return null;</span><br><span class="line"> * &#125;&lt;/pre&gt;&lt;/blockquote&gt;</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt; A &lt;tt&gt;getDecoder&lt;/tt&gt; method is defined similarly.</span><br><span class="line"> *</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt;&lt;span style=&quot;font-weight: bold; padding-right: 1em&quot;&gt;Usage Note&lt;/span&gt; If</span><br><span class="line"> * the class path of a class loader that is used for provider loading includes</span><br><span class="line"> * remote network URLs then those URLs will be dereferenced in the process of</span><br><span class="line"> * searching for provider-configuration files.</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt; This activity is normal, although it may cause puzzling entries to be</span><br><span class="line"> * created in web-server logs.  If a web server is not configured correctly,</span><br><span class="line"> * however, then this activity may cause the provider-loading algorithm to fail</span><br><span class="line"> * spuriously.</span><br><span class="line"> *</span><br><span class="line"> * &lt;p&gt; A web server should return an HTTP 404 (Not Found) response when a</span><br><span class="line"> * requested resource does not exist.  Sometimes, however, web servers are</span><br><span class="line"> * erroneously configured to return an HTTP 200 (OK) response along with a</span><br><span class="line"> * helpful HTML error page in such cases.  This will cause a &#123;@link</span><br><span class="line"> * ServiceConfigurationError&#125; to be thrown when this class attempts to parse</span><br><span class="line"> * the HTML page as a provider-configuration file.  The best solution to this</span><br><span class="line"> * problem is to fix the misconfigured web server to return the correct</span><br><span class="line"> * response code (HTTP 404) along with the HTML error page.</span><br><span class="line"> *</span><br><span class="line"> * @param  &lt;S&gt;</span><br><span class="line"> *         The type of the service to be loaded by this loader</span><br><span class="line"> *</span><br><span class="line"> * @author Mark Reinhold</span><br><span class="line"> * @since 1.6</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public final class ServiceLoader&lt;S&gt;</span><br><span class="line">    implements Iterable&lt;S&gt;</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    // 配置文件的目录</span><br><span class="line">    private static final String PREFIX = &quot;META-INF/services/&quot;;</span><br><span class="line"></span><br><span class="line">    // 要被加载的服务的类或接口</span><br><span class="line">    // The class or interface representing the service being loaded</span><br><span class="line">    private final Class&lt;S&gt; service;</span><br><span class="line"></span><br><span class="line">    // 定位 加载 实例化服务提供者</span><br><span class="line">    // The class loader used to locate, load, and instantiate providers</span><br><span class="line">    private final ClassLoader loader;</span><br><span class="line"></span><br><span class="line">    // 访问控制上下文</span><br><span class="line">    // The access control context taken when the ServiceLoader is created</span><br><span class="line">    private final AccessControlContext acc;</span><br><span class="line"></span><br><span class="line">    // 缓存已经被实例化的服务提供者，按照实例化的顺序存储</span><br><span class="line">    // Cached providers, in instantiation order</span><br><span class="line">    private LinkedHashMap&lt;String,S&gt; providers = new LinkedHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    // 迭代器</span><br><span class="line">    // The current lazy-lookup iterator</span><br><span class="line">    private LazyIterator lookupIterator;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Clear this loader&apos;s provider cache so that all providers will be</span><br><span class="line">     * reloaded.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt; After invoking this method, subsequent invocations of the &#123;@link</span><br><span class="line">     * #iterator() iterator&#125; method will lazily look up and instantiate</span><br><span class="line">     * providers from scratch, just as is done by a newly-created loader.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt; This method is intended for use in situations in which new providers</span><br><span class="line">     * can be installed into a running Java virtual machine.</span><br><span class="line">     */</span><br><span class="line">     // 重新加载，相当于重新创建ServiceLoader，将新的服务器提供者安装到正在运行的Java虚拟机中。</span><br><span class="line">    public void reload() &#123;</span><br><span class="line">        // 清空缓存中实例化的服务提供者</span><br><span class="line">        providers.clear();</span><br><span class="line">        // 新建迭代器，该迭代器会从头查找和实例化服务提供者</span><br><span class="line">        lookupIterator = new LazyIterator(service, loader);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 私有构造器</span><br><span class="line">    // 使用指定的类加载器和创建服务加载器</span><br><span class="line">    // 如果没有指定类加载器，则使用系统类加载器</span><br><span class="line">    private ServiceLoader(Class&lt;S&gt; svc, ClassLoader cl) &#123;</span><br><span class="line">        service = Objects.requireNonNull(svc, &quot;Service interface cannot be null&quot;);</span><br><span class="line">        loader = (cl == null) ? ClassLoader.getSystemClassLoader() : cl;</span><br><span class="line">        acc = (System.getSecurityManager() != null) ? AccessController.getContext() : null;</span><br><span class="line">        reload();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 解析处理失败的方法</span><br><span class="line">    private static void fail(Class&lt;?&gt; service, String msg, Throwable cause)</span><br><span class="line">        throws ServiceConfigurationError</span><br><span class="line">    &#123;</span><br><span class="line">        throw new ServiceConfigurationError(service.getName() + &quot;: &quot; + msg,</span><br><span class="line">                                            cause);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static void fail(Class&lt;?&gt; service, String msg)</span><br><span class="line">        throws ServiceConfigurationError</span><br><span class="line">    &#123;</span><br><span class="line">        throw new ServiceConfigurationError(service.getName() + &quot;: &quot; + msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static void fail(Class&lt;?&gt; service, URL u, int line, String msg)</span><br><span class="line">        throws ServiceConfigurationError</span><br><span class="line">    &#123;</span><br><span class="line">        fail(service, u + &quot;:&quot; + line + &quot;: &quot; + msg);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Parse a single line from the given configuration file, adding the name</span><br><span class="line">    // on the line to the names list.</span><br><span class="line">    //</span><br><span class="line">    // 解析服务提供者配置文件中的一行</span><br><span class="line">    // 去除注释校验，然后保存</span><br><span class="line">    // 返回下一行行号</span><br><span class="line">    // 重复的配置项和已经被实例化的配置项不会被保存</span><br><span class="line">    private int parseLine(Class&lt;?&gt; service, URL u, BufferedReader r, int lc,</span><br><span class="line">                          List&lt;String&gt; names)</span><br><span class="line">        throws IOException, ServiceConfigurationError</span><br><span class="line">    &#123;</span><br><span class="line">        String ln = r.readLine();</span><br><span class="line">        if (ln == null) &#123;</span><br><span class="line">            return -1;</span><br><span class="line">        &#125;</span><br><span class="line">        int ci = ln.indexOf(&apos;#&apos;);</span><br><span class="line">        if (ci &gt;= 0) ln = ln.substring(0, ci);</span><br><span class="line">        ln = ln.trim();</span><br><span class="line">        int n = ln.length();</span><br><span class="line">        if (n != 0) &#123;</span><br><span class="line">            if ((ln.indexOf(&apos; &apos;) &gt;= 0) || (ln.indexOf(&apos;\t&apos;) &gt;= 0))</span><br><span class="line">                fail(service, u, lc, &quot;Illegal configuration-file syntax&quot;);</span><br><span class="line">            int cp = ln.codePointAt(0);</span><br><span class="line">            if (!Character.isJavaIdentifierStart(cp))</span><br><span class="line">                fail(service, u, lc, &quot;Illegal provider-class name: &quot; + ln);</span><br><span class="line">            for (int i = Character.charCount(cp); i &lt; n; i += Character.charCount(cp)) &#123;</span><br><span class="line">                cp = ln.codePointAt(i);</span><br><span class="line">                if (!Character.isJavaIdentifierPart(cp) &amp;&amp; (cp != &apos;.&apos;))</span><br><span class="line">                    fail(service, u, lc, &quot;Illegal provider-class name: &quot; + ln);</span><br><span class="line">            &#125;</span><br><span class="line">            if (!providers.containsKey(ln) &amp;&amp; !names.contains(ln))</span><br><span class="line">                names.add(ln);</span><br><span class="line">        &#125;</span><br><span class="line">        return lc + 1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Parse the content of the given URL as a provider-configuration file.</span><br><span class="line">    //</span><br><span class="line">    // @param  service</span><br><span class="line">    //         The service type for which providers are being sought;</span><br><span class="line">    //         used to construct error detail strings</span><br><span class="line">    //</span><br><span class="line">    // @param  u</span><br><span class="line">    //         The URL naming the configuration file to be parsed</span><br><span class="line">    //</span><br><span class="line">    // @return A (possibly empty) iterator that will yield the provider-class</span><br><span class="line">    //         names in the given configuration file that are not yet members</span><br><span class="line">    //         of the returned set</span><br><span class="line">    //</span><br><span class="line">    // @throws ServiceConfigurationError</span><br><span class="line">    //         If an I/O error occurs while reading from the given URL, or</span><br><span class="line">    //         if a configuration-file format error is detected</span><br><span class="line">    //</span><br><span class="line">    // 解析配置文件，解析指定url配置文件</span><br><span class="line">    // 使用parseLine进行解析</span><br><span class="line">    private Iterator&lt;String&gt; parse(Class&lt;?&gt; service, URL u)</span><br><span class="line">        throws ServiceConfigurationError</span><br><span class="line">    &#123;</span><br><span class="line">        InputStream in = null;</span><br><span class="line">        BufferedReader r = null;</span><br><span class="line">        ArrayList&lt;String&gt; names = new ArrayList&lt;&gt;();</span><br><span class="line">        try &#123;</span><br><span class="line">            in = u.openStream();</span><br><span class="line">            r = new BufferedReader(new InputStreamReader(in, &quot;utf-8&quot;));</span><br><span class="line">            int lc = 1;</span><br><span class="line">            while ((lc = parseLine(service, u, r, lc, names)) &gt;= 0);</span><br><span class="line">        &#125; catch (IOException x) &#123;</span><br><span class="line">            fail(service, &quot;Error reading configuration file&quot;, x);</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            try &#123;</span><br><span class="line">                if (r != null) r.close();</span><br><span class="line">                if (in != null) in.close();</span><br><span class="line">            &#125; catch (IOException y) &#123;</span><br><span class="line">                fail(service, &quot;Error closing configuration file&quot;, y);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return names.iterator();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Private inner class implementing fully-lazy provider lookup</span><br><span class="line">    //</span><br><span class="line">    // 服务提供者查找的迭代器</span><br><span class="line">    private class LazyIterator</span><br><span class="line">        implements Iterator&lt;S&gt;</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        // 服务提供者接口</span><br><span class="line">        Class&lt;S&gt; service;</span><br><span class="line">        // 类加载器</span><br><span class="line">        ClassLoader loader;</span><br><span class="line">        // 保存实现类的url</span><br><span class="line">        Enumeration&lt;URL&gt; configs = null;</span><br><span class="line">        // 保存实现类的全名</span><br><span class="line">        Iterator&lt;String&gt; pending = null;</span><br><span class="line">        // 迭代器中下一个实现类的全名</span><br><span class="line">        String nextName = null;</span><br><span class="line"></span><br><span class="line">        private LazyIterator(Class&lt;S&gt; service, ClassLoader loader) &#123;</span><br><span class="line">            this.service = service;</span><br><span class="line">            this.loader = loader;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        private boolean hasNextService() &#123;</span><br><span class="line">            if (nextName != null) &#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">            if (configs == null) &#123;</span><br><span class="line">                try &#123;</span><br><span class="line">                    String fullName = PREFIX + service.getName();</span><br><span class="line">                    if (loader == null)</span><br><span class="line">                        configs = ClassLoader.getSystemResources(fullName);</span><br><span class="line">                    else</span><br><span class="line">                        configs = loader.getResources(fullName);</span><br><span class="line">                &#125; catch (IOException x) &#123;</span><br><span class="line">                    fail(service, &quot;Error locating configuration files&quot;, x);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            while ((pending == null) || !pending.hasNext()) &#123;</span><br><span class="line">                if (!configs.hasMoreElements()) &#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">                pending = parse(service, configs.nextElement());</span><br><span class="line">            &#125;</span><br><span class="line">            nextName = pending.next();</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        private S nextService() &#123;</span><br><span class="line">            if (!hasNextService())</span><br><span class="line">                throw new NoSuchElementException();</span><br><span class="line">            String cn = nextName;</span><br><span class="line">            nextName = null;</span><br><span class="line">            Class&lt;?&gt; c = null;</span><br><span class="line">            try &#123;</span><br><span class="line">                c = Class.forName(cn, false, loader);</span><br><span class="line">            &#125; catch (ClassNotFoundException x) &#123;</span><br><span class="line">                fail(service,</span><br><span class="line">                     &quot;Provider &quot; + cn + &quot; not found&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            if (!service.isAssignableFrom(c)) &#123;</span><br><span class="line">                fail(service,</span><br><span class="line">                     &quot;Provider &quot; + cn  + &quot; not a subtype&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            try &#123;</span><br><span class="line">                S p = service.cast(c.newInstance());</span><br><span class="line">                providers.put(cn, p);</span><br><span class="line">                return p;</span><br><span class="line">            &#125; catch (Throwable x) &#123;</span><br><span class="line">                fail(service,</span><br><span class="line">                     &quot;Provider &quot; + cn + &quot; could not be instantiated&quot;,</span><br><span class="line">                     x);</span><br><span class="line">            &#125;</span><br><span class="line">            throw new Error();          // This cannot happen</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public boolean hasNext() &#123;</span><br><span class="line">            if (acc == null) &#123;</span><br><span class="line">                return hasNextService();</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                PrivilegedAction&lt;Boolean&gt; action = new PrivilegedAction&lt;Boolean&gt;() &#123;</span><br><span class="line">                    public Boolean run() &#123; return hasNextService(); &#125;</span><br><span class="line">                &#125;;</span><br><span class="line">                return AccessController.doPrivileged(action, acc);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public S next() &#123;</span><br><span class="line">            if (acc == null) &#123;</span><br><span class="line">                return nextService();</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                PrivilegedAction&lt;S&gt; action = new PrivilegedAction&lt;S&gt;() &#123;</span><br><span class="line">                    public S run() &#123; return nextService(); &#125;</span><br><span class="line">                &#125;;</span><br><span class="line">                return AccessController.doPrivileged(action, acc);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public void remove() &#123;</span><br><span class="line">            throw new UnsupportedOperationException();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Lazily loads the available providers of this loader&apos;s service.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt; The iterator returned by this method first yields all of the</span><br><span class="line">     * elements of the provider cache, in instantiation order.  It then lazily</span><br><span class="line">     * loads and instantiates any remaining providers, adding each one to the</span><br><span class="line">     * cache in turn.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt; To achieve laziness the actual work of parsing the available</span><br><span class="line">     * provider-configuration files and instantiating providers must be done by</span><br><span class="line">     * the iterator itself.  Its &#123;@link java.util.Iterator#hasNext hasNext&#125; and</span><br><span class="line">     * &#123;@link java.util.Iterator#next next&#125; methods can therefore throw a</span><br><span class="line">     * &#123;@link ServiceConfigurationError&#125; if a provider-configuration file</span><br><span class="line">     * violates the specified format, or if it names a provider class that</span><br><span class="line">     * cannot be found and instantiated, or if the result of instantiating the</span><br><span class="line">     * class is not assignable to the service type, or if any other kind of</span><br><span class="line">     * exception or error is thrown as the next provider is located and</span><br><span class="line">     * instantiated.  To write robust code it is only necessary to catch &#123;@link</span><br><span class="line">     * ServiceConfigurationError&#125; when using a service iterator.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt; If such an error is thrown then subsequent invocations of the</span><br><span class="line">     * iterator will make a best effort to locate and instantiate the next</span><br><span class="line">     * available provider, but in general such recovery cannot be guaranteed.</span><br><span class="line">     *</span><br><span class="line">     * &lt;blockquote style=&quot;font-size: smaller; line-height: 1.2&quot;&gt;&lt;span</span><br><span class="line">     * style=&quot;padding-right: 1em; font-weight: bold&quot;&gt;Design Note&lt;/span&gt;</span><br><span class="line">     * Throwing an error in these cases may seem extreme.  The rationale for</span><br><span class="line">     * this behavior is that a malformed provider-configuration file, like a</span><br><span class="line">     * malformed class file, indicates a serious problem with the way the Java</span><br><span class="line">     * virtual machine is configured or is being used.  As such it is</span><br><span class="line">     * preferable to throw an error rather than try to recover or, even worse,</span><br><span class="line">     * fail silently.&lt;/blockquote&gt;</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt; The iterator returned by this method does not support removal.</span><br><span class="line">     * Invoking its &#123;@link java.util.Iterator#remove() remove&#125; method will</span><br><span class="line">     * cause an &#123;@link UnsupportedOperationException&#125; to be thrown.</span><br><span class="line">     *</span><br><span class="line">     * @implNote When adding providers to the cache, the &#123;@link #iterator</span><br><span class="line">     * Iterator&#125; processes resources in the order that the &#123;@link</span><br><span class="line">     * java.lang.ClassLoader#getResources(java.lang.String)</span><br><span class="line">     * ClassLoader.getResources(String)&#125; method finds the service configuration</span><br><span class="line">     * files.</span><br><span class="line">     *</span><br><span class="line">     * @return  An iterator that lazily loads providers for this loader&apos;s</span><br><span class="line">     *          service</span><br><span class="line">     */</span><br><span class="line">     // 获取迭代器</span><br><span class="line">     // 返回遍历服务提供者的迭代器</span><br><span class="line">     // 以懒加载的方式加载可用的服务提供者</span><br><span class="line">     // 懒加载的实现是：解析配置文件和实例化服务提供者的工作由迭代器本身完成</span><br><span class="line">    public Iterator&lt;S&gt; iterator() &#123;</span><br><span class="line">        return new Iterator&lt;S&gt;() &#123;</span><br><span class="line"></span><br><span class="line">            按照实例化顺序返回已经缓存的服务提供者实例</span><br><span class="line">            Iterator&lt;Map.Entry&lt;String,S&gt;&gt; knownProviders</span><br><span class="line">                = providers.entrySet().iterator();</span><br><span class="line"></span><br><span class="line">            public boolean hasNext() &#123;</span><br><span class="line">                if (knownProviders.hasNext())</span><br><span class="line">                    return true;</span><br><span class="line">                return lookupIterator.hasNext();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            public S next() &#123;</span><br><span class="line">                if (knownProviders.hasNext())</span><br><span class="line">                    return knownProviders.next().getValue();</span><br><span class="line">                return lookupIterator.next();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            public void remove() &#123;</span><br><span class="line">                throw new UnsupportedOperationException();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Creates a new service loader for the given service type and class</span><br><span class="line">     * loader.</span><br><span class="line">     *</span><br><span class="line">     * @param  &lt;S&gt; the class of the service type</span><br><span class="line">     *</span><br><span class="line">     * @param  service</span><br><span class="line">     *         The interface or abstract class representing the service</span><br><span class="line">     *</span><br><span class="line">     * @param  loader</span><br><span class="line">     *         The class loader to be used to load provider-configuration files</span><br><span class="line">     *         and provider classes, or &lt;tt&gt;null&lt;/tt&gt; if the system class</span><br><span class="line">     *         loader (or, failing that, the bootstrap class loader) is to be</span><br><span class="line">     *         used</span><br><span class="line">     *</span><br><span class="line">     * @return A new service loader</span><br><span class="line">     */</span><br><span class="line">     // 为指定的服务使用指定的类加载器来创建一个ServiceLoader</span><br><span class="line">    public static &lt;S&gt; ServiceLoader&lt;S&gt; load(Class&lt;S&gt; service,</span><br><span class="line">                                            ClassLoader loader)</span><br><span class="line">    &#123;</span><br><span class="line">        return new ServiceLoader&lt;&gt;(service, loader);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Creates a new service loader for the given service type, using the</span><br><span class="line">     * current thread&apos;s &#123;@linkplain java.lang.Thread#getContextClassLoader</span><br><span class="line">     * context class loader&#125;.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt; An invocation of this convenience method of the form</span><br><span class="line">     *</span><br><span class="line">     * &lt;blockquote&gt;&lt;pre&gt;</span><br><span class="line">     * ServiceLoader.load(&lt;i&gt;service&lt;/i&gt;)&lt;/pre&gt;&lt;/blockquote&gt;</span><br><span class="line">     *</span><br><span class="line">     * is equivalent to</span><br><span class="line">     *</span><br><span class="line">     * &lt;blockquote&gt;&lt;pre&gt;</span><br><span class="line">     * ServiceLoader.load(&lt;i&gt;service&lt;/i&gt;,</span><br><span class="line">     *                    Thread.currentThread().getContextClassLoader())&lt;/pre&gt;&lt;/blockquote&gt;</span><br><span class="line">     *</span><br><span class="line">     * @param  &lt;S&gt; the class of the service type</span><br><span class="line">     *</span><br><span class="line">     * @param  service</span><br><span class="line">     *         The interface or abstract class representing the service</span><br><span class="line">     *</span><br><span class="line">     * @return A new service loader</span><br><span class="line">     */</span><br><span class="line">     // 使用线程上下文的类加载器来创建ServiceLoader</span><br><span class="line">    public static &lt;S&gt; ServiceLoader&lt;S&gt; load(Class&lt;S&gt; service) &#123;</span><br><span class="line">        ClassLoader cl = Thread.currentThread().getContextClassLoader();</span><br><span class="line">        return ServiceLoader.load(service, cl);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Creates a new service loader for the given service type, using the</span><br><span class="line">     * extension class loader.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt; This convenience method simply locates the extension class loader,</span><br><span class="line">     * call it &lt;tt&gt;&lt;i&gt;extClassLoader&lt;/i&gt;&lt;/tt&gt;, and then returns</span><br><span class="line">     *</span><br><span class="line">     * &lt;blockquote&gt;&lt;pre&gt;</span><br><span class="line">     * ServiceLoader.load(&lt;i&gt;service&lt;/i&gt;, &lt;i&gt;extClassLoader&lt;/i&gt;)&lt;/pre&gt;&lt;/blockquote&gt;</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt; If the extension class loader cannot be found then the system class</span><br><span class="line">     * loader is used; if there is no system class loader then the bootstrap</span><br><span class="line">     * class loader is used.</span><br><span class="line">     *</span><br><span class="line">     * &lt;p&gt; This method is intended for use when only installed providers are</span><br><span class="line">     * desired.  The resulting service will only find and load providers that</span><br><span class="line">     * have been installed into the current Java virtual machine; providers on</span><br><span class="line">     * the application&apos;s class path will be ignored.</span><br><span class="line">     *</span><br><span class="line">     * @param  &lt;S&gt; the class of the service type</span><br><span class="line">     *</span><br><span class="line">     * @param  service</span><br><span class="line">     *         The interface or abstract class representing the service</span><br><span class="line">     *</span><br><span class="line">     * @return A new service loader</span><br><span class="line">     */</span><br><span class="line">     // 使用扩展类加载器为指定的服务创在ServiceLoader</span><br><span class="line">     // 只能找到并加载已经安装到当前Java虚拟机中的服务提供者，应用程序类路径中的服务提供者将被忽略</span><br><span class="line">    public static &lt;S&gt; ServiceLoader&lt;S&gt; loadInstalled(Class&lt;S&gt; service) &#123;</span><br><span class="line">        ClassLoader cl = ClassLoader.getSystemClassLoader();</span><br><span class="line">        ClassLoader prev = null;</span><br><span class="line">        while (cl != null) &#123;</span><br><span class="line">            prev = cl;</span><br><span class="line">            cl = cl.getParent();</span><br><span class="line">        &#125;</span><br><span class="line">        return ServiceLoader.load(service, prev);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Returns a string describing this service.</span><br><span class="line">     *</span><br><span class="line">     * @return  A descriptive string</span><br><span class="line">     */</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;java.util.ServiceLoader[&quot; + service.getName() + &quot;]&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ServiceLoader不是实例化以后，就去读取配置文件中的具体实现，并进行实例化。而是等到使用迭代器去遍历的时候，才会加载对应的配置文件去解析，调用hasNext方法的时候会去加载配置文件进行解析，调用next方法的时候进行实例化并缓存。</p>
+</li>
+<li>所有的配置文件只会加载一次，服务提供者也只会被实例化一次，重新加载配置文件可使用reload方法。</li>
+</ul>
+<h2 id="SPI缺点"><a href="#SPI缺点" class="headerlink" title="SPI缺点"></a>SPI缺点</h2><p>通过上面的解析，可以发现，我们使用SPI查找具体的实现的时候，需要遍历所有的实现，并实例化，然后我们在循环中才能找到我们需要实现。这应该也是最大的缺点，需要把所有的实现都实例化了，即便我们不需要，也都给实例化了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+    <div>
+      
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/2019/01/14/Java-source-code-reading-ServiceLoader/">【Java源码阅读计划】 ServiceLoader</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
+  <p><span>发布时间:</span>2019年01月14日 - 09:01</p>
+  <p><span>最后更新:</span>2019年01月14日 - 10:01</p>
+  <p><span>原始链接:</span><a href="/2019/01/14/Java-source-code-reading-ServiceLoader/" title="【Java源码阅读计划】 ServiceLoader">http://smarticeberg.github.io/2019/01/14/Java-source-code-reading-ServiceLoader/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2019/01/14/Java-source-code-reading-ServiceLoader/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+	});
+    });  
+</script>
+
+      
+    </div>
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/qrcode.jpg" alt="Iceberg wechat" style="width: 200px; max-width: 100%;"/>
+    <div>这是我的公众号，欢迎关注。</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/源码阅读计划/" rel="tag"><i class="fa fa-tag"></i> 源码阅读计划</a>
+          
+            <a href="/tags/JDK1-8/" rel="tag"><i class="fa fa-tag"></i> JDK1.8</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/10/Java-source-code-reading-arraylist/" rel="next" title="【Java源码阅读计划】 ArrayList">
+                <i class="fa fa-chevron-left"></i> 【Java源码阅读计划】 ArrayList
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Iceberg</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/smarticeberg" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:icebergsmart@gmail.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                推荐阅读
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.baidu.com" title="百度" target="_blank">百度</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ServiceLoader源码"><span class="nav-number">1.</span> <span class="nav-text">ServiceLoader源码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SPI缺点"><span class="nav-number">1.1.</span> <span class="nav-text">SPI缺点</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Iceberg</span>
+
+  
+</div>
+
+
+ <div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
