@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="Jarvis的技术小黑屋">
 <meta property="og:description" content="标题：【Java源码阅读计划】 ServiceLoader 进度：60% 总结：我们使用SPI查找具体的实现的时候，需要遍历所有的实现，并实例化，然后我们在循环中才能找到我们需要实现。这应该也是最大的缺点，需要把所有的实现都实例化了，即便我们不需要，也都给实例化了。推荐参考Dubbo中的实现可以很好的避免这个问题。 类结构：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-14T02:58:28.812Z">
+<meta property="og:updated_time" content="2019-01-14T03:02:16.521Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Java源码阅读计划】 ServiceLoader">
 <meta name="twitter:description" content="标题：【Java源码阅读计划】 ServiceLoader 进度：60% 总结：我们使用SPI查找具体的实现的时候，需要遍历所有的实现，并实例化，然后我们在循环中才能找到我们需要实现。这应该也是最大的缺点，需要把所有的实现都实例化了，即便我们不需要，也都给实例化了。推荐参考Dubbo中的实现可以很好的避免这个问题。 类结构：">
@@ -361,7 +361,7 @@
 </li>
 <li>所有的配置文件只会加载一次，服务提供者也只会被实例化一次，重新加载配置文件可使用reload方法。</li>
 </ul>
-<h2 id="SPI缺点"><a href="#SPI缺点" class="headerlink" title="SPI缺点"></a>SPI缺点</h2><p>通过上面的解析，可以发现，我们使用SPI查找具体的实现的时候，需要遍历所有的实现，并实例化，然后我们在循环中才能找到我们需要实现。这应该也是最大的缺点，需要把所有的实现都实例化了，即便我们不需要，也都给实例化了。</p>
+<h1 id="SPI缺点"><a href="#SPI缺点" class="headerlink" title="SPI缺点"></a>SPI缺点</h1><p>通过上面的解析，可以发现，我们使用SPI查找具体的实现的时候，需要遍历所有的实现，并实例化，然后我们在循环中才能找到我们需要实现。这应该也是最大的缺点，需要把所有的实现都实例化了，即便我们不需要，也都给实例化了。</p>
 
       
     </div>
@@ -390,7 +390,7 @@
   <p><span>本文标题:</span><a href="/2019/01/14/Java-source-code-reading-ServiceLoader/">【Java源码阅读计划】 ServiceLoader</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
   <p><span>发布时间:</span>2019年01月14日 - 09:01</p>
-  <p><span>最后更新:</span>2019年01月14日 - 10:01</p>
+  <p><span>最后更新:</span>2019年01月14日 - 11:01</p>
   <p><span>原始链接:</span><a href="/2019/01/14/Java-source-code-reading-ServiceLoader/" title="【Java源码阅读计划】 ServiceLoader">http://smarticeberg.github.io/2019/01/14/Java-source-code-reading-ServiceLoader/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2019/01/14/Java-source-code-reading-ServiceLoader/"  aria-label="复制成功！"></i></span>
   </p>
@@ -619,7 +619,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ServiceLoader源码"><span class="nav-number">1.</span> <span class="nav-text">ServiceLoader源码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SPI缺点"><span class="nav-number">1.1.</span> <span class="nav-text">SPI缺点</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ServiceLoader源码"><span class="nav-number">1.</span> <span class="nav-text">ServiceLoader源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SPI缺点"><span class="nav-number">2.</span> <span class="nav-text">SPI缺点</span></a></li></ol></div>
             
 
           </div>
