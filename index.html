@@ -256,6 +256,133 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2019/02/13/Java-source-code-reading-ConcurrentLinkedDeque/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/13/Java-source-code-reading-ConcurrentLinkedDeque/" itemprop="url">Java source code reading ConcurrentLinkedDeque</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T11:05:34+08:00">
+                2019-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2019/01/18/Java-source-code-reading-LinkedList/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1661,200 +1788,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/08/03/Java-GC-Analysis-And-Optimize/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Iceberg">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarvis的技术小黑屋">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/03/Java-GC-Analysis-And-Optimize/" itemprop="url">Java GC 分析及优化</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-03T10:19:23+08:00">
-                2018-08-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Java-GC常用工具"><a href="#Java-GC常用工具" class="headerlink" title="Java GC常用工具"></a>Java GC常用工具</h1><h2 id="JVM监控工具"><a href="#JVM监控工具" class="headerlink" title="JVM监控工具"></a>JVM监控工具</h2><table>
-<thead>
-<tr>
-<th>工具名称</th>
-<th>作用</th>
-<th>补充</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>jps</td>
-<td>显示指定系统内所有的虚拟机系统</td>
-<td>jps -v:显示启动时JVM参数</td>
-</tr>
-<tr>
-<td>jstat</td>
-<td>用于收集虚拟机各方面的运行数据</td>
-<td>jstat -gc:监视Java堆状况，容量情况<br>jstat -gcutil:监视Java堆各个区使用百分比</td>
-</tr>
-<tr>
-<td>jinfo</td>
-<td>查看和调整虚拟机参数</td>
-<td>jinfo -flag:调整JVM参数值<br>jinfo pid:查看配置信息</td>
-</tr>
-<tr>
-<td>jmap</td>
-<td>生成虚拟机的堆转储快照</td>
-<td>jmap -heap:显示Java堆详细信息<br>jmap -dump:生成堆内存快照信息</td>
-</tr>
-<tr>
-<td>jstack</td>
-<td>Java堆栈分析工具</td>
-<td>jstack -pid:打印堆栈</td>
-</tr>
-<tr>
-<td>jhat</td>
-<td>堆转储快照分析工具</td>
-<td>暂无</td>
-</tr>
-</tbody>
-</table>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/03/Java-GC-Analysis-And-Optimize/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-   
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1905,7 +1838,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
