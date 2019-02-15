@@ -94,14 +94,14 @@
 <meta property="og:site_name" content="Jarvis的技术小黑屋">
 <meta property="og:description" content="背景Docker的出现使得以Springboot为基础的微服务项目部署如此简单。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180604/1.png">
-<meta property="og:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180604/2.png">
-<meta property="og:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180604/3.png">
-<meta property="og:updated_time" content="2019-01-10T09:48:11.151Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/02/15/kDrhPf.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/02/15/kDrWIP.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/02/15/kDrRat.png">
+<meta property="og:updated_time" content="2019-02-15T01:21:02.984Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot-构建docker镜像">
 <meta name="twitter:description" content="背景Docker的出现使得以Springboot为基础的微服务项目部署如此简单。">
-<meta name="twitter:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180604/1.png">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/02/15/kDrhPf.png">
 
 
 
@@ -381,10 +381,10 @@
 </ul>
 <h1 id="开始打包"><a href="#开始打包" class="headerlink" title="开始打包"></a>开始打包</h1><p>进入打包步骤的前提是打包环境要安装好哦。</p>
 <h2 id="step-1"><a href="#step-1" class="headerlink" title="step 1"></a>step 1</h2><p>将项目拷贝到服务器中(可以使用rz,sz工具)，当然后续可以使用jenkins，webhook之类的技术直接从git拉代码构建，此处不做叙述。</p>
-<h2 id="step-2"><a href="#step-2" class="headerlink" title="step 2"></a>step 2</h2><p>使用 <code>mvn package docker:build</code>命令来使用Dockerfile构建镜像。第一次构建会有点慢，会在控制台看见输出如下图：<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180604/1.png" alt="Alt text"></p>
-<h2 id="step-3"><a href="#step-3" class="headerlink" title="step 3"></a>step 3</h2><p>使用<code>docker images</code>命令查看构建好的镜像，如下图：<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180604/2.png" alt="Alt text"></p>
+<h2 id="step-2"><a href="#step-2" class="headerlink" title="step 2"></a>step 2</h2><p>使用 <code>mvn package docker:build</code>命令来使用Dockerfile构建镜像。第一次构建会有点慢，会在控制台看见输出如下图：<br><img src="https://s2.ax1x.com/2019/02/15/kDrhPf.png" alt="Alt text"></p>
+<h2 id="step-3"><a href="#step-3" class="headerlink" title="step 3"></a>step 3</h2><p>使用<code>docker images</code>命令查看构建好的镜像，如下图：<br><img src="https://s2.ax1x.com/2019/02/15/kDrWIP.png" alt="Alt text"></p>
 <h1 id="运行镜像"><a href="#运行镜像" class="headerlink" title="运行镜像"></a>运行镜像</h1><ul>
-<li>使用命令<code>docker run -p [localport]:[port] -t jarvis/cruiser</code>:<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20180604/3.png" alt="Alt text"></li>
+<li>使用命令<code>docker run -p [localport]:[port] -t jarvis/cruiser</code>:<br><img src="https://s2.ax1x.com/2019/02/15/kDrRat.png" alt="Alt text"></li>
 <li>可以使用<code>docker ps</code>命令查看当前正在运行的镜像，就可以看到我们刚刚启动的啦。</li>
 <li>在浏览器中输入项目的地址，即可访问项目:<code>http://ip:port</code>。</li>
 </ul>
@@ -416,7 +416,7 @@
   <p><span>本文标题:</span><a href="/2018/06/04/SpringBoot-dockerfile/">SpringBoot-构建docker镜像</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
   <p><span>发布时间:</span>2018年06月04日 - 16:06</p>
-  <p><span>最后更新:</span>2019年01月10日 - 17:01</p>
+  <p><span>最后更新:</span>2019年02月15日 - 09:02</p>
   <p><span>原始链接:</span><a href="/2018/06/04/SpringBoot-dockerfile/" title="SpringBoot-构建docker镜像">http://smarticeberg.github.io/2018/06/04/SpringBoot-dockerfile/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2018/06/04/SpringBoot-dockerfile/"  aria-label="复制成功！"></i></span>
   </p>

@@ -94,18 +94,18 @@
 <meta property="og:site_name" content="Jarvis的技术小黑屋">
 <meta property="og:description" content="常用命令 jps jstat top jstack watch  利用JPS命令获取Java程序进程号利用jps命令可以快速获取Java程序的进程号。效果如下图：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/jps2.png">
-<meta property="og:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/top1.png">
-<meta property="og:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/top2.png">
-<meta property="og:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/jstack1.png">
-<meta property="og:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/jstack2.png">
-<meta property="og:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/watch1.png">
-<meta property="og:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/watch2.png">
-<meta property="og:updated_time" content="2019-01-10T09:46:00.525Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/02/15/kDs9sJ.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/02/15/kDrvGT.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/02/15/kDsiZR.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/02/15/kDrzzF.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/02/15/kDrxRU.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/02/15/kDsCL9.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/02/15/kDsFd1.png">
+<meta property="og:updated_time" content="2019-02-15T01:14:30.003Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="定位线上Java项目问题常用手法">
 <meta name="twitter:description" content="常用命令 jps jstat top jstack watch  利用JPS命令获取Java程序进程号利用jps命令可以快速获取Java程序的进程号。效果如下图：">
-<meta name="twitter:image" content="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/jps2.png">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/02/15/kDs9sJ.png">
 
 
 
@@ -364,11 +364,11 @@
 <li>jstack</li>
 <li>watch</li>
 </ul>
-<h2 id="利用JPS命令获取Java程序进程号"><a href="#利用JPS命令获取Java程序进程号" class="headerlink" title="利用JPS命令获取Java程序进程号"></a>利用JPS命令获取Java程序进程号</h2><p>利用jps命令可以快速获取Java程序的进程号。效果如下图：<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/jps2.png" alt="Alt text"><br><a id="more"></a></p>
-<h2 id="利用TOP查看CPU、内存占用"><a href="#利用TOP查看CPU、内存占用" class="headerlink" title="利用TOP查看CPU、内存占用"></a>利用TOP查看CPU、内存占用</h2><p>可以使用<code>top</code>查看所有的进程使用CPU、内存的情况，有点类似于windows下的任务管理器。当然如果想只看特定的进程，可以使用<code>top -p [进程ID]</code>进行查看。以通知系统为例，上面获取的进程pid为24042，则可以使用<code>top -p 24042</code>就可以查看到内存、CPU使用情况了。<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/top1.png" alt="Alt text"></p>
-<h3 id="查看进程中的线程使用情况"><a href="#查看进程中的线程使用情况" class="headerlink" title="查看进程中的线程使用情况"></a>查看进程中的线程使用情况</h3><p>很多时候，只看进程并不能快速的定位问题的所在，这时候需要清除应用程序到底在什么地方，耗费了大量的资源。通过<code>top -Hp [进程号]</code>可看到进程中详细的线程。当某个数据库操作比较耗时，或者某个算法比较耗时，可以通过线程的pid去定位问题，然而怎么去定位问题，这时候jstack就登场了。<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/top2.png" alt="Alt text"></p>
-<h2 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h2><p>首先将堆栈的日志输出到文件，上面获取的线程号需要转换成16进制，可以通过<code>cat [日志文件]|grep [16进制线程号]</code>，这样就能够具体分析堆栈的具体情况。<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/jstack1.png" alt="Alt text"><br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/jstack2.png" alt="Alt text"></p>
-<h2 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h2><p>另外，<code>watch</code>命令是一个比较方便的命令，<code>watch &quot;jstack [进程号]|grep [包的部分路径关键字]&quot;</code>，这样就能每隔2s打印堆栈信息，当然这个时间间隔可以通过参数自行设置。<br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/watch1.png" alt="Alt text"><br><img src="http://p1cwch5gs.bkt.clouddn.com/images/blog/20181101/watch2.png" alt="Alt text"></p>
+<h2 id="利用JPS命令获取Java程序进程号"><a href="#利用JPS命令获取Java程序进程号" class="headerlink" title="利用JPS命令获取Java程序进程号"></a>利用JPS命令获取Java程序进程号</h2><p>利用jps命令可以快速获取Java程序的进程号。效果如下图：<br><img src="https://s2.ax1x.com/2019/02/15/kDs9sJ.png" alt="Alt text"><br><a id="more"></a></p>
+<h2 id="利用TOP查看CPU、内存占用"><a href="#利用TOP查看CPU、内存占用" class="headerlink" title="利用TOP查看CPU、内存占用"></a>利用TOP查看CPU、内存占用</h2><p>可以使用<code>top</code>查看所有的进程使用CPU、内存的情况，有点类似于windows下的任务管理器。当然如果想只看特定的进程，可以使用<code>top -p [进程ID]</code>进行查看。以通知系统为例，上面获取的进程pid为24042，则可以使用<code>top -p 24042</code>就可以查看到内存、CPU使用情况了。<br><img src="https://s2.ax1x.com/2019/02/15/kDrvGT.png" alt="Alt text"></p>
+<h3 id="查看进程中的线程使用情况"><a href="#查看进程中的线程使用情况" class="headerlink" title="查看进程中的线程使用情况"></a>查看进程中的线程使用情况</h3><p>很多时候，只看进程并不能快速的定位问题的所在，这时候需要清除应用程序到底在什么地方，耗费了大量的资源。通过<code>top -Hp [进程号]</code>可看到进程中详细的线程。当某个数据库操作比较耗时，或者某个算法比较耗时，可以通过线程的pid去定位问题，然而怎么去定位问题，这时候jstack就登场了。<br><img src="https://s2.ax1x.com/2019/02/15/kDsiZR.png" alt="Alt text"></p>
+<h2 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h2><p>首先将堆栈的日志输出到文件，上面获取的线程号需要转换成16进制，可以通过<code>cat [日志文件]|grep [16进制线程号]</code>，这样就能够具体分析堆栈的具体情况。<br><img src="https://s2.ax1x.com/2019/02/15/kDrzzF.png" alt="Alt text"><br><img src="https://s2.ax1x.com/2019/02/15/kDrxRU.png" alt="Alt text"></p>
+<h2 id="watch"><a href="#watch" class="headerlink" title="watch"></a>watch</h2><p>另外，<code>watch</code>命令是一个比较方便的命令，<code>watch &quot;jstack [进程号]|grep [包的部分路径关键字]&quot;</code>，这样就能每隔2s打印堆栈信息，当然这个时间间隔可以通过参数自行设置。<br><img src="https://s2.ax1x.com/2019/02/15/kDsCL9.png" alt="Alt text"><br><img src="https://s2.ax1x.com/2019/02/15/kDsFd1.png" alt="Alt text"></p>
 <h2 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h2><p>前面介绍GC那篇文章有着重讲过这个工具，这边文章主要也是通过该命令去分析是否存在eden区和old区空间设置不合理，导致频繁GC，或者GC时间过长，STW等问题。常用命令:<br><code>jstat -gcutil [进程号] 1000</code>，该命令的作用是每1s输出gc情况，具体分析，可查看上一篇日志。</p>
 
       
@@ -398,7 +398,7 @@
   <p><span>本文标题:</span><a href="/2018/11/01/How-to-locate-the-online-java-problem/">定位线上Java项目问题常用手法</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
   <p><span>发布时间:</span>2018年11月01日 - 16:11</p>
-  <p><span>最后更新:</span>2019年01月10日 - 17:01</p>
+  <p><span>最后更新:</span>2019年02月15日 - 09:02</p>
   <p><span>原始链接:</span><a href="/2018/11/01/How-to-locate-the-online-java-problem/" title="定位线上Java项目问题常用手法">http://smarticeberg.github.io/2018/11/01/How-to-locate-the-online-java-problem/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2018/11/01/How-to-locate-the-online-java-problem/"  aria-label="复制成功！"></i></span>
   </p>
