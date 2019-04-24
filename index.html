@@ -349,7 +349,24 @@
       
         
           
-            <h1 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h1><h2 id="分布式锁实现方式"><a href="#分布式锁实现方式" class="headerlink" title="分布式锁实现方式"></a>分布式锁实现方式</h2><h3 id="MySQL数据库"><a href="#MySQL数据库" class="headerlink" title="MySQL数据库"></a>MySQL数据库</h3><h3 id="Redis实现"><a href="#Redis实现" class="headerlink" title="Redis实现"></a>Redis实现</h3><h3 id="Zookeeper实现"><a href="#Zookeeper实现" class="headerlink" title="Zookeeper实现"></a>Zookeeper实现</h3><ul>
+            <h1 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h1><h2 id="分布式锁实现方式"><a href="#分布式锁实现方式" class="headerlink" title="分布式锁实现方式"></a>分布式锁实现方式</h2><h3 id="MySQL数据库"><a href="#MySQL数据库" class="headerlink" title="MySQL数据库"></a>MySQL数据库</h3><h3 id="Redis实现"><a href="#Redis实现" class="headerlink" title="Redis实现"></a>Redis实现</h3><h4 id="Redis分布锁经典实现框架Redisson"><a href="#Redis分布锁经典实现框架Redisson" class="headerlink" title="Redis分布锁经典实现框架Redisson"></a>Redis分布锁经典实现框架Redisson</h4><p><img src="https://s2.ax1x.com/2019/04/24/EVpBuR.png" alt="Alt Text"></p>
+<p>从上图可以看出，为了保证redis操作的原子性，redisson使用了lua脚本操作redis。那么问题来了，保证操作原子性的意义是什么？<br>首先，我们先来解析一下这段Lua脚本的含义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">KEYS[1]：要加锁的key。</span><br><span class="line">ARGV[1]：锁的生存时间，默认为30秒。</span><br><span class="line">ARGV[2]：调用的客户端ID。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>redis.call(&#39;exists&#39;, KEYS[1]) == 0</code>：这段代码主要是为了判断是否要加锁的key是否不存在，如果不存在，则进行加锁操作。</p>
+<ul>
+<li><code>redis.call(&#39;hset&#39;, KEYS[1], ARGV[2], 1);</code>：设置一个hash结构，对key进行加锁操作。</li>
+<li><code>redis.call(&#39;pexpire&#39;, KEYS[1], ARGV[1]);</code>：设置key的过期时间。</li>
+</ul>
+</li>
+<li><p><code>redis.call(&#39;hexists&#39;, KEYS[1], ARGV[2]) == 1</code>：这段代码触发的场景是，当另一个客户端来尝试对同一个进行加锁时，会进入此判断，但是很明显，hash结构中不存在此客户端的ID，所以会直接返回<code>redis.call(&#39;pttl&#39;, KEYS[1]);</code>，此<code>pttl</code>参数为锁的剩余的生存时间。</p>
+<ul>
+<li><code>redis.call(&#39;hincrby&#39;, KEYS[1], ARGV[2], 1);</code>：可重入锁，对客户端的锁累加1。</li>
+</ul>
+</li>
+</ul>
+<p><code>Redisson</code>中的<code>Watch dog</code>：<br>由于加锁的默认生存时间为30秒，但是如果超过此生存时间，客户端还想继续持有锁，如何处理？<code>Redisson</code>在每个客户端加锁后，会启动一个watch dog后台线程，每隔10秒执行一次检查，如果客户端继续持有锁，则会延长锁的生存时间。</p>
+<h3 id="Zookeeper实现"><a href="#Zookeeper实现" class="headerlink" title="Zookeeper实现"></a>Zookeeper实现</h3><ul>
 <li>未完待续</li>
 </ul>
 
