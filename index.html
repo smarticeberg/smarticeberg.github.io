@@ -357,7 +357,22 @@
 <li>支持阻塞和非阻塞：支持lock和tryLock(long timeout)。</li>
 <li>支持公平和非公平锁：公平锁即按照请求的顺序获得锁，而非公平锁是无序的。</li>
 </ul>
-<h2 id="分布式锁实现方式"><a href="#分布式锁实现方式" class="headerlink" title="分布式锁实现方式"></a>分布式锁实现方式</h2><h3 id="MySQL数据库"><a href="#MySQL数据库" class="headerlink" title="MySQL数据库"></a>MySQL数据库</h3><h3 id="Redis实现"><a href="#Redis实现" class="headerlink" title="Redis实现"></a>Redis实现</h3><h4 id="基于Redis的setnx-、expire-方法实现分布式锁"><a href="#基于Redis的setnx-、expire-方法实现分布式锁" class="headerlink" title="基于Redis的setnx()、expire()方法实现分布式锁"></a>基于Redis的setnx()、expire()方法实现分布式锁</h4><h4 id="基于Redis的setnx-、get-、getset-方法实现分布式锁"><a href="#基于Redis的setnx-、get-、getset-方法实现分布式锁" class="headerlink" title="基于Redis的setnx()、get()、getset()方法实现分布式锁"></a>基于Redis的setnx()、get()、getset()方法实现分布式锁</h4><h4 id="Redis分布锁经典实现框架Redisson"><a href="#Redis分布锁经典实现框架Redisson" class="headerlink" title="Redis分布锁经典实现框架Redisson"></a>Redis分布锁经典实现框架Redisson</h4><p><img src="https://s2.ax1x.com/2019/04/24/EVpBuR.png" alt="Alt Text"></p>
+<h2 id="分布式锁实现方式"><a href="#分布式锁实现方式" class="headerlink" title="分布式锁实现方式"></a>分布式锁实现方式</h2><h3 id="MySQL数据库"><a href="#MySQL数据库" class="headerlink" title="MySQL数据库"></a>MySQL数据库</h3><h3 id="Redis实现"><a href="#Redis实现" class="headerlink" title="Redis实现"></a>Redis实现</h3><h4 id="基于Redis的setnx-、expire-方法实现分布式锁"><a href="#基于Redis的setnx-、expire-方法实现分布式锁" class="headerlink" title="基于Redis的setnx()、expire()方法实现分布式锁"></a>基于Redis的setnx()、expire()方法实现分布式锁</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setnx()：set if not exists.该方法为原子的，如果key不存在，则设置当前值成功，返回1。如果当前key存在，则设置当前值失败，返回0。</span><br><span class="line">expire()：expire设置过期时间。</span><br></pre></td></tr></table></figure>
+<h5 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h5><ul>
+<li>setnx(key,1)，返回1则说明设置成功，返回0则说明设置失败。</li>
+<li>expire对key设置超时时间，避免死锁的发生。</li>
+<li>业务执行完毕之后，使用del删除key。</li>
+</ul>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>步骤一执行之后，步骤二执行之前出现了redis的宕机，那么锁就一直不会被释放，导致死锁的产生。这也就是下面对redisson分析抛出原子性问题的解答。</p>
+<h4 id="基于Redis的setnx-、get-、getset-方法实现分布式锁"><a href="#基于Redis的setnx-、get-、getset-方法实现分布式锁" class="headerlink" title="基于Redis的setnx()、get()、getset()方法实现分布式锁"></a>基于Redis的setnx()、get()、getset()方法实现分布式锁</h4><p><code>此种实现方式实则是对上述方案死锁问题的优化。</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getset(key,newValue)：该方法是原子的，对key设置新值，并返回旧的值。如果key不存在，则会返回null，并设置新的值。</span><br></pre></td></tr></table></figure></p>
+<h5 id="实现步骤-1"><a href="#实现步骤-1" class="headerlink" title="实现步骤"></a>实现步骤</h5><ul>
+<li>setnx(key,当前时间+过期时间)，如果返回1，则获取锁成功。如果返回0，则获取锁失败。</li>
+<li>get(key)获取oldExpireTime，将此值与当前时间进行比较，如果小于当前时间，则锁已经超时，并允许别的请求获取锁。</li>
+<li>计算newExpireTime=当前时间+超时时间，getset(key,newExpireTime)会返回currentExpireTime。</li>
+<li>判断currentExpireTime与oldExpireTime是否相等，如果相等，则说明获取到了锁，如果不相等，则说明锁又被别的请求获取了，那么当前请求可以直接返回或者等待重试。</li>
+<li>获取到锁之后进行业务操作，如果执行时间小于锁的超时时间，则需要进行del进行锁的释放，大于锁的超时时间，则不需要任何锁的释放操作。</li>
+</ul>
+<h4 id="Redis分布锁经典实现框架Redisson"><a href="#Redis分布锁经典实现框架Redisson" class="headerlink" title="Redis分布锁经典实现框架Redisson"></a>Redis分布锁经典实现框架Redisson</h4><p><img src="https://s2.ax1x.com/2019/04/24/EVpBuR.png" alt="Alt Text"></p>
 <p>从上图可以看出，为了保证redis操作的原子性，redisson使用了lua脚本操作redis。那么问题来了，保证操作原子性的意义是什么？回答这个问题之前，也可以反过来问，不保证原子性会有什么问题？<br>首先，我们先来解析一下这段Lua脚本的含义：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">KEYS[1]：要加锁的key。</span><br><span class="line">ARGV[1]：锁的生存时间，默认为30秒。</span><br><span class="line">ARGV[2]：调用的客户端ID。</span><br></pre></td></tr></table></figure>
 <ul>
@@ -387,10 +402,10 @@
 <li>Zookeeper监听机制：客户端可以监听每个节点的变化，当产生变化会给客户端一个事件，具体有path和tree的监听，有兴趣可以深入了解一下。</li>
 </ul>
 <h4 id="Zookeeper基本锁"><a href="#Zookeeper基本锁" class="headerlink" title="Zookeeper基本锁"></a>Zookeeper基本锁</h4><p>利用临时节点和监听机制生成分布式锁。每个锁占用一个普通节点。当需要获取锁时，在普通节点下创建临时节点，创建成功则表示获取锁成功，失败则监听普通节点，有删除操作时再去争抢锁。创建临时节点的好处在于，当进程挂掉后，上锁的临时节点会自动销毁即取消锁。</p>
-<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>所有获取锁失败的进程都监听父节点，当释放锁后所有等待进程一起创建节点，并发量会很大。</p>
+<h5 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h5><p>所有获取锁失败的进程都监听父节点，当释放锁后所有等待进程一起创建节点，并发量会很大。</p>
 <h4 id="Zookeeper锁优化"><a href="#Zookeeper锁优化" class="headerlink" title="Zookeeper锁优化"></a>Zookeeper锁优化</h4><p>加锁的逻辑改为创建临时有序节点，每个加锁的节点都能创建临时节点成功，只有序号最小的才可以拥有锁。如果这个节点的序号不是最小，则监听前一个比本身序号小的节点（公平锁）。<br><img src="https://s2.ax1x.com/2019/04/24/EVNIUI.png" alt="Alt Text"></p>
 <h4 id="Zookeeper实现分布式锁的优缺点"><a href="#Zookeeper实现分布式锁的优缺点" class="headerlink" title="Zookeeper实现分布式锁的优缺点"></a>Zookeeper实现分布式锁的优缺点</h4><h5 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h5><p>有效解决锁无法释放的问题，单点问题，不可重入问题，实现方式较为简单。Zookeeper中创建和删除节点只能在leader服务器中执行，然后将数据同步到所有的Follower机器上。</p>
-<h5 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h5><p>性能没有缓存服务高，锁的创建和释放都要进行临时节点的创建和销毁。</p>
+<h5 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h5><p>性能没有缓存服务高，锁的创建和释放都要进行临时节点的创建和销毁。</p>
 <h3 id="三种实现方式的对比"><a href="#三种实现方式的对比" class="headerlink" title="三种实现方式的对比"></a>三种实现方式的对比</h3><ul>
 <li>Zookeeper：<ul>
 <li>优点：Zookeeper不用关心锁超时时间，Zookeeper集群可以保证高可用。</li>
