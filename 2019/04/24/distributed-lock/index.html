@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Java,Leetcode," />
+  <meta name="keywords" content="Java,分布式,分布式锁," />
 
 
 
@@ -86,18 +86,18 @@
 
 
 
-<meta name="description" content="Remove Element Given an array nums and a value val, remove all instances of that value in-place and return the new length.Do not allocate extra space for another array, you must do this by modifying t">
-<meta name="keywords" content="Java,Leetcode">
+<meta name="description" content="分布式锁分布式锁实现方式MySQL数据库Redis实现Zookeeper实现 未完待续">
+<meta name="keywords" content="Java,分布式,分布式锁">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode#27 Remove Element">
-<meta property="og:url" content="http://smarticeberg.github.io/2018/07/10/Leetcode-27-Remove-Element/index.html">
+<meta property="og:title" content="分布式锁">
+<meta property="og:url" content="http://smarticeberg.github.io/2019/04/24/distributed-lock/index.html">
 <meta property="og:site_name" content="Jarvis的技术小黑屋">
-<meta property="og:description" content="Remove Element Given an array nums and a value val, remove all instances of that value in-place and return the new length.Do not allocate extra space for another array, you must do this by modifying t">
+<meta property="og:description" content="分布式锁分布式锁实现方式MySQL数据库Redis实现Zookeeper实现 未完待续">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-10T09:47:57.997Z">
+<meta property="og:updated_time" content="2019-04-24T01:54:57.497Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Leetcode#27 Remove Element">
-<meta name="twitter:description" content="Remove Element Given an array nums and a value val, remove all instances of that value in-place and return the new length.Do not allocate extra space for another array, you must do this by modifying t">
+<meta name="twitter:title" content="分布式锁">
+<meta name="twitter:description" content="分布式锁分布式锁实现方式MySQL数据库Redis实现Zookeeper实现 未完待续">
 
 
 
@@ -127,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://smarticeberg.github.io/2018/07/10/Leetcode-27-Remove-Element/"/>
+  <link rel="canonical" href="http://smarticeberg.github.io/2019/04/24/distributed-lock/"/>
 
 
 
 
 
-  <title>Leetcode#27 Remove Element | Jarvis的技术小黑屋</title>
+  <title>分布式锁 | Jarvis的技术小黑屋</title>
   
 
 
@@ -260,7 +260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/07/10/Leetcode-27-Remove-Element/">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2019/04/24/distributed-lock/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Iceberg">
@@ -277,7 +277,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode#27 Remove Element</h1>
+          <h1 class="post-title" itemprop="name headline">分布式锁</h1>
         
 
         <div class="post-meta">
@@ -289,8 +289,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-10T15:02:46+08:00">
-                2018-07-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-24T09:51:50+08:00">
+                2019-04-24
               </time>
             
 
@@ -312,8 +312,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">Leetcode</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -349,25 +349,10 @@
       
 
       
-        <h1 id="Remove-Element"><a href="#Remove-Element" class="headerlink" title="Remove Element"></a>Remove Element</h1><blockquote>
-<p>Given an array nums and a value val, remove all instances of that value in-place and return the new length.Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.The order of elements can be changed. It doesn’t matter what you leave beyond the new length.</p>
-</blockquote>
-<p><strong>Example 1:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Given nums = [3,2,2,3], val = 3,</span><br><span class="line"></span><br><span class="line">Your function should return length = 2, with the first two elements of nums being 2.</span><br><span class="line"></span><br><span class="line">It doesn&apos;t matter what you leave beyond the returned length.</span><br></pre></td></tr></table></figure>
-<p><strong>Example 2:</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Given nums = [0,1,2,2,3,0,4,2], val = 2,</span><br><span class="line"></span><br><span class="line">Your function should return length = 5, with the first five elements of nums containing 0, 1, 3, 0, and 4.</span><br><span class="line"></span><br><span class="line">Note that the order of those five elements can be arbitrary.</span><br><span class="line"></span><br><span class="line">It doesn&apos;t matter what values are set beyond the returned length.</span><br></pre></td></tr></table></figure>
-<p><strong>Clarification:</strong></p>
-<blockquote>
-<p>Confused why the returned value is an integer but your answer is an array?Note that the input array is passed in by reference, which means modification to the input array will be known to the caller as well.Internally you can think of this:</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// nums is passed in by reference. (i.e., without making a copy)</span><br><span class="line">int len = removeElement(nums, val);</span><br><span class="line"></span><br><span class="line">// any modification to nums in your function would be known by the caller.</span><br><span class="line">// using the length returned by your function, it prints the first len elements.</span><br><span class="line">for (int i = 0; i &lt; len; i++) &#123;</span><br><span class="line">    print(nums[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><blockquote>
-<p>删除数组中给定的值，并返回修改后的长度。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度:O(n)，空间复杂度:O(1)。</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>与#26 Remove Duplicates from Sorted Array.方法相似。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class Solution &#123;</span><br><span class="line">	public int removeElement(int[] nums, int val) &#123;</span><br><span class="line">		int i = 0;</span><br><span class="line">		for (int j = 0; j &lt; nums.length; j++) &#123;</span><br><span class="line">			if (nums[j] != val) &#123;</span><br><span class="line">				nums[i] = nums[j];</span><br><span class="line">				i++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		return i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h1><h2 id="分布式锁实现方式"><a href="#分布式锁实现方式" class="headerlink" title="分布式锁实现方式"></a>分布式锁实现方式</h2><h3 id="MySQL数据库"><a href="#MySQL数据库" class="headerlink" title="MySQL数据库"></a>MySQL数据库</h3><h3 id="Redis实现"><a href="#Redis实现" class="headerlink" title="Redis实现"></a>Redis实现</h3><h3 id="Zookeeper实现"><a href="#Zookeeper实现" class="headerlink" title="Zookeeper实现"></a>Zookeeper实现</h3><ul>
+<li>未完待续</li>
+</ul>
+
       
     </div>
     
@@ -392,12 +377,12 @@
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/2018/07/10/Leetcode-27-Remove-Element/">Leetcode#27 Remove Element</a></p>
+  <p><span>本文标题:</span><a href="/2019/04/24/distributed-lock/">分布式锁</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
-  <p><span>发布时间:</span>2018年07月10日 - 15:07</p>
-  <p><span>最后更新:</span>2019年01月10日 - 17:01</p>
-  <p><span>原始链接:</span><a href="/2018/07/10/Leetcode-27-Remove-Element/" title="Leetcode#27 Remove Element">http://smarticeberg.github.io/2018/07/10/Leetcode-27-Remove-Element/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2018/07/10/Leetcode-27-Remove-Element/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2019年04月24日 - 09:04</p>
+  <p><span>最后更新:</span>2019年04月24日 - 09:04</p>
+  <p><span>原始链接:</span><a href="/2019/04/24/distributed-lock/" title="分布式锁">http://smarticeberg.github.io/2019/04/24/distributed-lock/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2019/04/24/distributed-lock/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -439,7 +424,9 @@
           
             <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           
-            <a href="/tags/Leetcode/" rel="tag"><i class="fa fa-tag"></i> Leetcode</a>
+            <a href="/tags/分布式/" rel="tag"><i class="fa fa-tag"></i> 分布式</a>
+          
+            <a href="/tags/分布式锁/" rel="tag"><i class="fa fa-tag"></i> 分布式锁</a>
           
         </div>
       
@@ -452,8 +439,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/10/Leetcode-26-Remove-Duplicates-from-Sorted-Array/" rel="next" title="Leetcode#26 Remove Duplicates from Sorted Array">
-                <i class="fa fa-chevron-left"></i> Leetcode#26 Remove Duplicates from Sorted Array
+              <a href="/2019/04/11/Java-source-code-reading-AbstractQueuedSynchronizer/" rel="next" title="Java source code reading AbstractQueuedSynchronizer">
+                <i class="fa fa-chevron-left"></i> Java source code reading AbstractQueuedSynchronizer
               </a>
             
           </div>
@@ -461,10 +448,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/11/Leetcode-28-Implement-strStr/" rel="prev" title="Leetcode#28 Implement strStr()">
-                Leetcode#28 Implement strStr() <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -626,7 +609,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Remove-Element"><span class="nav-number">1.</span> <span class="nav-text">Remove Element</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目翻译"><span class="nav-number">1.1.</span> <span class="nav-text">题目翻译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">1.2.</span> <span class="nav-text">思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路一"><span class="nav-number">1.2.1.</span> <span class="nav-text">思路一</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#复杂度"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">复杂度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-1"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">思路</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式锁"><span class="nav-number">1.</span> <span class="nav-text">分布式锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分布式锁实现方式"><span class="nav-number">1.1.</span> <span class="nav-text">分布式锁实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL数据库"><span class="nav-number">1.1.1.</span> <span class="nav-text">MySQL数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis实现"><span class="nav-number">1.1.2.</span> <span class="nav-text">Redis实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Zookeeper实现"><span class="nav-number">1.1.3.</span> <span class="nav-text">Zookeeper实现</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
