@@ -381,11 +381,14 @@
 <li>Zookeeper子节点类型：<ul>
 <li>序列化节点：每在该节点下增加一个子节点，自动给该节点名称自增。</li>
 <li>临时节点：当创建这个znode的客户端与服务器失去联系，这个znode也将自动删除。</li>
-<li>普通节点<h3 id="三种实现方式的对比"><a href="#三种实现方式的对比" class="headerlink" title="三种实现方式的对比"></a>三种实现方式的对比</h3></li>
+<li>普通节点</li>
 </ul>
 </li>
+<li>Zookeeper监听机制：客户端可以监听每个节点的变化，当产生变化会给客户端一个事件，具体有path和tree的监听，有兴趣可以深入了解一下。</li>
 </ul>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<h4 id="Zookeeper基本锁"><a href="#Zookeeper基本锁" class="headerlink" title="Zookeeper基本锁"></a>Zookeeper基本锁</h4><p>利用临时节点和监听机制生成分布式锁。每个锁占用一个普通节点。当需要获取锁时，在普通节点下创建临时节点，创建成功则表示获取锁成功，失败则监听普通节点，有删除操作时再去争抢锁。创建临时节点的好处在于，当进程挂掉后，上锁的临时节点会自动销毁即取消锁。</p>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><p>所有获取锁失败的进程都监听父节点，当释放锁后所有等待进程一起创建节点，并发量会很大。</p>
+<h4 id="Zookeeper锁优化"><a href="#Zookeeper锁优化" class="headerlink" title="Zookeeper锁优化"></a>Zookeeper锁优化</h4><h3 id="三种实现方式的对比"><a href="#三种实现方式的对比" class="headerlink" title="三种实现方式的对比"></a>三种实现方式的对比</h3><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="https://juejin.im/post/5bf3f15851882526a643e207" target="_blank" rel="noopener">拜托，面试请不要再问我Redis分布式锁的实现原理！</a></li>
 <li><a href="https://juejin.im/post/5bbb0d8df265da0abd3533a5" target="_blank" rel="noopener">再有人问你分布式锁，这篇文章扔给他</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/42056183" target="_blank" rel="noopener">分布式锁看这篇就够了</a></li>
