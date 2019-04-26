@@ -95,7 +95,7 @@
 <meta property="og:description" content="自旋锁自旋锁存在问题 饥饿问题：竞争非常激烈时可能会导致一些线程无法获取锁（争抢活跃的线程获得锁的概率比较大） 系统消耗：由于自旋锁使用的是同一个共享变量，所以内存同步会消耗大量的系统资源。 非公平性：自旋锁无法实现公平性，如果需要实现公平性，则需要引入其余变量进行维护。  排队自旋锁自旋锁与排队自旋锁存在的问题内存同步为了更清晰的阐述自旋锁和排队自旋锁存在的问题，有必要了解一下内存同步是怎么一回">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s2.ax1x.com/2019/04/26/EmlN9S.png">
-<meta property="og:updated_time" content="2019-04-26T02:12:31.765Z">
+<meta property="og:updated_time" content="2019-04-26T02:24:02.264Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自旋锁">
 <meta name="twitter:description" content="自旋锁自旋锁存在问题 饥饿问题：竞争非常激烈时可能会导致一些线程无法获取锁（争抢活跃的线程获得锁的概率比较大） 系统消耗：由于自旋锁使用的是同一个共享变量，所以内存同步会消耗大量的系统资源。 非公平性：自旋锁无法实现公平性，如果需要实现公平性，则需要引入其余变量进行维护。  排队自旋锁自旋锁与排队自旋锁存在的问题内存同步为了更清晰的阐述自旋锁和排队自旋锁存在的问题，有必要了解一下内存同步是怎么一回">
@@ -357,6 +357,47 @@
 <li>非公平性：自旋锁无法实现公平性，如果需要实现公平性，则需要引入其余变量进行维护。</li>
 </ul>
 <h2 id="排队自旋锁"><a href="#排队自旋锁" class="headerlink" title="排队自旋锁"></a>排队自旋锁</h2><h2 id="自旋锁与排队自旋锁存在的问题"><a href="#自旋锁与排队自旋锁存在的问题" class="headerlink" title="自旋锁与排队自旋锁存在的问题"></a>自旋锁与排队自旋锁存在的问题</h2><h3 id="内存同步"><a href="#内存同步" class="headerlink" title="内存同步"></a>内存同步</h3><p>为了更清晰的阐述自旋锁和排队自旋锁存在的问题，有必要了解一下内存同步是怎么一回事。<br><img src="https://s2.ax1x.com/2019/04/26/EmlN9S.png" alt="Alt Text"></p>
+<table>
+<thead>
+<tr>
+<th>从CPU到</th>
+<th>大约需要的CPU周期</th>
+<th style="text-align:left">大约需要的时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>主存</td>
+<td>——</td>
+<td style="text-align:left">约60-80ns</td>
+</tr>
+<tr>
+<td>QPI 总线传输(between sockets, not drawn)</td>
+<td>——</td>
+<td style="text-align:left">约20ns</td>
+</tr>
+<tr>
+<td>L3 cache</td>
+<td>约40-45 cycles</td>
+<td style="text-align:left">约15ns</td>
+</tr>
+<tr>
+<td>L2 cache</td>
+<td>约10 cycles</td>
+<td style="text-align:left">约3ns</td>
+</tr>
+<tr>
+<td>L1 cache</td>
+<td>约3-4 cycles</td>
+<td style="text-align:left">约1ns</td>
+</tr>
+<tr>
+<td>寄存器</td>
+<td>1 cycle</td>
+<td style="text-align:left">——</td>
+</tr>
+</tbody>
+</table>
 <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>无论是基于非公平的自旋锁还是基于公平的排队自旋锁，由于都是执行线程都在同一个共享变量上自旋，申请和释放锁的时候都会对该共享变量进行修改，这将导致所有参与排队自旋锁操作的处理器缓存失效。如果排队自旋锁竞争比较厉害的话，频繁的缓存同步操作会导致繁重的系统总线和内存的流量，从而降低系统的性能。为了避免在同一个共享变量上自旋，MCS和CLH应运而生。</p>
 <h2 id="MCS锁"><a href="#MCS锁" class="headerlink" title="MCS锁"></a>MCS锁</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>MCS锁是一种高效的、可扩展的公平锁，申请线程只在本地变量上自旋，直接前驱负责通知其结束自旋，减少处理器内存同步，降低总线和内存的开销。</p>
 <h2 id="CLH锁"><a href="#CLH锁" class="headerlink" title="CLH锁"></a>CLH锁</h2><h2 id="MCS锁与CLH锁的区别"><a href="#MCS锁与CLH锁的区别" class="headerlink" title="MCS锁与CLH锁的区别"></a>MCS锁与CLH锁的区别</h2><ul>
