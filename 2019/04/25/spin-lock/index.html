@@ -95,7 +95,9 @@
 <meta property="og:description" content="自旋锁自旋锁存在问题 饥饿问题：竞争非常激烈时可能会导致一些线程无法获取锁（争抢活跃的线程获得锁的概率比较大） 系统消耗：由于自旋锁使用的是同一个共享变量，所以内存同步会消耗大量的系统资源。 非公平性：自旋锁无法实现公平性，如果需要实现公平性，则需要引入其余变量进行维护。  排队自旋锁自旋锁与排队自旋锁存在的问题内存同步为了更清晰的阐述自旋锁和排队自旋锁存在的问题，有必要了解一下内存同步是怎么一回">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://s2.ax1x.com/2019/04/26/EmlN9S.png">
-<meta property="og:updated_time" content="2019-04-26T02:49:34.811Z">
+<meta property="og:image" content="https://s2.ax1x.com/2019/04/26/EmtfGq.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/04/26/EmthR0.png">
+<meta property="og:updated_time" content="2019-04-26T03:27:34.631Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自旋锁">
 <meta name="twitter:description" content="自旋锁自旋锁存在问题 饥饿问题：竞争非常激烈时可能会导致一些线程无法获取锁（争抢活跃的线程获得锁的概率比较大） 系统消耗：由于自旋锁使用的是同一个共享变量，所以内存同步会消耗大量的系统资源。 非公平性：自旋锁无法实现公平性，如果需要实现公平性，则需要引入其余变量进行维护。  排队自旋锁自旋锁与排队自旋锁存在的问题内存同步为了更清晰的阐述自旋锁和排队自旋锁存在的问题，有必要了解一下内存同步是怎么一回">
@@ -399,8 +401,8 @@
 </tbody>
 </table>
 <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>无论是基于非公平的自旋锁还是基于公平的排队自旋锁，由于都是执行线程都在同一个共享变量上自旋，申请和释放锁的时候都会对该共享变量进行修改，这将导致所有参与排队自旋锁操作的处理器缓存失效。如果排队自旋锁竞争比较厉害的话，频繁的缓存同步操作会导致繁重的系统总线和内存的流量，从而降低系统的性能。为了避免在同一个共享变量上自旋，MCS和CLH应运而生。</p>
-<h2 id="MCS锁"><a href="#MCS锁" class="headerlink" title="MCS锁"></a>MCS锁</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>MCS锁是一种基于链表的高效的、可扩展的公平自旋锁，申请线程只在本地变量上自旋，直接前驱负责通知其结束自旋，减少处理器内存同步，降低总线和内存的开销。</p>
-<h2 id="CLH锁"><a href="#CLH锁" class="headerlink" title="CLH锁"></a>CLH锁</h2><p>CLH锁是一种基于链表的高效的、可扩展的公平自旋锁。</p>
+<h2 id="MCS锁"><a href="#MCS锁" class="headerlink" title="MCS锁"></a>MCS锁</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>MCS锁是一种基于链表的高效的、可扩展的公平自旋锁，申请线程只在本地变量上自旋，直接前驱负责通知其结束自旋，减少处理器内存同步，降低总线和内存的开销。<br><img src="https://s2.ax1x.com/2019/04/26/EmtfGq.png" alt="Alt Text"></p>
+<h2 id="CLH锁"><a href="#CLH锁" class="headerlink" title="CLH锁"></a>CLH锁</h2><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h3><p>CLH锁是一种基于链表的高效的、可扩展的公平自旋锁。<br><img src="https://s2.ax1x.com/2019/04/26/EmthR0.png" alt="Alt Text"></p>
 <h2 id="MCS锁与CLH锁的异同"><a href="#MCS锁与CLH锁的异同" class="headerlink" title="MCS锁与CLH锁的异同"></a>MCS锁与CLH锁的异同</h2><h3 id="同"><a href="#同" class="headerlink" title="同"></a>同</h3><ul>
 <li>CLH与MCS的原理大致相同，都是各个线程轮询各自关注的变量，避免多个线程对同一变量的轮询，从CPU缓存一致性的角度减少系统的开销。</li>
 </ul>
@@ -452,6 +454,7 @@
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="https://tech.meituan.com/2016/11/18/disruptor.html" target="_blank" rel="noopener">高性能队列——Disruptor</a></li>
 <li><a href="https://coderbee.net/index.php/concurrent/20131115/577" target="_blank" rel="noopener">自旋锁、排队自旋锁、MCS锁、CLH锁</a></li>
+<li><a href="https://www.cnblogs.com/sanzao/p/10567529.html" target="_blank" rel="noopener">并发系列（3）之 CLH、MCS 队列锁简介</a></li>
 </ul>
 
       
@@ -481,7 +484,7 @@
   <p><span>本文标题:</span><a href="/2019/04/25/spin-lock/">自旋锁</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
   <p><span>发布时间:</span>2019年04月25日 - 17:04</p>
-  <p><span>最后更新:</span>2019年04月26日 - 10:04</p>
+  <p><span>最后更新:</span>2019年04月26日 - 11:04</p>
   <p><span>原始链接:</span><a href="/2019/04/25/spin-lock/" title="自旋锁">http://smarticeberg.github.io/2019/04/25/spin-lock/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2019/04/25/spin-lock/"  aria-label="复制成功！"></i></span>
   </p>
@@ -700,7 +703,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自旋锁"><span class="nav-number">1.</span> <span class="nav-text">自旋锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自旋锁-1"><span class="nav-number">1.1.</span> <span class="nav-text">自旋锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存在问题"><span class="nav-number">1.1.1.</span> <span class="nav-text">存在问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排队自旋锁"><span class="nav-number">1.2.</span> <span class="nav-text">排队自旋锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自旋锁与排队自旋锁存在的问题"><span class="nav-number">1.3.</span> <span class="nav-text">自旋锁与排队自旋锁存在的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存同步"><span class="nav-number">1.3.1.</span> <span class="nav-text">内存同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">1.3.2.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCS锁"><span class="nav-number">1.4.</span> <span class="nav-text">MCS锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.4.1.</span> <span class="nav-text">简介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CLH锁"><span class="nav-number">1.5.</span> <span class="nav-text">CLH锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCS锁与CLH锁的异同"><span class="nav-number">1.6.</span> <span class="nav-text">MCS锁与CLH锁的异同</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#同"><span class="nav-number">1.6.1.</span> <span class="nav-text">同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异"><span class="nav-number">1.6.2.</span> <span class="nav-text">异</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用"><span class="nav-number">2.</span> <span class="nav-text">应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Disruptor的等待策略"><span class="nav-number">2.1.</span> <span class="nav-text">Disruptor的等待策略</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自旋锁"><span class="nav-number">1.</span> <span class="nav-text">自旋锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自旋锁-1"><span class="nav-number">1.1.</span> <span class="nav-text">自旋锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存在问题"><span class="nav-number">1.1.1.</span> <span class="nav-text">存在问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排队自旋锁"><span class="nav-number">1.2.</span> <span class="nav-text">排队自旋锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自旋锁与排队自旋锁存在的问题"><span class="nav-number">1.3.</span> <span class="nav-text">自旋锁与排队自旋锁存在的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存同步"><span class="nav-number">1.3.1.</span> <span class="nav-text">内存同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">1.3.2.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCS锁"><span class="nav-number">1.4.</span> <span class="nav-text">MCS锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.4.1.</span> <span class="nav-text">简介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CLH锁"><span class="nav-number">1.5.</span> <span class="nav-text">CLH锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介-1"><span class="nav-number">1.5.1.</span> <span class="nav-text">简介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCS锁与CLH锁的异同"><span class="nav-number">1.6.</span> <span class="nav-text">MCS锁与CLH锁的异同</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#同"><span class="nav-number">1.6.1.</span> <span class="nav-text">同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异"><span class="nav-number">1.6.2.</span> <span class="nav-text">异</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#应用"><span class="nav-number">2.</span> <span class="nav-text">应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Disruptor的等待策略"><span class="nav-number">2.1.</span> <span class="nav-text">Disruptor的等待策略</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
