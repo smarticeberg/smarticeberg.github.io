@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="Jarvis的技术小黑屋">
 <meta property="og:description" content="标题：【Java源码阅读计划】AbstractQueuedSynchronizer 进度：60% 总结： 类结构：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-26T09:54:50.516Z">
+<meta property="og:updated_time" content="2019-04-26T10:07:29.440Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java source code reading AbstractQueuedSynchronizer">
 <meta name="twitter:description" content="标题：【Java源码阅读计划】AbstractQueuedSynchronizer 进度：60% 总结： 类结构：">
@@ -368,19 +368,25 @@
 <p>package java.util.concurrent.locks;<br>import java.util.concurrent.TimeUnit;<br>import java.util.Date;</p>
 <p>public interface Condition {<br>    // 当前线程进入等待状态直到被唤醒或中断<br>    void await() throws InterruptedException;<br>    // 当前线程进入等待状态，不响应中断，阻塞直到被唤醒<br>    void awaitUninterruptibly();<br>    // 当前线程进入等待状态直到被唤醒或中断,阻塞带时间限制<br>    long awaitNanos(long nanosTimeout) throws InterruptedException;<br>    // 当前线程进入等待状态直到被唤醒或中断,阻塞带时间限制<br>    boolean await(long time, TimeUnit unit) throws InterruptedException;<br>    // 当前线程进入等待状态直到被唤醒或中断,阻塞带时间限制<br>    boolean awaitUntil(Date deadline) throws InterruptedException;<br>    // 唤醒单个阻塞线程<br>    void signal();<br>    // 唤醒所有阻塞线程<br>    void signalAll();<br>}</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">## ConditionObject ##</span><br></pre></td></tr></table></figure>
-<p>public class ConditionObject implements Condition, java.io.Serializable {<br>        private static final long serialVersionUID = 1173984872572414699L;<br>        private transient Node firstWaiter;<br>        private transient Node lastWaiter;<br>        public ConditionObject() { }</p>
-<pre><code>    private Node addConditionWaiter() {
+<p>public class ConditionObject implements Condition, java.io.Serializable {<br>        private static final long serialVersionUID = 1173984872572414699L;<br>        // 条件队列的第一个节点<br>        private transient Node firstWaiter;<br>        // 条件队列的最后一个节点<br>        private transient Node lastWaiter;<br>        public ConditionObject() { }</p>
+<pre><code>    // 添加条件等待节点
+    private Node addConditionWaiter() {
         Node t = lastWaiter;
         // If lastWaiter is cancelled, clean out.
+        // 最后一个节点不为条件等待状态，则是取消状态
         if (t != null &amp;&amp; t.waitStatus != Node.CONDITION) {
+            // 解除所有取消等待的节点的连接
             unlinkCancelledWaiters();
             t = lastWaiter;
         }
+        // 基于当前线程新建一个条件等待节点
         Node node = new Node(Thread.currentThread(), Node.CONDITION);
+        // 首次创建Condition时，最后一个节点的引用为null，则把第一个节点置为新建的节点
         if (t == null)
             firstWaiter = node;
         else
-            t.nextWaiter = node;
+            t.nextWaiter = node; //已经存在第一个节点，则通过nextWaiter连接新的节点
+        // 最后一个节点的引用更新为最新节点的引用
         lastWaiter = node;
         return node;
     }
@@ -404,11 +410,13 @@
         } while (first != null);
     }
 
+    // 从条件等待队列中解除所有取消节点的连接，其实就是所有取消节点移除的操作，涉及到双向链表的断链操作。
     private void unlinkCancelledWaiters() {
         Node t = firstWaiter;
         Node trail = null;
         while (t != null) {
             Node next = t.nextWaiter;
+            // 这里进行了状态判断
             if (t.waitStatus != Node.CONDITION) {
                 t.nextWaiter = null;
                 if (trail == null)
@@ -644,7 +652,7 @@
   <p><span>本文标题:</span><a href="/2019/04/11/Java-source-code-reading-AbstractQueuedSynchronizer/">Java source code reading AbstractQueuedSynchronizer</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
   <p><span>发布时间:</span>2019年04月11日 - 09:04</p>
-  <p><span>最后更新:</span>2019年04月26日 - 17:04</p>
+  <p><span>最后更新:</span>2019年04月26日 - 18:04</p>
   <p><span>原始链接:</span><a href="/2019/04/11/Java-source-code-reading-AbstractQueuedSynchronizer/" title="Java source code reading AbstractQueuedSynchronizer">http://smarticeberg.github.io/2019/04/11/Java-source-code-reading-AbstractQueuedSynchronizer/</a>
     <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2019/04/11/Java-source-code-reading-AbstractQueuedSynchronizer/"  aria-label="复制成功！"></i></span>
   </p>
