@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="Jarvis的技术小黑屋">
 <meta property="og:description" content="自旋锁自旋锁存在问题 饥饿问题：竞争非常激烈时可能会导致一些线程无法获取锁（争抢活跃的线程获得锁的概率比较大） 系统消耗：由于自旋锁使用的是同一个共享变量，所以内存同步会消耗大量的系统资源。 非公平性：自旋锁无法实现公平性，如果需要实现公平性，则需要引入其余变量进行维护。  排队自旋锁自旋锁与排队自旋锁存在的问题内存同步为了更清晰的阐述自旋锁和排队自旋锁存在的问题，有必要了解一下内存同步是怎么一回">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-26T02:08:48.520Z">
+<meta property="og:updated_time" content="2019-04-26T02:09:26.909Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自旋锁">
 <meta name="twitter:description" content="自旋锁自旋锁存在问题 饥饿问题：竞争非常激烈时可能会导致一些线程无法获取锁（争抢活跃的线程获得锁的概率比较大） 系统消耗：由于自旋锁使用的是同一个共享变量，所以内存同步会消耗大量的系统资源。 非公平性：自旋锁无法实现公平性，如果需要实现公平性，则需要引入其余变量进行维护。  排队自旋锁自旋锁与排队自旋锁存在的问题内存同步为了更清晰的阐述自旋锁和排队自旋锁存在的问题，有必要了解一下内存同步是怎么一回">
@@ -404,6 +404,7 @@
 </table>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a href="https://tech.meituan.com/2016/11/18/disruptor.html" target="_blank" rel="noopener">高性能队列——Disruptor</a></li>
+<li><a href="https://coderbee.net/index.php/concurrent/20131115/577" target="_blank" rel="noopener">自旋锁、排队自旋锁、MCS锁、CLH锁</a></li>
 </ul>
 
       
