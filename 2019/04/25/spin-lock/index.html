@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Java,Leetcode," />
+  <meta name="keywords" content="Java,自旋锁," />
 
 
 
@@ -86,18 +86,18 @@
 
 
 
-<meta name="description" content="Valid Parentheses Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.The brackets must close in the correct order, “()” and “()[]{}”">
-<meta name="keywords" content="Java,Leetcode">
+<meta name="description" content="自旋锁自旋锁存在问题 饥饿问题：竞争非常激烈时可能会导致一些线程无法获取锁（争抢活跃的线程获得锁的概率比较大） 系统消耗：由于自旋锁使用的是同一个共享变量，所以内存同步会消耗大量的系统资源。 非公平性：自旋锁无法实现公平性，如果需要实现公平性，则需要引入其余变量进行维护。  排队自旋锁自旋锁与排队自旋锁存在的问题内存同步为了更清晰的阐述自旋锁和排队自旋锁存在的问题，有必要了解一下内存同步是怎么一回">
+<meta name="keywords" content="Java,自旋锁">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode#20 Valid Parentheses">
-<meta property="og:url" content="http://smarticeberg.github.io/2018/03/05/Leetcode-20-Valid-Parentheses/index.html">
+<meta property="og:title" content="自旋锁">
+<meta property="og:url" content="http://smarticeberg.github.io/2019/04/25/spin-lock/index.html">
 <meta property="og:site_name" content="Jarvis的技术小黑屋">
-<meta property="og:description" content="Valid Parentheses Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.The brackets must close in the correct order, “()” and “()[]{}”">
+<meta property="og:description" content="自旋锁自旋锁存在问题 饥饿问题：竞争非常激烈时可能会导致一些线程无法获取锁（争抢活跃的线程获得锁的概率比较大） 系统消耗：由于自旋锁使用的是同一个共享变量，所以内存同步会消耗大量的系统资源。 非公平性：自旋锁无法实现公平性，如果需要实现公平性，则需要引入其余变量进行维护。  排队自旋锁自旋锁与排队自旋锁存在的问题内存同步为了更清晰的阐述自旋锁和排队自旋锁存在的问题，有必要了解一下内存同步是怎么一回">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-10T09:47:33.502Z">
+<meta property="og:updated_time" content="2019-04-26T02:08:48.520Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Leetcode#20 Valid Parentheses">
-<meta name="twitter:description" content="Valid Parentheses Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.The brackets must close in the correct order, “()” and “()[]{}”">
+<meta name="twitter:title" content="自旋锁">
+<meta name="twitter:description" content="自旋锁自旋锁存在问题 饥饿问题：竞争非常激烈时可能会导致一些线程无法获取锁（争抢活跃的线程获得锁的概率比较大） 系统消耗：由于自旋锁使用的是同一个共享变量，所以内存同步会消耗大量的系统资源。 非公平性：自旋锁无法实现公平性，如果需要实现公平性，则需要引入其余变量进行维护。  排队自旋锁自旋锁与排队自旋锁存在的问题内存同步为了更清晰的阐述自旋锁和排队自旋锁存在的问题，有必要了解一下内存同步是怎么一回">
 
 
 
@@ -127,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://smarticeberg.github.io/2018/03/05/Leetcode-20-Valid-Parentheses/"/>
+  <link rel="canonical" href="http://smarticeberg.github.io/2019/04/25/spin-lock/"/>
 
 
 
 
 
-  <title>Leetcode#20 Valid Parentheses | Jarvis的技术小黑屋</title>
+  <title>自旋锁 | Jarvis的技术小黑屋</title>
   
 
 
@@ -260,7 +260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/03/05/Leetcode-20-Valid-Parentheses/">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2019/04/25/spin-lock/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Iceberg">
@@ -277,7 +277,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode#20 Valid Parentheses</h1>
+          <h1 class="post-title" itemprop="name headline">自旋锁</h1>
         
 
         <div class="post-meta">
@@ -289,8 +289,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T13:26:37+08:00">
-                2018-03-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-25T17:05:50+08:00">
+                2019-04-25
               </time>
             
 
@@ -312,8 +312,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">Leetcode</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -349,13 +349,63 @@
       
 
       
-        <h1 id="Valid-Parentheses"><a href="#Valid-Parentheses" class="headerlink" title="Valid Parentheses"></a>Valid Parentheses</h1><blockquote>
-<p>Given a string containing just the characters ‘(‘, ‘)’, ‘{‘, ‘}’, ‘[‘ and ‘]’, determine if the input string is valid.<br>The brackets must close in the correct order, “()” and “()[]{}” are all valid but “(]” and “([)]” are not.<br><a id="more"></a></p>
-<h2 id="题目翻译"><a href="#题目翻译" class="headerlink" title="题目翻译"></a>题目翻译</h2><p>给定一个只包含’(‘, ‘)’, ‘{‘, ‘}’, ‘[‘和 ‘]’的字符串，确定给定的字符串是否有效。括号的闭合是按照正确的顺序，例：”()” 和 “()[]{}”是有效的，但是”(]” 和 “([)]”是无效的。</p>
-</blockquote>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="思路一"><a href="#思路一" class="headerlink" title="思路一"></a>思路一</h3><h4 id="复杂度"><a href="#复杂度" class="headerlink" title="复杂度"></a>复杂度</h4><p>时间复杂度O(n)</p>
-<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>左符号入栈，右符号出栈，最后检查栈是否为空。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public boolean isValid(String s) &#123;</span><br><span class="line">	if (s == null || s.length() &lt; 2) return false;</span><br><span class="line"></span><br><span class="line">	Stack&lt;Character&gt; stack = new Stack&lt;Character&gt;();</span><br><span class="line">	for (char c : s.toCharArray()) &#123;</span><br><span class="line">		if (c == &apos;(&apos;) stack.push(&apos;)&apos;);</span><br><span class="line">		else if (c == &apos;&#123;&apos;) stack.push(&apos;&#125;&apos;);</span><br><span class="line">		else if (c == &apos;[&apos;) stack.push(&apos;]&apos;);</span><br><span class="line">		else if (stack.isEmpty() || stack.pop() != c) return false;</span><br><span class="line">	&#125;</span><br><span class="line">	return stack.isEmpty();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h1><h2 id="自旋锁-1"><a href="#自旋锁-1" class="headerlink" title="自旋锁"></a>自旋锁</h2><h3 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h3><ul>
+<li>饥饿问题：竞争非常激烈时可能会导致一些线程无法获取锁（争抢活跃的线程获得锁的概率比较大）</li>
+<li>系统消耗：由于自旋锁使用的是同一个共享变量，所以内存同步会消耗大量的系统资源。</li>
+<li>非公平性：自旋锁无法实现公平性，如果需要实现公平性，则需要引入其余变量进行维护。</li>
+</ul>
+<h2 id="排队自旋锁"><a href="#排队自旋锁" class="headerlink" title="排队自旋锁"></a>排队自旋锁</h2><h2 id="自旋锁与排队自旋锁存在的问题"><a href="#自旋锁与排队自旋锁存在的问题" class="headerlink" title="自旋锁与排队自旋锁存在的问题"></a>自旋锁与排队自旋锁存在的问题</h2><h3 id="内存同步"><a href="#内存同步" class="headerlink" title="内存同步"></a>内存同步</h3><p>为了更清晰的阐述自旋锁和排队自旋锁存在的问题，有必要了解一下内存同步是怎么一回事。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>无论是基于非公平的自旋锁还是基于公平的排队自旋锁，由于都是执行线程都在同一个共享变量上自旋，申请和释放锁的时候都会对该共享变量进行修改，这将导致所有参与排队自旋锁操作的处理器缓存失效。如果排队自旋锁竞争比较厉害的话，频繁的缓存同步操作会导致繁重的系统总线和内存的流量，从而降低系统的性能。为了避免在同一个共享变量上自旋，MCS和CLH应运而生。</p>
+<h2 id="MCS锁"><a href="#MCS锁" class="headerlink" title="MCS锁"></a>MCS锁</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>MCS锁是一种高效的、可扩展的公平锁，申请线程只在本地变量上自旋，直接前驱负责通知其结束自旋，减少处理器内存同步，降低总线和内存的开销。</p>
+<h2 id="CLH锁"><a href="#CLH锁" class="headerlink" title="CLH锁"></a>CLH锁</h2><h2 id="MCS锁与CLH锁的区别"><a href="#MCS锁与CLH锁的区别" class="headerlink" title="MCS锁与CLH锁的区别"></a>MCS锁与CLH锁的区别</h2><ul>
+<li>链表结构的区别</li>
+<li>自旋对象的区别：CLH是在前驱节点上自旋，MCS是在自身节点上自旋。主要体现在SMP(Symmetric Multi-Processor) 和 NUMA(Non-Uniform Memory Access) 不同的处理器架构上。</li>
+</ul>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><h2 id="Disruptor的等待策略"><a href="#Disruptor的等待策略" class="headerlink" title="Disruptor的等待策略"></a>Disruptor的等待策略</h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>措施</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BlockingWaitStrategy</td>
+<td>加锁</td>
+<td>CPU资源紧缺，吞吐量和延迟并不重要的场景</td>
+</tr>
+<tr>
+<td>BusySpinWaitStrategy</td>
+<td>自旋</td>
+<td>通过不断重试，减少切换线程导致的系统调用，而降低延迟。推荐在线程绑定到固定的CPU的场景下使用</td>
+</tr>
+<tr>
+<td>PhasedBackoffWaitStrategy</td>
+<td>自旋 + yield + 自定义策略</td>
+<td>CPU资源紧缺，吞吐量和延迟并不重要的场景</td>
+</tr>
+<tr>
+<td>SleepingWaitStrategy</td>
+<td>自旋 + yield + sleep</td>
+<td>性能和CPU资源之间有很好的折中。延迟不均匀</td>
+</tr>
+<tr>
+<td>TimeoutBlockingWaitStrategy</td>
+<td>加锁，有超时限制</td>
+<td>CPU资源紧缺，吞吐量和延迟并不重要的场景</td>
+</tr>
+<tr>
+<td>YieldingWaitStrategy</td>
+<td>自旋 + yield + 自旋</td>
+<td>性能和CPU资源之间有很好的折中。延迟比较均匀</td>
+</tr>
+</tbody>
+</table>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://tech.meituan.com/2016/11/18/disruptor.html" target="_blank" rel="noopener">高性能队列——Disruptor</a></li>
+</ul>
+
       
     </div>
     
@@ -380,12 +430,12 @@
   <!-- JS库 sweetalert 可修改路径 -->
   <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <p><span>本文标题:</span><a href="/2018/03/05/Leetcode-20-Valid-Parentheses/">Leetcode#20 Valid Parentheses</a></p>
+  <p><span>本文标题:</span><a href="/2019/04/25/spin-lock/">自旋锁</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 Iceberg 的个人博客">Iceberg</a></p>
-  <p><span>发布时间:</span>2018年03月05日 - 13:03</p>
-  <p><span>最后更新:</span>2019年01月10日 - 17:01</p>
-  <p><span>原始链接:</span><a href="/2018/03/05/Leetcode-20-Valid-Parentheses/" title="Leetcode#20 Valid Parentheses">http://smarticeberg.github.io/2018/03/05/Leetcode-20-Valid-Parentheses/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2018/03/05/Leetcode-20-Valid-Parentheses/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2019年04月25日 - 17:04</p>
+  <p><span>最后更新:</span>2019年04月26日 - 10:04</p>
+  <p><span>原始链接:</span><a href="/2019/04/25/spin-lock/" title="自旋锁">http://smarticeberg.github.io/2019/04/25/spin-lock/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="http://smarticeberg.github.io/2019/04/25/spin-lock/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -427,7 +477,7 @@
           
             <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           
-            <a href="/tags/Leetcode/" rel="tag"><i class="fa fa-tag"></i> Leetcode</a>
+            <a href="/tags/自旋锁/" rel="tag"><i class="fa fa-tag"></i> 自旋锁</a>
           
         </div>
       
@@ -440,8 +490,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/05/Leetcode-19-Remove-Nth-Node-From-End-of-List/" rel="next" title="Leetcode#19 Remove Nth Node From End of List">
-                <i class="fa fa-chevron-left"></i> Leetcode#19 Remove Nth Node From End of List
+              <a href="/2019/04/24/distributed-lock/" rel="next" title="分布式锁">
+                <i class="fa fa-chevron-left"></i> 分布式锁
               </a>
             
           </div>
@@ -449,10 +499,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/05/Leetcode-21-Merge-Two-Sorted-Lists/" rel="prev" title="Leetcode#21 Merge Two Sorted Lists">
-                Leetcode#21 Merge Two Sorted Lists <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -614,7 +660,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Valid-Parentheses"><span class="nav-number">1.</span> <span class="nav-text">Valid Parentheses</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目翻译"><span class="nav-number">1.1.</span> <span class="nav-text">题目翻译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">1.2.</span> <span class="nav-text">思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路一"><span class="nav-number">1.2.1.</span> <span class="nav-text">思路一</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#复杂度"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">复杂度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-1"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">思路</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自旋锁"><span class="nav-number">1.</span> <span class="nav-text">自旋锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自旋锁-1"><span class="nav-number">1.1.</span> <span class="nav-text">自旋锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#存在问题"><span class="nav-number">1.1.1.</span> <span class="nav-text">存在问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排队自旋锁"><span class="nav-number">1.2.</span> <span class="nav-text">排队自旋锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自旋锁与排队自旋锁存在的问题"><span class="nav-number">1.3.</span> <span class="nav-text">自旋锁与排队自旋锁存在的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存同步"><span class="nav-number">1.3.1.</span> <span class="nav-text">内存同步</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">1.3.2.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCS锁"><span class="nav-number">1.4.</span> <span class="nav-text">MCS锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.4.1.</span> <span class="nav-text">简介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CLH锁"><span class="nav-number">1.5.</span> <span class="nav-text">CLH锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MCS锁与CLH锁的区别"><span class="nav-number">1.6.</span> <span class="nav-text">MCS锁与CLH锁的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">2.</span> <span class="nav-text">后记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Disruptor的等待策略"><span class="nav-number">2.1.</span> <span class="nav-text">Disruptor的等待策略</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>

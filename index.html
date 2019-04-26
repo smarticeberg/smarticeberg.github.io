@@ -256,6 +256,211 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2019/04/25/spin-lock/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Iceberg">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jarvis的技术小黑屋">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/25/spin-lock/" itemprop="url">自旋锁</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-25T17:05:50+08:00">
+                2019-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h1><h2 id="自旋锁-1"><a href="#自旋锁-1" class="headerlink" title="自旋锁"></a>自旋锁</h2><h3 id="存在问题"><a href="#存在问题" class="headerlink" title="存在问题"></a>存在问题</h3><ul>
+<li>饥饿问题：竞争非常激烈时可能会导致一些线程无法获取锁（争抢活跃的线程获得锁的概率比较大）</li>
+<li>系统消耗：由于自旋锁使用的是同一个共享变量，所以内存同步会消耗大量的系统资源。</li>
+<li>非公平性：自旋锁无法实现公平性，如果需要实现公平性，则需要引入其余变量进行维护。</li>
+</ul>
+<h2 id="排队自旋锁"><a href="#排队自旋锁" class="headerlink" title="排队自旋锁"></a>排队自旋锁</h2><h2 id="自旋锁与排队自旋锁存在的问题"><a href="#自旋锁与排队自旋锁存在的问题" class="headerlink" title="自旋锁与排队自旋锁存在的问题"></a>自旋锁与排队自旋锁存在的问题</h2><h3 id="内存同步"><a href="#内存同步" class="headerlink" title="内存同步"></a>内存同步</h3><p>为了更清晰的阐述自旋锁和排队自旋锁存在的问题，有必要了解一下内存同步是怎么一回事。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>无论是基于非公平的自旋锁还是基于公平的排队自旋锁，由于都是执行线程都在同一个共享变量上自旋，申请和释放锁的时候都会对该共享变量进行修改，这将导致所有参与排队自旋锁操作的处理器缓存失效。如果排队自旋锁竞争比较厉害的话，频繁的缓存同步操作会导致繁重的系统总线和内存的流量，从而降低系统的性能。为了避免在同一个共享变量上自旋，MCS和CLH应运而生。</p>
+<h2 id="MCS锁"><a href="#MCS锁" class="headerlink" title="MCS锁"></a>MCS锁</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>MCS锁是一种高效的、可扩展的公平锁，申请线程只在本地变量上自旋，直接前驱负责通知其结束自旋，减少处理器内存同步，降低总线和内存的开销。</p>
+<h2 id="CLH锁"><a href="#CLH锁" class="headerlink" title="CLH锁"></a>CLH锁</h2><h2 id="MCS锁与CLH锁的区别"><a href="#MCS锁与CLH锁的区别" class="headerlink" title="MCS锁与CLH锁的区别"></a>MCS锁与CLH锁的区别</h2><ul>
+<li>链表结构的区别</li>
+<li>自旋对象的区别：CLH是在前驱节点上自旋，MCS是在自身节点上自旋。主要体现在SMP(Symmetric Multi-Processor) 和 NUMA(Non-Uniform Memory Access) 不同的处理器架构上。</li>
+</ul>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><h2 id="Disruptor的等待策略"><a href="#Disruptor的等待策略" class="headerlink" title="Disruptor的等待策略"></a>Disruptor的等待策略</h2><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>措施</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BlockingWaitStrategy</td>
+<td>加锁</td>
+<td>CPU资源紧缺，吞吐量和延迟并不重要的场景</td>
+</tr>
+<tr>
+<td>BusySpinWaitStrategy</td>
+<td>自旋</td>
+<td>通过不断重试，减少切换线程导致的系统调用，而降低延迟。推荐在线程绑定到固定的CPU的场景下使用</td>
+</tr>
+<tr>
+<td>PhasedBackoffWaitStrategy</td>
+<td>自旋 + yield + 自定义策略</td>
+<td>CPU资源紧缺，吞吐量和延迟并不重要的场景</td>
+</tr>
+<tr>
+<td>SleepingWaitStrategy</td>
+<td>自旋 + yield + sleep</td>
+<td>性能和CPU资源之间有很好的折中。延迟不均匀</td>
+</tr>
+<tr>
+<td>TimeoutBlockingWaitStrategy</td>
+<td>加锁，有超时限制</td>
+<td>CPU资源紧缺，吞吐量和延迟并不重要的场景</td>
+</tr>
+<tr>
+<td>YieldingWaitStrategy</td>
+<td>自旋 + yield + 自旋</td>
+<td>性能和CPU资源之间有很好的折中。延迟比较均匀</td>
+</tr>
+</tbody>
+</table>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://tech.meituan.com/2016/11/18/disruptor.html" target="_blank" rel="noopener">高性能队列——Disruptor</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+    </div>
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+   
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2019/04/24/distributed-lock/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1731,164 +1936,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://smarticeberg.github.io/2018/09/28/Java-Source-Code-Reading-Project-AtomicInteger/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Iceberg">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Jarvis的技术小黑屋">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/28/Java-Source-Code-Reading-Project-AtomicInteger/" itemprop="url">【Java源码阅读计划】AtomicInteger</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-28T08:59:19+08:00">
-                2018-09-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <ul>
-<li>标题：【Java源码阅读计划】AtomicInteger</li>
-<li>进度：0%</li>
-<li>总结：</li>
-<li>类结构：
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/09/28/Java-Source-Code-Reading-Project-AtomicInteger/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    <div>
-      
-    </div>
-    <div>
-      
-    </div>
-
-    
-
-    
-
-    
-
-   
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1939,7 +1986,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1961,7 +2008,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
